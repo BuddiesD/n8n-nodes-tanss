@@ -31,9 +31,31 @@ export class TanssApi implements INodeType {
 		],
 		properties: [
 			{
+				displayName: 'Category',
+				name: 'category',
+				type: 'options',
+				options: [
+					{
+						name: 'Authentication',
+						value: 'authentication',
+					},
+					{
+						name: 'Ticket Lists',
+						value: 'ticketLists',
+					},
+				],
+				default: 'authentication',
+				description: 'Category of the operation',
+			},
+			{
 				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
+				displayOptions: {
+					show: {
+						category: ['authentication'],
+					},
+				},
 				options: [
 					{
 						name: 'Login',
@@ -41,40 +63,83 @@ export class TanssApi implements INodeType {
 						description: 'Login to the TANSS API',
 						action: 'Login to the TANSS API',
 					},
-					{
-						name: 'Get Ticket',
-						value: 'getTicket',
-						description: 'Fetches a ticket by ID and returns its details',
-						action: 'Fetches a ticket by ID and returns its details',
-					},
-					{
-						name: 'Get Ticket History',
-						value: 'getTicketHistory',
-						description: 'Fetches the history of a ticket by ID',
-						action: 'Fetches the history of a ticket by ID',
-					},
-					{
-						name: 'Create Comment',
-						value: 'createComment',
-						description: 'Creates a comment for a given ticket',
-						action: 'Creates a comment for a given ticket',
-					},
 				],
 				default: 'login',
 				noDataExpression: true,
 			},
 			{
-				displayName: 'Ticket ID',
-				name: 'ticketId',
-				type: 'number',
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
 				displayOptions: {
 					show: {
-						operation: ['getTicket', 'getTicketHistory', 'createComment'],
+						category: ['ticketLists'],
 					},
 				},
-				default: 0,
-				required: true,
-				description: 'The ID of the ticket to retrieve or comment on',
+				options: [
+					{
+						name: 'Get Company Tickets',
+						value: 'getCompanyTickets',
+						description: 'Gets a list of tickets for a given company',
+						action: 'Gets a list of company tickets',
+					},
+					{
+						name: 'Get Custom Ticket List',
+						value: 'getCustomTicketList',
+						description: 'Gets a custom list of tickets based on various filters',
+						action: 'Gets a custom ticket list',
+					},
+					{
+						name: 'Get General Tickets',
+						value: 'getGeneralTickets',
+						description: 'Gets a list of general tickets assigned to no employee',
+						action: 'Gets a list of general tickets',
+					},
+					{
+						name: 'Get Local Admin Tickets',
+						value: 'getLocalAdminTickets',
+						description: 'Gets a list of all tickets under control of local ticket admins',
+						action: 'Gets a list of local admin tickets',
+					},
+					{
+						name: 'Get Not Identified Tickets',
+						value: 'getNotIdentifiedTickets',
+						description: 'Gets a list of all tickets which couldn\'t be assigned to a company',
+						action: 'Gets a list of not identified tickets',
+					},
+					{
+						name: 'Get Own Tickets',
+						value: 'getOwnTickets',
+						description: 'Gets a list of own tickets assigned to the currently logged in employee',
+						action: 'Gets a list of own tickets',
+					},
+					{
+						name: 'Get Project Tickets',
+						value: 'getProjectTickets',
+						description: 'Gets a list of all projects',
+						action: 'Gets a list of project tickets',
+					},
+					{
+						name: 'Get Repair Tickets',
+						value: 'getRepairTickets',
+						description: 'Gets a list of all repair tickets',
+						action: 'Gets a list of repair tickets',
+					},
+					{
+						name: 'Get Technician Tickets',
+						value: 'getTechnicianTickets',
+						description: 'Gets a list of tickets of all technicians (excluding currently logged in employee)',
+						action: 'Gets a list of technician tickets',
+					},
+					{
+						name: 'Get Tickets with Role',
+						value: 'getTicketsWithRole',
+						description: 'Gets a list of tickets the currently logged in technician has a role in',
+						action: 'Gets a list of tickets with role',
+					},
+				],
+				default: 'getOwnTickets',
+				noDataExpression: true,
 			},
 			{
 				displayName: 'API Token',
@@ -82,7 +147,7 @@ export class TanssApi implements INodeType {
 				type: 'string',
 				displayOptions: {
 					show: {
-						operation: ['getTicket', 'getTicketHistory', 'createComment'],
+						category: ['ticketLists'],
 					},
 				},
 				default: '',
@@ -93,43 +158,171 @@ export class TanssApi implements INodeType {
 				},
 			},
 			{
-				displayName: 'Title',
-				name: 'title',
-				type: 'string',
+				displayName: 'Filters',
+				name: 'filters',
+				type: 'fixedCollection',
+				placeholder: 'Add Filter',
 				displayOptions: {
 					show: {
-						operation: ['createComment'],
+						operation: ['getCustomTicketList'],
 					},
 				},
-				default: '',
-				required: true,
-				description: 'Title of the comment to be created',
-			},
-			{
-				displayName: 'Content',
-				name: 'content',
-				type: 'string',
-				displayOptions: {
-					show: {
-						operation: ['createComment'],
-					},
+				typeOptions: {
+					multipleValues: true,
 				},
-				default: '',
-				required: true,
-				description: 'Content of the comment to be created',
-			},
-			{
-				displayName: 'Internal',
-				name: 'internal',
-				type: 'boolean',
-				displayOptions: {
-					show: {
-						operation: ['createComment'],
+				default: {},
+				options: [
+					{
+						name: 'companyFilter',
+						displayName: 'Company ID Filter',
+						values: [
+							{
+								displayName: 'Company ID',
+								name: 'companyId',
+								type: 'number',
+								default: 0,
+								description: 'The ID of the company to fetch tickets for',
+							},
+						],
 					},
-				},
-				default: false,
-				required: true,
-				description: 'Whether the comment is internal or not',
+					{
+						name: 'staffFilter',
+						displayName: 'Staff IDs Filter',
+						values: [
+							{
+								displayName: 'Staff IDs',
+								name: 'staff',
+								type: 'string',
+								default: '',
+								description: 'Comma-separated list of staff IDs to fetch tickets assigned to these employees',
+							},
+						],
+					},
+					{
+						name: 'notAssignedFilter',
+						displayName: 'Not Assigned to Employees Filter',
+						values: [
+							{
+								displayName: 'Not Assigned to Employees',
+								name: 'notAssignedToEmployees',
+								type: 'string',
+								default: '',
+								description: 'Comma-separated list of employee IDs to exclude from fetching',
+							},
+						],
+					},
+					{
+						name: 'departmentFilter',
+						displayName: 'Department IDs Filter',
+						values: [
+							{
+								displayName: 'Department IDs',
+								name: 'departments',
+								type: 'string',
+								default: '',
+								description: 'Comma-separated list of department IDs to fetch tickets assigned to these departments',
+							},
+						],
+					},
+					{
+						name: 'isRepairFilter',
+						displayName: 'Is Repair Filter',
+						values: [
+							{
+								displayName: 'Is Repair',
+								name: 'isRepair',
+								type: 'boolean',
+								default: false,
+								description: 'Whether to fetch only repair tickets if set to true',
+							},
+						],
+					},
+					{
+						name: 'includeDoneTicketsFilter',
+						displayName: 'Include Done Tickets Filter',
+						values: [
+							{
+								displayName: 'Include Done Tickets',
+								name: 'includeDoneTickets',
+								type: 'boolean',
+								default: false,
+								description: 'Whether to include done tickets if set to true',
+							},
+						],
+					},
+					{
+						name: 'ticketIdsFilter',
+						displayName: 'Ticket IDs Filter',
+						values: [
+							{
+								displayName: 'Ticket IDs',
+								name: 'ids',
+								type: 'string',
+								default: '',
+								description: 'Comma-separated list of ticket IDs to fetch',
+							},
+						],
+					},
+					{
+						name: 'projectFilter',
+						displayName: 'Project ID Filter',
+						values: [
+							{
+								displayName: 'Project ID',
+								name: 'projectId',
+								type: 'number',
+								default: 0,
+								description: 'Fetch only tickets of this project',
+							},
+						],
+					},
+					{
+						name: 'phaseFilter',
+						displayName: 'Phase ID Filter',
+						values: [
+							{
+								displayName: 'Phase ID',
+								name: 'phaseId',
+								type: 'number',
+								default: 0,
+								description: 'Fetch only tickets of a given phase ID',
+							},
+						],
+					},
+					{
+						name: 'remitterFilter',
+						displayName: 'Remitter ID Filter',
+						values: [
+							{
+								displayName: 'Remitter ID',
+								name: 'remitterId',
+								type: 'number',
+								default: 0,
+								description: 'Fetch only tickets of this remitter ID',
+							},
+						],
+					},
+					{
+						name: 'paginationFilter',
+						displayName: 'Pagination Filter',
+						values: [
+							{
+								displayName: 'Items Per Page',
+								name: 'itemsPerPage',
+								type: 'number',
+								default: 10,
+								description: 'Number of tickets to fetch per page (pagination)',
+							},
+							{
+								displayName: 'Page Number',
+								name: 'page',
+								type: 'number',
+								default: 1,
+								description: 'Page number to fetch (pagination)',
+							},
+						],
+					},
+				],
 			},
 		],
 	};
@@ -146,103 +339,95 @@ export class TanssApi implements INodeType {
 		}
 
 		for (let i = 0; i < items.length; i++) {
+			const category = this.getNodeParameter('category', i) as string;
 			const operation = this.getNodeParameter('operation', i) as string;
+			const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 
-			if (operation === 'login') {
-				const username = credentials.username as string;
-				const password = credentials.password as string;
+			let requestOptions: any;
+			let url: string;
 
-				const requestOptions = {
-					method: 'POST' as IHttpRequestMethods,
-					url: `${credentials.baseURL}/api/v1/login`,
-					body: {
-						username,
-						password,
-					},
-					json: true,
-				};
-
-				try {
-					// Perform login request
-					const responseData = await this.helpers.request(requestOptions);
-					returnData.push({ json: responseData });
-				} catch (error) {
-					throw new NodeOperationError(this.getNode(), `Login failed: ${error.message}`);
+			if (category === 'authentication') {
+				if (operation === 'login') {
+					const username = credentials.username as string;
+					const password = credentials.password as string;
+					url = `${credentials.baseURL}/api/v1/login`;
+					requestOptions = {
+						method: 'POST' as IHttpRequestMethods,
+						url,
+						body: { username, password },
+						json: true,
+					};
+				} else {
+					throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized in category "authentication".`);
 				}
-			} else if (operation === 'getTicket') {
-				// Get Ticket operation
-				const ticketId = this.getNodeParameter('ticketId', i) as number;
-				const apiToken = this.getNodeParameter('apiToken', i) as string;
+			} else if (category === 'ticketLists') {
+				switch (operation) {
+					case 'getOwnTickets':
+						url = `${credentials.baseURL}/api/v1/tickets/own`;
+						requestOptions = {
+							method: 'GET' as IHttpRequestMethods,
+							url,
+							headers: { apiToken, 'Content-Type': 'application/json' },
+							json: true,
+						};
+						break;
+					case 'getGeneralTickets':
+						url = `${credentials.baseURL}/api/v1/tickets/general`;
+						requestOptions = {
+							method: 'GET' as IHttpRequestMethods,
+							url,
+							headers: { apiToken, 'Content-Type': 'application/json' },
+							json: true,
+						};
+						break;
+					case 'getCompanyTickets':
+						const companyId = this.getNodeParameter('companyId', i) as number;
+						url = `${credentials.baseURL}/api/v1/tickets/company/${companyId}`;
+						requestOptions = {
+							method: 'GET' as IHttpRequestMethods,
+							url,
+							headers: { apiToken, 'Content-Type': 'application/json' },
+							json: true,
+						};
+						break;
+					case 'getCustomTicketList':
+						url = `${credentials.baseURL}/api/v1/tickets`;
 
-				const requestOptions = {
-					method: 'GET' as IHttpRequestMethods,
-					url: `${credentials.baseURL}/api/v1/tickets/${ticketId}`,
-					headers: {
-						apiToken: apiToken,
-						'Content-Type': 'application/json',
-					},
-					json: true,
-				};
+						const filterOptions = this.getNodeParameter('filters', i) as { filters: Array<{ [key: string]: any }> };
 
-				try {
-					// Perform get ticket request
-					const responseData = await this.helpers.request(requestOptions);
-					returnData.push({ json: responseData });
-				} catch (error) {
-					throw new NodeOperationError(this.getNode(), `Failed to fetch ticket: ${error.message}`);
+						const customFilters: any = {};
+						if (Array.isArray(filterOptions.filters)) {
+							for (const filter of filterOptions.filters) {
+								for (const [key, value] of Object.entries(filter)) {
+									if (value !== undefined && value !== '') {
+										customFilters[key] = typeof value === 'string' && value.includes(',')
+											? value.split(',').map(Number)
+											: value;
+									}
+								}
+							}
+						}
+
+						requestOptions = {
+							method: 'PUT' as IHttpRequestMethods,
+							url,
+							headers: { apiToken, 'Content-Type': 'application/json' },
+							body: customFilters,
+							json: true,
+						};
+						break;
+					default:
+						throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized in category "ticketLists".`);
 				}
-			} else if (operation === 'getTicketHistory') {
-				// Get Ticket History operation
-				const ticketId = this.getNodeParameter('ticketId', i) as number;
-				const apiToken = this.getNodeParameter('apiToken', i) as string;
+			} else {
+				throw new NodeOperationError(this.getNode(), `The category "${category}" is not recognized.`);
+			}
 
-				const requestOptions = {
-					method: 'GET' as IHttpRequestMethods,
-					url: `${credentials.baseURL}/api/v1/tickets/history/${ticketId}`,
-					headers: {
-						apiToken: apiToken,
-						'Content-Type': 'application/json',
-					},
-					json: true,
-				};
-
-				try {
-					// Perform get ticket history request
-					const responseData = await this.helpers.request(requestOptions);
-					returnData.push({ json: responseData });
-				} catch (error) {
-					throw new NodeOperationError(this.getNode(), `Failed to fetch ticket history: ${error.message}`);
-				}
-			} else if (operation === 'createComment') {
-				// Create Comment operation
-				const ticketId = this.getNodeParameter('ticketId', i) as number;
-				const apiToken = this.getNodeParameter('apiToken', i) as string;
-				const title = this.getNodeParameter('title', i) as string;
-				const content = this.getNodeParameter('content', i) as string;
-				const internal = this.getNodeParameter('internal', i) as boolean;
-
-				const requestOptions = {
-					method: 'POST' as IHttpRequestMethods,
-					url: `${credentials.baseURL}/api/v1/tickets/${ticketId}/comments`,
-					headers: {
-						apiToken: apiToken,
-						'Content-Type': 'application/json',
-					},
-					body: {
-						title,
-						content,
-						internal,
-					},
-					json: true,
-				};
-
-				try {
-					// Perform create comment request
-					const responseData = await this.helpers.request(requestOptions);
-					returnData.push({ json: responseData });
-				} catch (error) {
-					throw new NodeOperationError(this.getNode(), `Failed to create comment: ${error.message}`);
-				}
+			try {
+				const responseData = await this.helpers.request(requestOptions);
+				returnData.push({ json: responseData });
+			} catch (error) {
+				throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${error.message}`);
 			}
 		}
 
