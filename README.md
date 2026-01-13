@@ -476,6 +476,8 @@ You only need to provide:
 - `password`
 - optionally: `TOTP Secret Key` (for two-factor authentication)
 
+or alternatively you can provide an already generated `TANSS API Token`.
+
 ## Compatibility
 
 Compatible with n8n@1.60.0 or later
