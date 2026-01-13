@@ -39,15 +39,48 @@ export async function handleAuth(this: IExecuteFunctions, i: number) {
 		throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	}
 
-	const baseURL = (credentials.baseURL as string).replace(/\/+$/, '');
-	const username = credentials.username as string;
-	const password = credentials.password as string;
+	const { baseURL, authentication, username, password, apiToken, totpSecret } = credentials as {
+		baseURL: string;
+		authentication: string;
+		username?: string;
+		password?: string;
+		apiToken?: string;
+		totpSecret?: string;
+	};
 
-	const url = `${baseURL}/backend/api/v1/login`;
+	const url = `${baseURL.replace(/\/+$/, '')}/backend/api/v1/login`;
 
 	if (operation === 'login') {
+		if (authentication === 'apiToken') {
+			if (!apiToken) {
+				throw new NodeOperationError(
+					this.getNode(),
+					'API Token is required for apiToken authentication',
+				);
+			}
+
+			return {
+				meta: {
+					text: 'Using static API token authentication.',
+				},
+				content: {
+					employeeId: undefined,
+					apiKey: String(apiToken),
+					expire: undefined,
+					refresh: undefined,
+					employeeType: undefined,
+				},
+			};
+		}
+
+		if (!username || !password) {
+			throw new NodeOperationError(
+				this.getNode(),
+				'Username and Password are required for loginTotp authentication',
+			);
+		}
+
 		const body: { username: string; password: string; token?: string } = { username, password };
-		const totpSecret = (credentials as { totpSecret?: string | undefined }).totpSecret;
 
 		if (totpSecret) {
 			const triedWindows = [0, -1, 1];
