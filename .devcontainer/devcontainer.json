@@ -1,0 +1,13 @@
+{
+	"name": "node-dev",
+	"image": "docker.io/library/node:24-trixie",
+	"workspaceFolder": "/workspace",
+	"remoteUser": "node",
+	"updateRemoteUserUID": false,
+	"mounts": ["source=${localWorkspaceFolder},target=/workspace,type=bind"],
+	"customizations": {
+		"vscode": {
+			"extensions": ["prettier.prettier-vscode"]
+		}
+	}
+}
