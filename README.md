@@ -485,3 +485,9 @@ Tested with TANSS API. Version: 10.10.0
 
 * [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
 * [Tanss API documentation](https://api-doc.tanss.de/)
+
+## Development
+
+This project can be developed using a regular local Node.js setup.
+
+Optionally, a dev container configuration is included to provide a ready-to-use development environment with the required Node.js version and basic editor tooling.
