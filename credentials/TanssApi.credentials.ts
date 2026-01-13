@@ -21,10 +21,31 @@ export class TanssApi implements ICredentialType {
 			description: 'The base URL of the TANSS API.',
 		},
 		{
+			displayName: 'Authentication',
+			name: 'authentication',
+			type: 'options',
+			default: 'loginTotp',
+			options: [
+				{
+					name: 'Username + Password (+ TOTP)',
+					value: 'loginTotp',
+					description: 'Authenticate using username and password, with optional TOTP-based 2FA.',
+				},
+				{
+					name: 'API Token',
+					value: 'apiToken',
+					description: 'Authenticate using a pre-generated API token.',
+				},
+			],
+		},
+		{
 			displayName: 'Username',
 			name: 'username',
 			type: 'string',
 			default: '',
+			displayOptions: {
+				show: { authentication: ['loginTotp'] },
+			},
 			required: true,
 			description: 'The username to authenticate with the TANSS API.',
 		},
@@ -35,6 +56,9 @@ export class TanssApi implements ICredentialType {
 			default: '',
 			typeOptions: {
 				password: true,
+			},
+			displayOptions: {
+				show: { authentication: ['loginTotp'] },
 			},
 			required: true,
 			description: 'The password to authenticate with the TANSS API.',
@@ -47,9 +71,30 @@ export class TanssApi implements ICredentialType {
 				password: true,
 			},
 			default: '',
+			displayOptions: {
+				show: {
+					authentication: ['loginTotp'],
+				},
+			},
 			required: false,
 			description:
 				'Base32 secret for TOTP-based 2FA. The 6-digit code will be generated automatically from this secret.',
+		},
+		{
+			displayName: 'API Token',
+			name: 'apiToken',
+			type: 'string',
+			typeOptions: {
+				password: true,
+			},
+			default: '',
+			displayOptions: {
+				show: {
+					authentication: ['apiToken'],
+				},
+			},
+			required: true,
+			description: 'The API Token to authenticate with the TANSS API.',
 		},
 	];
 
