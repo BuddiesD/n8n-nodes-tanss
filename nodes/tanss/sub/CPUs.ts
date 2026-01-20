@@ -8,11 +8,36 @@ export const cpuOperations: INodeProperties[] = [
 		noDataExpression: true,
 		displayOptions: { show: { resource: ['cpus'] } },
 		options: [
-			{ name: 'Create CPU', value: 'createCpu', description: 'Creates a new CPU', action: 'Create a CPU' },
-			{ name: 'Delete CPU', value: 'deleteCpu', description: 'Deletes a CPU', action: 'Delete a CPU' },
-			{ name: 'Get All CPUs', value: 'getAllCpus', description: 'Gets a list of all CPUs', action: 'Get all CPUs' },
-			{ name: 'Get CPU', value: 'getCpuById', description: 'Gets a specific CPU', action: 'Get a CPU' },
-			{ name: 'Update CPU', value: 'updateCpu', description: 'Updates an existing CPU', action: 'Update a CPU' },
+			{
+				name: 'Create CPU',
+				value: 'createCpu',
+				description: 'Creates a new CPU',
+				action: 'Create a CPU',
+			},
+			{
+				name: 'Delete CPU',
+				value: 'deleteCpu',
+				description: 'Deletes a CPU',
+				action: 'Delete a CPU',
+			},
+			{
+				name: 'Get All CPUs',
+				value: 'getAllCpus',
+				description: 'Gets a list of all CPUs',
+				action: 'Get all CPUs',
+			},
+			{
+				name: 'Get CPU',
+				value: 'getCpuById',
+				description: 'Gets a specific CPU',
+				action: 'Get a CPU',
+			},
+			{
+				name: 'Update CPU',
+				value: 'updateCpu',
+				description: 'Updates an existing CPU',
+				action: 'Update a CPU',
+			},
 		],
 		default: 'getAllCpus',
 	},
@@ -35,7 +60,9 @@ export const cpuFields: INodeProperties[] = [
 		type: 'number' as const,
 		default: 0,
 		description: 'ID of the CPU',
-		displayOptions: { show: { resource: ['cpus'], operation: ['updateCpu','getCpuById','deleteCpu'] } },
+		displayOptions: {
+			show: { resource: ['cpus'], operation: ['updateCpu', 'getCpuById', 'deleteCpu'] },
+		},
 	},
 	{
 		displayName: 'Create CPU Fields',
@@ -90,8 +117,12 @@ export async function handleCpu(this: IExecuteFunctions, i: number) {
 		case 'createCpu': {
 			url = `${credentials.baseURL}/backend/api/v1/cpus`;
 			requestOptions.method = 'POST';
-			const createCpuFields = this.getNodeParameter('createCpuFields', i, {}) as Record<string, unknown>;
-			if (Object.keys(createCpuFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for CPU creation.');
+			const createCpuFields = this.getNodeParameter('createCpuFields', i, {}) as Record<
+				string,
+				unknown
+			>;
+			if (Object.keys(createCpuFields).length === 0)
+				throw new NodeOperationError(this.getNode(), 'No fields provided for CPU creation.');
 			requestOptions.body = createCpuFields;
 			break;
 		}
@@ -113,20 +144,30 @@ export async function handleCpu(this: IExecuteFunctions, i: number) {
 		case 'updateCpu': {
 			url = `${credentials.baseURL}/backend/api/v1/cpus/${cpuId}`;
 			requestOptions.method = 'PUT';
-			const updateCpuFields = this.getNodeParameter('updateCpuFields', i, {}) as Record<string, unknown>;
-			if (Object.keys(updateCpuFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for CPU update.');
+			const updateCpuFields = this.getNodeParameter('updateCpuFields', i, {}) as Record<
+				string,
+				unknown
+			>;
+			if (Object.keys(updateCpuFields).length === 0)
+				throw new NodeOperationError(this.getNode(), 'No fields provided for CPU update.');
 			requestOptions.body = updateCpuFields;
 			break;
 		}
 		default:
-			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized for CPUs.`);
+			throw new NodeOperationError(
+				this.getNode(),
+				`The operation "${operation}" is not recognized for CPUs.`,
+			);
 	}
 
 	requestOptions.url = url;
 
 	try {
 		type FullResponse = { statusCode: number; body?: unknown };
-		const options = { ...requestOptions, returnFullResponse: true } as unknown as import('n8n-workflow').IHttpRequestOptions;
+		const options = {
+			...requestOptions,
+			returnFullResponse: true,
+		} as unknown as import('n8n-workflow').IHttpRequestOptions;
 		const fullResponse = (await this.helpers.httpRequest(options)) as unknown as FullResponse;
 		if (requestOptions.method === 'DELETE') {
 			return { success: fullResponse.statusCode === 204, statusCode: fullResponse.statusCode };

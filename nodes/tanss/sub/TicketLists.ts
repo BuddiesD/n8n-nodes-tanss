@@ -120,10 +120,33 @@ export const ticketListFields: INodeProperties[] = [
 		default: {},
 		placeholder: 'Add Field',
 		options: [
-			{ displayName: 'Companies', name: 'companies', type: 'string' as const, typeOptions: { multipleValues: true }, default: [] },
-			{ displayName: 'Departments', name: 'departments', type: 'string' as const, typeOptions: { multipleValues: true }, default: [] },
-			{ displayName: 'IDs', name: 'ids', type: 'string' as const, typeOptions: { multipleValues: true }, default: [] },
-			{ displayName: 'Include Done Tickets', name: 'includeDoneTickets', type: 'boolean' as const, default: false },
+			{
+				displayName: 'Companies',
+				name: 'companies',
+				type: 'string' as const,
+				typeOptions: { multipleValues: true },
+				default: [],
+			},
+			{
+				displayName: 'Departments',
+				name: 'departments',
+				type: 'string' as const,
+				typeOptions: { multipleValues: true },
+				default: [],
+			},
+			{
+				displayName: 'IDs',
+				name: 'ids',
+				type: 'string' as const,
+				typeOptions: { multipleValues: true },
+				default: [],
+			},
+			{
+				displayName: 'Include Done Tickets',
+				name: 'includeDoneTickets',
+				type: 'boolean' as const,
+				default: false,
+			},
 			{ displayName: 'Is Repair', name: 'isRepair', type: 'boolean' as const, default: false },
 			{ displayName: 'Items Per Page', name: 'itemsPerPage', type: 'number' as const, default: 20 },
 			{
@@ -137,20 +160,56 @@ export const ticketListFields: INodeProperties[] = [
 						name: 'timeframe',
 						displayName: 'Timeframe',
 						values: [
-							{ displayName: 'From', name: 'from', type: 'number' as const, default: 0, description: 'Unix timestamp of the "from" date' },
-							{ displayName: 'To', name: 'to', type: 'number' as const, default: 0, description: 'Unix timestamp of the "to" date' },
+							{
+								displayName: 'From',
+								name: 'from',
+								type: 'number' as const,
+								default: 0,
+								description: 'Unix timestamp of the "from" date',
+							},
+							{
+								displayName: 'To',
+								name: 'to',
+								type: 'number' as const,
+								default: 0,
+								description: 'Unix timestamp of the "to" date',
+							},
 						],
 					},
 				],
 			},
-			{ displayName: 'Not Assigned To Employees', name: 'notAssignedToEmployees', type: 'multiOptions' as const, typeOptions: { multipleValues: true }, default: [] },
+			{
+				displayName: 'Not Assigned To Employees',
+				name: 'notAssignedToEmployees',
+				type: 'multiOptions' as const,
+				typeOptions: { multipleValues: true },
+				default: [],
+			},
 			{ displayName: 'Page', name: 'page', type: 'number' as const, default: 1 },
 			{ displayName: 'Phase ID', name: 'phaseId', type: 'number' as const, default: 0 },
 			{ displayName: 'Project ID', name: 'projectId', type: 'number' as const, default: 0 },
 			{ displayName: 'Remitter ID', name: 'remitterId', type: 'number' as const, default: 0 },
-			{ displayName: 'Staff', name: 'staff', type: 'string' as const, typeOptions: { multipleValues: true }, default: [] },
-			{ displayName: 'States', name: 'states', type: 'multiOptions' as const, typeOptions: { multipleValues: true }, default: [] },
-			{ displayName: 'Types', name: 'types', type: 'multiOptions' as const, typeOptions: { multipleValues: true }, default: [] },
+			{
+				displayName: 'Staff',
+				name: 'staff',
+				type: 'string' as const,
+				typeOptions: { multipleValues: true },
+				default: [],
+			},
+			{
+				displayName: 'States',
+				name: 'states',
+				type: 'multiOptions' as const,
+				typeOptions: { multipleValues: true },
+				default: [],
+			},
+			{
+				displayName: 'Types',
+				name: 'types',
+				type: 'multiOptions' as const,
+				typeOptions: { multipleValues: true },
+				default: [],
+			},
 		],
 	},
 ];
@@ -213,19 +272,27 @@ export async function handleTicketList(this: IExecuteFunctions, i: number) {
 			break;
 		case 'getCustomTicketList': {
 			url = `${credentials.baseURL}/backend/api/v1/tickets`;
-			const customTicketQuery = this.getNodeParameter('customTicketQuery', i, {}) as Record<string, unknown>;
+			const customTicketQuery = this.getNodeParameter('customTicketQuery', i, {}) as Record<
+				string,
+				unknown
+			>;
 			requestOptions.method = 'PUT';
 			requestOptions.body = customTicketQuery;
 			break;
 		}
 		default:
-			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized.`);
+			throw new NodeOperationError(
+				this.getNode(),
+				`The operation "${operation}" is not recognized.`,
+			);
 	}
 
 	requestOptions.url = url;
 
 	try {
-		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+		const responseData = await this.helpers.httpRequest(
+			requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
+		);
 		return responseData;
 	} catch (error: unknown) {
 		const errorMessage = error instanceof Error ? error.message : String(error);

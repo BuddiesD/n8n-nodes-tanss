@@ -82,14 +82,19 @@ export async function handleAuth(this: IExecuteFunctions, i: number) {
 					const responseData = await this.helpers.httpRequest(requestOptions);
 					return responseData;
 				} catch (err: unknown) {
-					const e = err as { message?: string; status?: number; response?: { status?: number; data?: unknown } } | undefined;
+					const e = err as
+						| { message?: string; status?: number; response?: { status?: number; data?: unknown } }
+						| undefined;
 					lastError = err;
 
 					const responseData = e?.response?.data ?? e?.message ?? e;
 					const msg = JSON.stringify(responseData);
 
 					if (msg.includes('LOGIN_ERROR_TOO_MANY_FAILED_LOGINS')) {
-						throw new NodeOperationError(this.getNode(), `Login blocked: too many failed logins. Server response: ${msg}`);
+						throw new NodeOperationError(
+							this.getNode(),
+							`Login blocked: too many failed logins. Server response: ${msg}`,
+						);
 					}
 					if (!msg.includes('LOGIN_ERROR_WRONG_LOGIN_TOKEN_CODE')) {
 						throw new NodeOperationError(this.getNode(), `Login failed: ${msg}`);
@@ -97,7 +102,10 @@ export async function handleAuth(this: IExecuteFunctions, i: number) {
 				}
 			}
 
-			throw new NodeOperationError(this.getNode(), `Failed to login with generated TOTP after ${attempts} attempts. Last error: ${JSON.stringify(lastError)}`);
+			throw new NodeOperationError(
+				this.getNode(),
+				`Failed to login with generated TOTP after ${attempts} attempts. Last error: ${JSON.stringify(lastError)}`,
+			);
 		}
 
 		try {

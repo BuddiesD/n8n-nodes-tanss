@@ -1,9 +1,4 @@
-import {
-	Icon,
-	ICredentialType,
-	INodeProperties,
-	ICredentialTestRequest,
-} from 'n8n-workflow';
+import { Icon, ICredentialType, INodeProperties, ICredentialTestRequest } from 'n8n-workflow';
 
 export class TanssApi implements ICredentialType {
 	name = 'tanssApi';

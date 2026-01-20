@@ -8,11 +8,36 @@ export const operatingSystemsOperations: INodeProperties[] = [
 		noDataExpression: true,
 		displayOptions: { show: { resource: ['operatingSystems'] } },
 		options: [
-			{ name: 'Create OS', value: 'createOs', description: 'Creates a new operating system', action: 'Create an OS' },
-			{ name: 'Delete OS', value: 'deleteOs', description: 'Deletes a specific operating system', action: 'Delete an OS' },
-			{ name: 'Get All OS', value: 'getAllOs', description: 'Gets a list of all operating systems', action: 'Get all OS' },
-			{ name: 'Get OS', value: 'getOsById', description: 'Gets a specific operating system', action: 'Get an OS' },
-			{ name: 'Update OS', value: 'updateOs', description: 'Updates an existing operating system', action: 'Update an OS' },
+			{
+				name: 'Create OS',
+				value: 'createOs',
+				description: 'Creates a new operating system',
+				action: 'Create an OS',
+			},
+			{
+				name: 'Delete OS',
+				value: 'deleteOs',
+				description: 'Deletes a specific operating system',
+				action: 'Delete an OS',
+			},
+			{
+				name: 'Get All OS',
+				value: 'getAllOs',
+				description: 'Gets a list of all operating systems',
+				action: 'Get all OS',
+			},
+			{
+				name: 'Get OS',
+				value: 'getOsById',
+				description: 'Gets a specific operating system',
+				action: 'Get an OS',
+			},
+			{
+				name: 'Update OS',
+				value: 'updateOs',
+				description: 'Updates an existing operating system',
+				action: 'Update an OS',
+			},
 		],
 		default: 'getAllOs',
 	},
@@ -35,7 +60,9 @@ export const operatingSystemsFields: INodeProperties[] = [
 		type: 'number' as const,
 		default: 0,
 		description: 'ID of the operating system',
-		displayOptions: { show: { resource: ['operatingSystems'], operation: ['updateOs','getOsById','deleteOs'] } },
+		displayOptions: {
+			show: { resource: ['operatingSystems'], operation: ['updateOs', 'getOsById', 'deleteOs'] },
+		},
 	},
 	{
 		displayName: 'Create OS Fields',
@@ -47,9 +74,19 @@ export const operatingSystemsFields: INodeProperties[] = [
 		options: [
 			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
 			{ displayName: 'Name', name: 'name', type: 'string' as const, default: '' },
-			{ displayName: 'Server Operating System', name: 'serverOperatingSystem', type: 'boolean' as const, default: false },
+			{
+				displayName: 'Server Operating System',
+				name: 'serverOperatingSystem',
+				type: 'boolean' as const,
+				default: false,
+			},
 			{ displayName: 'Active', name: 'active', type: 'boolean' as const, default: true },
-			{ displayName: 'Article Number', name: 'articleNumber', type: 'string' as const, default: '' },
+			{
+				displayName: 'Article Number',
+				name: 'articleNumber',
+				type: 'string' as const,
+				default: '',
+			},
 		],
 	},
 	{
@@ -62,9 +99,19 @@ export const operatingSystemsFields: INodeProperties[] = [
 		options: [
 			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
 			{ displayName: 'Name', name: 'name', type: 'string' as const, default: '' },
-			{ displayName: 'Server Operating System', name: 'serverOperatingSystem', type: 'boolean' as const, default: false },
+			{
+				displayName: 'Server Operating System',
+				name: 'serverOperatingSystem',
+				type: 'boolean' as const,
+				default: false,
+			},
 			{ displayName: 'Active', name: 'active', type: 'boolean' as const, default: true },
-			{ displayName: 'Article Number', name: 'articleNumber', type: 'string' as const, default: '' },
+			{
+				displayName: 'Article Number',
+				name: 'articleNumber',
+				type: 'string' as const,
+				default: '',
+			},
 		],
 	},
 ];
@@ -96,8 +143,12 @@ export async function handleOperatingSystems(this: IExecuteFunctions, i: number)
 		case 'createOs': {
 			url = `${credentials.baseURL}/backend/api/v1/os`;
 			requestOptions.method = 'POST';
-			const createOsFields = this.getNodeParameter('createOsFields', i, {}) as Record<string, unknown>;
-			if (Object.keys(createOsFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for OS creation.');
+			const createOsFields = this.getNodeParameter('createOsFields', i, {}) as Record<
+				string,
+				unknown
+			>;
+			if (Object.keys(createOsFields).length === 0)
+				throw new NodeOperationError(this.getNode(), 'No fields provided for OS creation.');
 			requestOptions.body = createOsFields;
 			break;
 		}
@@ -119,20 +170,30 @@ export async function handleOperatingSystems(this: IExecuteFunctions, i: number)
 		case 'updateOs': {
 			url = `${credentials.baseURL}/backend/api/v1/os/${osId}`;
 			requestOptions.method = 'PUT';
-			const updateOsFields = this.getNodeParameter('updateOsFields', i, {}) as Record<string, unknown>;
-			if (Object.keys(updateOsFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for OS update.');
+			const updateOsFields = this.getNodeParameter('updateOsFields', i, {}) as Record<
+				string,
+				unknown
+			>;
+			if (Object.keys(updateOsFields).length === 0)
+				throw new NodeOperationError(this.getNode(), 'No fields provided for OS update.');
 			requestOptions.body = updateOsFields;
 			break;
 		}
 		default:
-			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized for Operating Systems.`);
+			throw new NodeOperationError(
+				this.getNode(),
+				`The operation "${operation}" is not recognized for Operating Systems.`,
+			);
 	}
 
 	requestOptions.url = url;
 
 	try {
 		type FullResponse = { statusCode: number; body?: unknown };
-		const options = { ...requestOptions, returnFullResponse: true } as unknown as import('n8n-workflow').IHttpRequestOptions;
+		const options = {
+			...requestOptions,
+			returnFullResponse: true,
+		} as unknown as import('n8n-workflow').IHttpRequestOptions;
 		const fullResponse = (await this.helpers.httpRequest(options)) as unknown as FullResponse;
 		if (requestOptions.method === 'DELETE') {
 			return { success: fullResponse.statusCode === 204, statusCode: fullResponse.statusCode };

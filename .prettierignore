@@ -1,0 +1,21 @@
+# Build output
+dist/
+coverage/
+
+# Root *.json files
+*.json
+
+# Dependency lockfiles
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Docs / meta
+README.md
+CHANGELOG.md
+
+# Generated / vendor
+node_modules/
+
+# Github workflows
+.github/

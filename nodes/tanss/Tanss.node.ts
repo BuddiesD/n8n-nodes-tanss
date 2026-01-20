@@ -1,9 +1,18 @@
-import { INodeType, INodeTypeDescription, IExecuteFunctions, NodeOperationError } from 'n8n-workflow';
+import {
+	INodeType,
+	INodeTypeDescription,
+	IExecuteFunctions,
+	NodeOperationError,
+} from 'n8n-workflow';
 import { handleAuth, authOperations, authFields } from './sub/Authentication';
 import { handlePc, pcOperations, pcFields } from './sub/PCs';
 import { handleTicket, ticketOperations, ticketFields } from './sub/Tickets';
 import { handleTicketList, ticketListOperations, ticketListFields } from './sub/TicketLists';
-import { handleTicketContent, ticketContentOperations, ticketContentFields } from './sub/TicketContent';
+import {
+	handleTicketContent,
+	ticketContentOperations,
+	ticketContentFields,
+} from './sub/TicketContent';
 import { handleTicketStates, ticketStatesOperations, ticketStatesFields } from './sub/TicketSates';
 import { handleTimestamps, timestampOperations, timestampFields } from './sub/timestamp';
 import { handleAvailability, availabilityOperations, availabilityFields } from './sub/Availability';
@@ -11,11 +20,23 @@ import { handleEmployees, employeesOperations, employeesFields } from './sub/Emp
 import { handleMails, mailsOperations, mailsFields } from './sub/Mails';
 import { handleCalls, callsOperations, callsFields } from './sub/calls';
 import { handleCallsUser, callsUserOperations, callsUserFields } from './sub/callsuser';
-import { handleRemoteSupports, remoteSupportsOperations, remoteSupportsFields } from './sub/RemoteSupports';
+import {
+	handleRemoteSupports,
+	remoteSupportsOperations,
+	remoteSupportsFields,
+} from './sub/RemoteSupports';
 import { handleCpu, cpuOperations, cpuFields } from './sub/CPUs';
 import { handleHddTypes, hddTypesOperations, hddTypesFields } from './sub/hddTypes';
-import { handleManufacturers, manufacturersOperations, manufacturersFields } from './sub/manufacturers';
-import { handleOperatingSystems, operatingSystemsOperations, operatingSystemsFields } from './sub/OperatingSystems';
+import {
+	handleManufacturers,
+	manufacturersOperations,
+	manufacturersFields,
+} from './sub/manufacturers';
+import {
+	handleOperatingSystems,
+	operatingSystemsOperations,
+	operatingSystemsFields,
+} from './sub/OperatingSystems';
 
 export class Tanss implements INodeType {
 	description: INodeTypeDescription = {
@@ -105,7 +126,6 @@ export class Tanss implements INodeType {
 		],
 	};
 
-
 	async execute(this: IExecuteFunctions) {
 		const items = this.getInputData();
 		const returnData = [];
@@ -125,12 +145,17 @@ export class Tanss implements INodeType {
 			else if (resource === 'callsuser') responseData = await handleCallsUser.call(this, i);
 			else if (resource === 'employees') responseData = await handleEmployees.call(this, i);
 			else if (resource === 'mails') responseData = await handleMails.call(this, i);
-			else if (resource === 'remoteSupports') responseData = await handleRemoteSupports.call(this, i);
+			else if (resource === 'remoteSupports')
+				responseData = await handleRemoteSupports.call(this, i);
 			else if (resource === 'availability') responseData = await handleAvailability.call(this, i);
 			else if (resource === 'hddTypes') responseData = await handleHddTypes.call(this, i);
 			else if (resource === 'manufacturers') responseData = await handleManufacturers.call(this, i);
-			else if (resource === 'operatingSystems') responseData = await handleOperatingSystems.call(this, i);
-			else throw new NodeOperationError(this.getNode(), `Unknown resource: ${resource}`, { itemIndex: i });
+			else if (resource === 'operatingSystems')
+				responseData = await handleOperatingSystems.call(this, i);
+			else
+				throw new NodeOperationError(this.getNode(), `Unknown resource: ${resource}`, {
+					itemIndex: i,
+				});
 
 			if (Array.isArray(responseData)) returnData.push(...responseData);
 			else returnData.push(responseData);

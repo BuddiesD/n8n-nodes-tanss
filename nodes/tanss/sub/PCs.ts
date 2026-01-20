@@ -12,11 +12,36 @@ export const pcOperations: INodeProperties[] = [
 			},
 		},
 		options: [
-			{ name: 'Create PC', value: 'createPc', description: 'Creates a new PC or server', action: 'Creates a PC' },
-			{ name: 'Delete PC', value: 'deletePc', description: 'Deletes a PC or server', action: 'Deletes a PC' },
-			{ name: 'Get PC by ID', value: 'getPcById', description: 'Fetches a PC or server by a given ID', action: 'Fetches a PC by ID' },
-			{ name: 'List PCs', value: 'listPcs', description: 'Gets a list of PCs or servers', action: 'List pcs' },
-			{ name: 'Update PC', value: 'updatePc', description: 'Updates a PC or server', action: 'Updates a PC' },
+			{
+				name: 'Create PC',
+				value: 'createPc',
+				description: 'Creates a new PC or server',
+				action: 'Creates a PC',
+			},
+			{
+				name: 'Delete PC',
+				value: 'deletePc',
+				description: 'Deletes a PC or server',
+				action: 'Deletes a PC',
+			},
+			{
+				name: 'Get PC by ID',
+				value: 'getPcById',
+				description: 'Fetches a PC or server by a given ID',
+				action: 'Fetches a PC by ID',
+			},
+			{
+				name: 'List PCs',
+				value: 'listPcs',
+				description: 'Gets a list of PCs or servers',
+				action: 'List pcs',
+			},
+			{
+				name: 'Update PC',
+				value: 'updatePc',
+				description: 'Updates a PC or server',
+				action: 'Updates a PC',
+			},
 		],
 		default: 'getPcById',
 	},
@@ -93,29 +118,95 @@ export const pcFields: INodeProperties[] = [
 		options: [
 			{ displayName: 'Active', name: 'active', type: 'boolean' as const, default: false },
 			{ displayName: 'AnyDesk ID', name: 'anydeskId', type: 'string' as const, default: '' },
-			{ displayName: 'AnyDesk Password', name: 'anydeskPassword', type: 'string' as const, default: '', typeOptions: { password: true } },
-			{ displayName: 'Article Number', name: 'articleNumber', type: 'string' as const, default: '' },
-			{ displayName: 'Billing Number', name: 'billingNumber', type: 'string' as const, default: '' },
+			{
+				displayName: 'AnyDesk Password',
+				name: 'anydeskPassword',
+				type: 'string' as const,
+				default: '',
+				typeOptions: { password: true },
+			},
+			{
+				displayName: 'Article Number',
+				name: 'articleNumber',
+				type: 'string' as const,
+				default: '',
+			},
+			{
+				displayName: 'Billing Number',
+				name: 'billingNumber',
+				type: 'string' as const,
+				default: '',
+			},
 			{ displayName: 'BIOS', name: 'bios', type: 'string' as const, default: '' },
 			{ displayName: 'BIOS Release', name: 'biosRelease', type: 'string' as const, default: '' },
 			{ displayName: 'CPU Frequency', name: 'cpuFrequency', type: 'number' as const, default: 0 },
-			{ displayName: 'CPU Manufacturer ID', name: 'cpuManufacturerId', type: 'number' as const, default: 0 },
+			{
+				displayName: 'CPU Manufacturer ID',
+				name: 'cpuManufacturerId',
+				type: 'number' as const,
+				default: 0,
+			},
 			{ displayName: 'CPU Number', name: 'cpuNumber', type: 'number' as const, default: 0 },
 			{ displayName: 'CPU Type ID', name: 'cpuTypeId', type: 'number' as const, default: 0 },
 			{ displayName: 'Date', name: 'date', type: 'number' as const, default: 0 },
 			{ displayName: 'Description', name: 'description', type: 'string' as const, default: '' },
 			{ displayName: 'Employee ID', name: 'employeeId', type: 'number' as const, default: 0 },
 			{ displayName: 'Host ID', name: 'hostId', type: 'number' as const, default: 0 },
-			{ displayName: 'Internal Remark', name: 'internalRemark', type: 'string' as const, default: '' },
-			{ displayName: 'Inventory Number', name: 'inventoryNumber', type: 'string' as const, default: '' },
-			{ displayName: 'Keyboard Serial Number', name: 'keyboardSerialNumber', type: 'string' as const, default: '' },
+			{
+				displayName: 'Internal Remark',
+				name: 'internalRemark',
+				type: 'string' as const,
+				default: '',
+			},
+			{
+				displayName: 'Inventory Number',
+				name: 'inventoryNumber',
+				type: 'string' as const,
+				default: '',
+			},
+			{
+				displayName: 'Keyboard Serial Number',
+				name: 'keyboardSerialNumber',
+				type: 'string' as const,
+				default: '',
+			},
 			{ displayName: 'Location', name: 'location', type: 'string' as const, default: '' },
-			{ displayName: 'Mainboard Manufacturer ID', name: 'mainboardManufacturerId', type: 'number' as const, default: 0 },
-			{ displayName: 'Mainboard Manufacturer Revision', name: 'mainboardManufacturerRevision', type: 'string' as const, default: '' },
-			{ displayName: 'Mainboard Serial Number', name: 'mainboardSerialNumber', type: 'string' as const, default: '' },
-			{ displayName: 'Manufacturer ID', name: 'manufacturerId', type: 'number' as const, default: 0 },
-			{ displayName: 'Manufacturer Number', name: 'manufacturerNumber', type: 'string' as const, default: '' },
-			{ displayName: 'Mouse Serial Number', name: 'mouseSerialNumber', type: 'string' as const, default: '' },
+			{
+				displayName: 'Mainboard Manufacturer ID',
+				name: 'mainboardManufacturerId',
+				type: 'number' as const,
+				default: 0,
+			},
+			{
+				displayName: 'Mainboard Manufacturer Revision',
+				name: 'mainboardManufacturerRevision',
+				type: 'string' as const,
+				default: '',
+			},
+			{
+				displayName: 'Mainboard Serial Number',
+				name: 'mainboardSerialNumber',
+				type: 'string' as const,
+				default: '',
+			},
+			{
+				displayName: 'Manufacturer ID',
+				name: 'manufacturerId',
+				type: 'number' as const,
+				default: 0,
+			},
+			{
+				displayName: 'Manufacturer Number',
+				name: 'manufacturerNumber',
+				type: 'string' as const,
+				default: '',
+			},
+			{
+				displayName: 'Mouse Serial Number',
+				name: 'mouseSerialNumber',
+				type: 'string' as const,
+				default: '',
+			},
 			{ displayName: 'Name', name: 'name', type: 'string' as const, default: '' },
 			{ displayName: 'OS ID', name: 'osId', type: 'number' as const, default: 0 },
 			{
@@ -133,17 +224,33 @@ export const pcFields: INodeProperties[] = [
 			{ displayName: 'Purchase Price', name: 'purchasePrice', type: 'number' as const, default: 0 },
 			{ displayName: 'Remark', name: 'remark', type: 'string' as const, default: '' },
 			{ displayName: 'Reserved CPU', name: 'reservedCpu', type: 'number' as const, default: 0 },
-			{ displayName: 'Reserved Hard Disk', name: 'reservedHardDisk', type: 'number' as const, default: 0 },
+			{
+				displayName: 'Reserved Hard Disk',
+				name: 'reservedHardDisk',
+				type: 'number' as const,
+				default: 0,
+			},
 			{ displayName: 'Reserved RAM', name: 'reservedRam', type: 'number' as const, default: 0 },
 			{ displayName: 'Selling Price', name: 'sellingPrice', type: 'number' as const, default: 0 },
 			{ displayName: 'Serial Number', name: 'serialNumber', type: 'string' as const, default: '' },
 			{ displayName: 'Server', name: 'server', type: 'boolean' as const, default: false },
-			{ displayName: 'Service Technician ID', name: 'serviceTechnicianId', type: 'number' as const, default: 0 },
+			{
+				displayName: 'Service Technician ID',
+				name: 'serviceTechnicianId',
+				type: 'number' as const,
+				default: 0,
+			},
 			{ displayName: 'Show Remark', name: 'showRemark', type: 'boolean' as const, default: false },
 			{ displayName: 'Software', name: 'software', type: 'string' as const, default: '' },
 			{ displayName: 'Storage ID', name: 'storageId', type: 'number' as const, default: 0 },
 			{ displayName: 'TeamViewer ID', name: 'teamviewerId', type: 'string' as const, default: '' },
-			{ displayName: 'TeamViewer Password', name: 'teamviewerPassword', type: 'string' as const, default: '', typeOptions: { password: true } },
+			{
+				displayName: 'TeamViewer Password',
+				name: 'teamviewerPassword',
+				type: 'string' as const,
+				default: '',
+				typeOptions: { password: true },
+			},
 		],
 	},
 	{
@@ -183,7 +290,14 @@ export const pcFields: INodeProperties[] = [
 				default: 'COMPANY_ONLY',
 			},
 			{ displayName: 'Company ID', name: 'companyId', type: 'number' as const, default: 0 },
-			{ displayName: 'OS IDs', name: 'osIds', type: 'multiOptions' as const, typeOptions: { multipleValues: true }, options: [], default: [] },
+			{
+				displayName: 'OS IDs',
+				name: 'osIds',
+				type: 'multiOptions' as const,
+				typeOptions: { multipleValues: true },
+				options: [],
+				default: [],
+			},
 			{
 				displayName: 'Type',
 				name: 'type',
@@ -228,7 +342,10 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 	switch (operation) {
 		case 'getPcById':
 			if (!pcId || typeof pcId !== 'number' || pcId <= 0)
-				throw new NodeOperationError(this.getNode(), 'Field "PC ID" is required and must be a valid ID.');
+				throw new NodeOperationError(
+					this.getNode(),
+					'Field "PC ID" is required and must be a valid ID.',
+				);
 			url = `${credentials.baseURL}/backend/api/v1/pcs/${pcId}`;
 			requestOptions.method = 'GET';
 			break;
@@ -249,9 +366,15 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 			if (Object.keys(body).length === 0)
 				throw new NodeOperationError(this.getNode(), 'No data provided for creating the PC.');
 			if (!body.model)
-				throw new NodeOperationError(this.getNode(), 'Field "Model" is required for creating a PC.');
+				throw new NodeOperationError(
+					this.getNode(),
+					'Field "Model" is required for creating a PC.',
+				);
 			if (!body.companyId || typeof body.companyId !== 'number' || body.companyId <= 0)
-				throw new NodeOperationError(this.getNode(), 'Field "Company ID" is required and must be a valid company ID.');
+				throw new NodeOperationError(
+					this.getNode(),
+					'Field "Company ID" is required and must be a valid company ID.',
+				);
 			requestOptions.method = 'POST';
 			requestOptions.body = body;
 			break;
@@ -271,15 +394,23 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 		}
 
 		default:
-			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized.`);
+			throw new NodeOperationError(
+				this.getNode(),
+				`The operation "${operation}" is not recognized.`,
+			);
 	}
 
 	requestOptions.url = url;
 
 	try {
-		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+		const responseData = await this.helpers.httpRequest(
+			requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
+		);
 
-		if (operation === 'deletePc' && (responseData === undefined || responseData === null || responseData === '')) {
+		if (
+			operation === 'deletePc' &&
+			(responseData === undefined || responseData === null || responseData === '')
+		) {
 			return { success: true, message: 'PC deleted successfully.' };
 		}
 
