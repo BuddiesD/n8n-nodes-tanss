@@ -69,6 +69,10 @@ This command uses `n8n-node dev` to build the node, start a local n8n instance, 
 
 `npm run dev` is equivalent to running `n8n-node dev` directly.
 
+### Development (Dev Container)
+To start **n8n** with the custom node, run: `npm run dev`
+
+Note: The first startup may time out because n8n is being downloaded and set up.
 
 ## Operations
 

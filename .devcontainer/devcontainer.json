@@ -1,0 +1,27 @@
+{
+  "name": "n8n-nodes-tanss-dev",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "remoteUser": "node",
+  "workspaceFolder": "/workspace",
+
+  "mounts": ["source=${localWorkspaceFolder},target=/workspace,type=bind"],
+
+  "forwardPorts": [5678],
+
+  "portsAttributes": {
+    "5678": {
+      "label": "n8n (dev)"
+    }
+  },
+
+  "postCreateCommand": "npm install",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}
