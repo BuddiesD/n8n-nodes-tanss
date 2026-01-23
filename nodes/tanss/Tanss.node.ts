@@ -37,6 +37,7 @@ import {
 	operatingSystemsOperations,
 	operatingSystemsFields,
 } from './sub/OperatingSystems';
+import { handleCallback, callbackOperations, callbackFields } from './sub/Callback';
 
 export class Tanss implements INodeType {
 	description: INodeTypeDescription = {
@@ -83,6 +84,7 @@ export class Tanss implements INodeType {
 					{ name: 'Ticket Content', value: 'ticketContent' },
 					{ name: 'Ticket List', value: 'ticketList' },
 					{ name: 'Ticket State', value: 'ticketStates' },
+					{ name: 'Callback', value: 'callbacks' },
 					{ name: 'Timestamp', value: 'timestamps' },
 				],
 				default: 'authentication',
@@ -121,6 +123,8 @@ export class Tanss implements INodeType {
 			...manufacturersFields,
 			...operatingSystemsOperations,
 			...operatingSystemsFields,
+			...callbackOperations,
+			...callbackFields,
 			...remoteSupportsOperations,
 			...remoteSupportsFields,
 		],
@@ -141,6 +145,7 @@ export class Tanss implements INodeType {
 			else if (resource === 'ticketList') responseData = await handleTicketList.call(this, i);
 			else if (resource === 'ticketStates') responseData = await handleTicketStates.call(this, i);
 			else if (resource === 'timestamps') responseData = await handleTimestamps.call(this, i);
+			else if (resource === 'callbacks') responseData = await handleCallback.call(this, i);
 			else if (resource === 'calls') responseData = await handleCalls.call(this, i);
 			else if (resource === 'callsuser') responseData = await handleCallsUser.call(this, i);
 			else if (resource === 'employees') responseData = await handleEmployees.call(this, i);

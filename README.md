@@ -29,6 +29,7 @@ TANSS is a professional ticket and service management system for handling suppor
 - [Resources](#resources)
 - [ToDo](#to-do--progress)
 - [Changelog](CHANGELOG.md)
+- [Contributing](#contributing)
 
 ## Installation
 
@@ -160,7 +161,7 @@ Progress: **94 / 256 (1 not in API Docs)** (36%)
   - [x] [DEL] Deletes a ticket state
 </details>
 <details>
-<summary><strong>timestamp [15/15] - Testing</strong></summary>
+<summary><strong>timestamp [15/15] - Done</strong></summary>
 
   - [x] [GET] gets a list of timestamps from a given period
   - [x] [POST] writes a timestamp into the database
@@ -179,7 +180,7 @@ Progress: **94 / 256 (1 not in API Docs)** (36%)
   - [x] [DEL] deletes a pause config
 </details>
 <details>
-<summary><strong>calls [9/9] - Testing</strong></summary>
+<summary><strong>calls [9/9] - Done</strong></summary>
 
   - [x] [POST] Creates/imports a phone call into the database
   - [x] [PUT] Get a list of phone calls
@@ -199,7 +200,7 @@ Progress: **94 / 256 (1 not in API Docs)** (36%)
   - [x] [POST] identifies a phone call
 </details>
 <details>
-<summary><strong>remote supports [11/11] - Testing</strong></summary>
+<summary><strong>remote supports [11/11] - Done</strong></summary>
 
   - [x] [POST] Creates/imports a remote support into the database
   - [x] [PUT] Get list of remote supports
@@ -309,12 +310,12 @@ Progress: **94 / 256 (1 not in API Docs)** (36%)
   - [ ] [GET] List of tags logs to an assignment
 </details>
 <details>
-<summary><strong>callback [0/4] - ToDo</strong></summary>
+<summary><strong>callback [4/4] - Done</strong></summary>
 
-  - [ ] [POST] Creates a callback
-  - [ ] [PUT] Get a list of callbacks
-  - [ ] [GET] Gets a callback
-  - [ ] [PUT] Updates a callback
+  - [x] [POST] Creates a callback
+  - [x] [PUT] Get a list of callbacks
+  - [x] [GET] Gets a callback
+  - [x] [PUT] Updates a callback
 </details>
 <details>
 <summary><strong>search [0/1] - ToDo</strong></summary>
@@ -530,3 +531,15 @@ Progress: **94 / 256 (1 not in API Docs)** (36%)
 </details>
 
 </details>
+
+## Contributing
+
+Thank you for considering contributing to this project! Community contributions are what keep open-source projects growing and improving, and every contribution is highly appreciated.
+
+When submitting bug reports, please make sure they are:
+
+- **Reproducible** – clearly describe the steps required to reproduce the issue.
+- **Detailed** – include relevant information such as versions, environment, and setup.
+- **Unique** – avoid creating duplicate issues by checking existing ones first.
+- **Focused** – report one bug per issue to keep discussions clear and effective.
+
