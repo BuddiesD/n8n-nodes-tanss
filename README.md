@@ -106,7 +106,7 @@ Tested with TANSS API. Version: 10.10.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **94 / 256 (1 not in API Docs)** (36%)
+Progress: **98 / 256 (1 not in API Docs)** (38%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
