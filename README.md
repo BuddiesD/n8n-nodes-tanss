@@ -106,7 +106,7 @@ Tested with TANSS API. Version: 10.10.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **98 / 256 (1 not in API Docs)** (38%)
+Progress: **99 / 256 (1 not in API Docs)** (39%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -318,9 +318,9 @@ Progress: **98 / 256 (1 not in API Docs)** (38%)
   - [x] [PUT] Updates a callback
 </details>
 <details>
-<summary><strong>search [0/1] - ToDo</strong></summary>
+<summary><strong>search [1/1] - Done</strong></summary>
 
-  - [ ] [PUT] global search
+  - [x] [PUT] global search
 </details>
 <details>
 <summary><strong>checklists [0/5] - ToDo</strong></summary>
