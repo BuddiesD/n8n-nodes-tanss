@@ -11,7 +11,7 @@ export const callbackOperations: INodeProperties[] = [
 				resource: ['callbacks'],
 			},
 		},
-	options: [
+		options: [
 			{
 				name: 'Create Callback',
 				value: 'createCallback',
@@ -84,9 +84,19 @@ export const callbackFields: INodeProperties[] = [
 		},
 		default: {},
 		options: [
-			{ displayName: 'fromEmployeeId', name: 'fromEmployeeId', type: 'number' as const, default: 0 },
+			{
+				displayName: 'fromEmployeeId',
+				name: 'fromEmployeeId',
+				type: 'number' as const,
+				default: 0,
+			},
 			{ displayName: 'toEmployeeId', name: 'toEmployeeId', type: 'number' as const, default: 0 },
-			{ displayName: 'toDepartmentId', name: 'toDepartmentId', type: 'number' as const, default: 0 },
+			{
+				displayName: 'toDepartmentId',
+				name: 'toDepartmentId',
+				type: 'number' as const,
+				default: 0,
+			},
 			{ displayName: 'date (timestamp)', name: 'date', type: 'number' as const, default: 0 },
 			{ displayName: 'companyId', name: 'companyId', type: 'number' as const, default: 0 },
 			{ displayName: 'companyName', name: 'companyName', type: 'string' as const, default: '' },
@@ -112,8 +122,18 @@ export const callbackFields: INodeProperties[] = [
 				default: 'UNSEEN',
 			},
 			{ displayName: 'priority', name: 'priority', type: 'number' as const, default: 1 },
-			{ displayName: 'callbackAfterTime (timestamp)', name: 'callbackAfterTime', type: 'number' as const, default: 0 },
-			{ displayName: 'callbackUntilTime (timestamp)', name: 'callbackUntilTime', type: 'number' as const, default: 0 },
+			{
+				displayName: 'callbackAfterTime (timestamp)',
+				name: 'callbackAfterTime',
+				type: 'number' as const,
+				default: 0,
+			},
+			{
+				displayName: 'callbackUntilTime (timestamp)',
+				name: 'callbackUntilTime',
+				type: 'number' as const,
+				default: 0,
+			},
 			{ displayName: 'linkTypeId', name: 'linkTypeId', type: 'number' as const, default: 0 },
 			{ displayName: 'linkId', name: 'linkId', type: 'number' as const, default: 0 },
 		],
@@ -132,9 +152,19 @@ export const callbackFields: INodeProperties[] = [
 		},
 		default: {},
 		options: [
-			{ displayName: 'fromEmployeeId', name: 'fromEmployeeId', type: 'number' as const, default: 0 },
+			{
+				displayName: 'fromEmployeeId',
+				name: 'fromEmployeeId',
+				type: 'number' as const,
+				default: 0,
+			},
 			{ displayName: 'toEmployeeId', name: 'toEmployeeId', type: 'number' as const, default: 0 },
-			{ displayName: 'toDepartmentId', name: 'toDepartmentId', type: 'number' as const, default: 0 },
+			{
+				displayName: 'toDepartmentId',
+				name: 'toDepartmentId',
+				type: 'number' as const,
+				default: 0,
+			},
 			{ displayName: 'date (timestamp)', name: 'date', type: 'number' as const, default: 0 },
 			{ displayName: 'companyId', name: 'companyId', type: 'number' as const, default: 0 },
 			{ displayName: 'companyName', name: 'companyName', type: 'string' as const, default: '' },
@@ -160,8 +190,18 @@ export const callbackFields: INodeProperties[] = [
 				default: 'UNSEEN',
 			},
 			{ displayName: 'priority', name: 'priority', type: 'number' as const, default: 1 },
-			{ displayName: 'callbackAfterTime (timestamp)', name: 'callbackAfterTime', type: 'number' as const, default: 0 },
-			{ displayName: 'callbackUntilTime (timestamp)', name: 'callbackUntilTime', type: 'number' as const, default: 0 },
+			{
+				displayName: 'callbackAfterTime (timestamp)',
+				name: 'callbackAfterTime',
+				type: 'number' as const,
+				default: 0,
+			},
+			{
+				displayName: 'callbackUntilTime (timestamp)',
+				name: 'callbackUntilTime',
+				type: 'number' as const,
+				default: 0,
+			},
 			{ displayName: 'linkTypeId', name: 'linkTypeId', type: 'number' as const, default: 0 },
 			{ displayName: 'linkId', name: 'linkId', type: 'number' as const, default: 0 },
 		],
@@ -190,8 +230,18 @@ export const callbackFields: INodeProperties[] = [
 		displayOptions: { show: { resource: ['callbacks'], operation: ['getCallbacks'] } },
 		default: {},
 		options: [
-			{ displayName: 'Timeframe From (Timestamp)', name: 'timeFrom', type: 'number' as const, default: 0 },
-			{ displayName: 'Timeframe To (Timestamp)', name: 'timeTo', type: 'number' as const, default: 0 },
+			{
+				displayName: 'Timeframe From (Timestamp)',
+				name: 'timeFrom',
+				type: 'number' as const,
+				default: 0,
+			},
+			{
+				displayName: 'Timeframe To (Timestamp)',
+				name: 'timeTo',
+				type: 'number' as const,
+				default: 0,
+			},
 			{
 				displayName: 'State',
 				name: 'state',
@@ -216,13 +266,43 @@ export const callbackFields: INodeProperties[] = [
 				default: '',
 				description: 'If multiple states have to be filtered, give a comma separated list',
 			},
-			{ displayName: 'From Employee ID', name: 'fromEmployeeId', type: 'number' as const, default: 0 },
+			{
+				displayName: 'From Employee ID',
+				name: 'fromEmployeeId',
+				type: 'number' as const,
+				default: 0,
+			},
 			{ displayName: 'To Employee ID', name: 'toEmployeeId', type: 'number' as const, default: 0 },
-			{ displayName: 'To All Employees With Access To', name: 'toAllEmployeesWithAccessTo', type: 'boolean' as const, default: false },
-			{ displayName: 'To Department IDs (Comma Separated)', name: 'toDepartmentIds', type: 'string' as const, default: '' },
-			{ displayName: 'Company IDs (Comma Separated)', name: 'companyIds', type: 'string' as const, default: '' },
-			{ displayName: 'Employee IDs (Comma Separated)', name: 'employeeIds', type: 'string' as const, default: '' },
-			{ displayName: 'Load Linked Entities', name: 'loadLinkedEntites', type: 'boolean' as const, default: false },
+			{
+				displayName: 'To All Employees With Access To',
+				name: 'toAllEmployeesWithAccessTo',
+				type: 'boolean' as const,
+				default: false,
+			},
+			{
+				displayName: 'To Department IDs (Comma Separated)',
+				name: 'toDepartmentIds',
+				type: 'string' as const,
+				default: '',
+			},
+			{
+				displayName: 'Company IDs (Comma Separated)',
+				name: 'companyIds',
+				type: 'string' as const,
+				default: '',
+			},
+			{
+				displayName: 'Employee IDs (Comma Separated)',
+				name: 'employeeIds',
+				type: 'string' as const,
+				default: '',
+			},
+			{
+				displayName: 'Load Linked Entities',
+				name: 'loadLinkedEntites',
+				type: 'boolean' as const,
+				default: false,
+			},
 			{ displayName: 'With Log', name: 'withLog', type: 'boolean' as const, default: false },
 			{ displayName: 'Items Per Page', name: 'itemsPerPage', type: 'number' as const, default: 0 },
 			{ displayName: 'Page', name: 'page', type: 'number' as const, default: 0 },
@@ -251,7 +331,6 @@ export async function handleCallback(this: IExecuteFunctions, i: number) {
 		json: true,
 		url,
 	};
-
 
 	switch (operation) {
 		case 'createCallback': {
@@ -308,15 +387,29 @@ export async function handleCallback(this: IExecuteFunctions, i: number) {
 
 				if (filters.toAllEmployeesWithAccessTo === true) body.toAllEmployeesWithAccessTo = true;
 
-				if (filters.toDepartmentIds && typeof filters.toDepartmentIds === 'string' && filters.toDepartmentIds.trim() !== '') {
-					body.toDepartmentIds = filters.toDepartmentIds.split(',').map((s: string) => Number(s.trim()));
+				if (
+					filters.toDepartmentIds &&
+					typeof filters.toDepartmentIds === 'string' &&
+					filters.toDepartmentIds.trim() !== ''
+				) {
+					body.toDepartmentIds = filters.toDepartmentIds
+						.split(',')
+						.map((s: string) => Number(s.trim()));
 				}
 
-				if (filters.companyIds && typeof filters.companyIds === 'string' && filters.companyIds.trim() !== '') {
+				if (
+					filters.companyIds &&
+					typeof filters.companyIds === 'string' &&
+					filters.companyIds.trim() !== ''
+				) {
 					body.companyIds = filters.companyIds.split(',').map((s: string) => Number(s.trim()));
 				}
 
-				if (filters.employeeIds && typeof filters.employeeIds === 'string' && filters.employeeIds.trim() !== '') {
+				if (
+					filters.employeeIds &&
+					typeof filters.employeeIds === 'string' &&
+					filters.employeeIds.trim() !== ''
+				) {
 					body.employeeIds = filters.employeeIds.split(',').map((s: string) => Number(s.trim()));
 				}
 
@@ -367,7 +460,10 @@ export async function handleCallback(this: IExecuteFunctions, i: number) {
 		}
 
 		default:
-			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized.`);
+			throw new NodeOperationError(
+				this.getNode(),
+				`The operation "${operation}" is not recognized.`,
+			);
 	}
 
 	requestOptions.url = url;
