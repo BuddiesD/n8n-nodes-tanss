@@ -106,7 +106,7 @@ Tested with TANSS API. Version: 10.12.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **108 / 271 (1 not in API Docs)** (40%)
+Progress: **119 / 271 (1 not in API Docs)** (40%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -362,19 +362,19 @@ Progress: **108 / 271 (1 not in API Docs)** (40%)
   - [x] [PUT] Gets a list of pcs
 </details>
 <details>
-<summary><strong>periphery [0/11] - ?</strong></summary>
+<summary><strong>periphery [11/11] - Testing</strong></summary>
 
-  - [ ] [GET] Gets a periphery by id
-  - [ ] [PUT] Updates a periphery
-  - [ ] [DEL] Deletes a periphery
-  - [ ] [POST] Creates a periphery
-  - [ ] [PUT] Gets a list of peripheries
-  - [ ] [GET] Get periphery types
-  - [ ] [POST] Create periphery type
-  - [ ] [PUT] Update periphery type
-  - [ ] [DEL] Delete periphery type
-  - [ ] [POST] Assign periphery
-  - [ ] [DEL] Delete periphery assignment
+  - [x] [GET] Gets a periphery by id
+  - [x] [PUT] Updates a periphery
+  - [x] [DEL] Deletes a periphery
+  - [x] [POST] Creates a periphery
+  - [x] [PUT] Gets a list of peripheries
+  - [x] [GET] Get periphery types
+  - [x] [POST] Create periphery type
+  - [x] [PUT] Update periphery type
+  - [x] [DEL] Delete periphery type
+  - [x] [POST] Assign periphery
+  - [x] [DEL] Delete periphery assignment
 </details>
 <details>
 <summary><strong>components [0/9] - ?</strong></summary>

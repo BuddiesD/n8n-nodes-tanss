@@ -17,6 +17,7 @@ import { handleRemoteSupports, remoteSupportsOperations, remoteSupportsFields } 
 import { handleCpu, cpuOperations, cpuFields } from './sub/CPUs';
 import { handleHddTypes, hddTypesOperations, hddTypesFields } from './sub/hddTypes';
 import { handleManufacturers, manufacturersOperations, manufacturersFields } from './sub/manufacturers';
+import { handlePeriphery, peripheryOperations, peripheryFields } from './sub/Periphery';
 import { handleOperatingSystems, operatingSystemsOperations, operatingSystemsFields } from './sub/OperatingSystems';
 import { handleSearch, searchOperations, searchFields } from './sub/Search';
 import { handleCallback, callbackOperations, callbackFields } from './sub/Callback';
@@ -65,6 +66,7 @@ export class Tanss implements INodeType {
 					{ name: 'Remote Support', value: 'remoteSupports' },
 					{ name: 'Ticket', value: 'ticket' },
 					{ name: 'Checklist', value: 'checklists' },
+					{ name: 'Periphery', value: 'peripheries' },
 					{ name: 'Ticket Content', value: 'ticketContent' },
 					{ name: 'Ticket List', value: 'ticketList' },
 					{ name: 'Ticket State', value: 'ticketStates' },
@@ -108,6 +110,8 @@ export class Tanss implements INodeType {
 			...hddTypesFields,
 			...ipsOperations,
 			...ipsFields,
+			...peripheryOperations,
+			...peripheryFields,
 			...manufacturersOperations,
 			...manufacturersFields,
 			...operatingSystemsOperations,
@@ -133,6 +137,7 @@ export class Tanss implements INodeType {
 			else if (resource === 'cpus') responseData = await handleCpu.call(this, i);
 			else if (resource === 'ticket') responseData = await handleTicket.call(this, i);
 			else if (resource === 'checklists') responseData = await handleChecklists.call(this, i);
+			else if (resource === 'peripheries') responseData = await handlePeriphery.call(this, i);
 			else if (resource === 'ips') responseData = await handleIps.call(this, i);
 			else if (resource === 'ticketContent') responseData = await handleTicketContent.call(this, i);
 			else if (resource === 'ticketList') responseData = await handleTicketList.call(this, i);
