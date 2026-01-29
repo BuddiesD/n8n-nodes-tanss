@@ -96,7 +96,7 @@ You only need to provide:
 ## Compatibility
 
 Compatible with n8n@1.60.0 or later<br>
-Tested with TANSS API. Version: 10.10.0
+Tested with TANSS API. Version: 10.12.0
 
 ## Resources
 
@@ -106,7 +106,7 @@ Tested with TANSS API. Version: 10.10.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **104 / 271 (1 not in API Docs)** (38%)
+Progress: **108 / 271 (1 not in API Docs)** (40%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -399,12 +399,12 @@ Progress: **104 / 271 (1 not in API Docs)** (38%)
   - [ ] [DEL] Deletes a service
 </details>
 <details>
-<summary><strong>ips [0/4] - ToDo</strong></summary>
+<summary><strong>ips [4/4] - Done</strong></summary>
 
-  - [ ] [GET] Gets ip addresses
-  - [ ] [POST] Creates an ip address
-  - [ ] [PUT] Update ip address
-  - [ ] [DEL] Deletes an ip address
+  - [x] [GET] Gets ip addresses
+  - [x] [POST] Creates an ip address
+  - [x] [PUT] Update ip address
+  - [x] [DEL] Deletes an ip address
 </details>
 <details>
 <summary><strong>company [0/2] - ToDo</strong></summary>
