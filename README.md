@@ -106,7 +106,7 @@ Tested with TANSS API. Version: 10.12.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **119 / 271 (1 not in API Docs)** (44%)
+Progress: **128 / 271 (1 not in API Docs)** (47%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -377,17 +377,17 @@ Progress: **119 / 271 (1 not in API Docs)** (44%)
   - [x] [DEL] Delete periphery assignment
 </details>
 <details>
-<summary><strong>components [0/9] - ?</strong></summary>
+<summary><strong>components [9/9] - Testing</strong></summary>
 
-  - [ ] [GET] Gets a component by id
-  - [ ] [PUT] Updates a component
-  - [ ] [DEL] Deletes a component
-  - [ ] [POST] Creates a component
-  - [ ] [PUT] Gets a list of components
-  - [ ] [GET] Gets a list of component types
-  - [ ] [POST] Create component type
-  - [ ] [PUT] Update component type
-  - [ ] [DEL] Delete component type
+  - [x] [GET] Gets a component by id
+  - [x] [PUT] Updates a component
+  - [x] [DEL] Deletes a component
+  - [x] [POST] Creates a component
+  - [x] [PUT] Gets a list of components
+  - [x] [GET] Gets a list of component types
+  - [x] [POST] Create component type
+  - [x] [PUT] Update component type
+  - [x] [DEL] Delete component type
 </details>
 <details>
 <summary><strong>services [0/5] - ?</strong></summary>
