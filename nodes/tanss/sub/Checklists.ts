@@ -174,8 +174,7 @@ export async function handleChecklists(this: IExecuteFunctions, i: number) {
 		}
 		case 'checkItem': {
 			const checkItemFields = this.getNodeParameter('checkItemFields', i, {}) as Record<string, unknown>;
-			if (Object.keys(checkItemFields).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No fields provided for checking the item.');
+			if (Object.keys(checkItemFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for checking the item.');
 			url = `${credentials.baseURL}/backend/api/v1/checklists/check`;
 			requestOptions.method = 'PUT';
 			requestOptions.body = checkItemFields;

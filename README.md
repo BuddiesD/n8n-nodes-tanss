@@ -106,7 +106,7 @@ Tested with TANSS API. Version: 10.10.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **104 / 256 (1 not in API Docs)** (41%)
+Progress: **104 / 271 (1 not in API Docs)** (38%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -399,7 +399,7 @@ Progress: **104 / 256 (1 not in API Docs)** (41%)
   - [ ] [DEL] Deletes a service
 </details>
 <details>
-<summary><strong>ips [0/4] - ?</strong></summary>
+<summary><strong>ips [0/4] - ToDo</strong></summary>
 
   - [ ] [GET] Gets ip addresses
   - [ ] [POST] Creates an ip address
@@ -413,7 +413,7 @@ Progress: **104 / 256 (1 not in API Docs)** (41%)
   - [ ] [GET] Gets all employees of a company
 </details>
 <details>
-<summary><strong>company category [0/10] - ?</strong></summary>
+<summary><strong>company category [0/10] - ToDo</strong></summary>
 
   - [ ] [GET] list of categories
   - [ ] [POST] Creates a new company category
@@ -528,6 +528,29 @@ Progress: **104 / 256 (1 not in API Docs)** (41%)
   - [ ] [PUT] List of user items
   - [ ] [GET] Number of unseen events
   - [ ] [POST] Marks all as seen
+</details>
+<details>
+<summary><strong>domains [0/5] - ToDo</strong></summary>
+
+  - [ ] [POST] Creates a domain
+  - [ ] [GET] Gets a single domain
+  - [ ] [PUT] Updates a domain
+  - [ ] [DEL] Deletes a domain
+  - [ ] [GET] List of domains of a company
+</details>
+<details>
+<summary><strong>software licenses [0/10] - ?</strong></summary>
+
+  - [ ] [PUT] Get a list of software licenses
+  - [ ] [POST] Creates a software license
+  - [ ] [GET] Gets a single software license by id
+  - [ ] [PUT] Updates a software license
+  - [ ] [DEL] Deletes a software license
+  - [ ] [GET] Gets all software license types
+  - [ ] [POST] Creates a new software license type
+  - [ ] [GET] Gets a single software license type
+  - [ ] [PUT] Updates a software license type
+  - [ ] [DEL] Deletes a software license type
 </details>
 
 </details>
