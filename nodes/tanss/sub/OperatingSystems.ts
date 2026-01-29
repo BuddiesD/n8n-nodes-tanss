@@ -143,12 +143,8 @@ export async function handleOperatingSystems(this: IExecuteFunctions, i: number)
 		case 'createOs': {
 			url = `${credentials.baseURL}/backend/api/v1/os`;
 			requestOptions.method = 'POST';
-			const createOsFields = this.getNodeParameter('createOsFields', i, {}) as Record<
-				string,
-				unknown
-			>;
-			if (Object.keys(createOsFields).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No fields provided for OS creation.');
+			const createOsFields = this.getNodeParameter('createOsFields', i, {}) as Record<string, unknown>;
+			if (Object.keys(createOsFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for OS creation.');
 			requestOptions.body = createOsFields;
 			break;
 		}
@@ -170,20 +166,13 @@ export async function handleOperatingSystems(this: IExecuteFunctions, i: number)
 		case 'updateOs': {
 			url = `${credentials.baseURL}/backend/api/v1/os/${osId}`;
 			requestOptions.method = 'PUT';
-			const updateOsFields = this.getNodeParameter('updateOsFields', i, {}) as Record<
-				string,
-				unknown
-			>;
-			if (Object.keys(updateOsFields).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No fields provided for OS update.');
+			const updateOsFields = this.getNodeParameter('updateOsFields', i, {}) as Record<string, unknown>;
+			if (Object.keys(updateOsFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for OS update.');
 			requestOptions.body = updateOsFields;
 			break;
 		}
 		default:
-			throw new NodeOperationError(
-				this.getNode(),
-				`The operation "${operation}" is not recognized for Operating Systems.`,
-			);
+			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized for Operating Systems.`);
 	}
 
 	requestOptions.url = url;

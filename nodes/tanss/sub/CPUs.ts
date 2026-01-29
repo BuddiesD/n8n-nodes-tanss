@@ -117,12 +117,8 @@ export async function handleCpu(this: IExecuteFunctions, i: number) {
 		case 'createCpu': {
 			url = `${credentials.baseURL}/backend/api/v1/cpus`;
 			requestOptions.method = 'POST';
-			const createCpuFields = this.getNodeParameter('createCpuFields', i, {}) as Record<
-				string,
-				unknown
-			>;
-			if (Object.keys(createCpuFields).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No fields provided for CPU creation.');
+			const createCpuFields = this.getNodeParameter('createCpuFields', i, {}) as Record<string, unknown>;
+			if (Object.keys(createCpuFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for CPU creation.');
 			requestOptions.body = createCpuFields;
 			break;
 		}
@@ -144,20 +140,13 @@ export async function handleCpu(this: IExecuteFunctions, i: number) {
 		case 'updateCpu': {
 			url = `${credentials.baseURL}/backend/api/v1/cpus/${cpuId}`;
 			requestOptions.method = 'PUT';
-			const updateCpuFields = this.getNodeParameter('updateCpuFields', i, {}) as Record<
-				string,
-				unknown
-			>;
-			if (Object.keys(updateCpuFields).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No fields provided for CPU update.');
+			const updateCpuFields = this.getNodeParameter('updateCpuFields', i, {}) as Record<string, unknown>;
+			if (Object.keys(updateCpuFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for CPU update.');
 			requestOptions.body = updateCpuFields;
 			break;
 		}
 		default:
-			throw new NodeOperationError(
-				this.getNode(),
-				`The operation "${operation}" is not recognized for CPUs.`,
-			);
+			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized for CPUs.`);
 	}
 
 	requestOptions.url = url;

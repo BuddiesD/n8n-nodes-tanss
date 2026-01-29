@@ -1,10 +1,4 @@
-import {
-	IExecuteFunctions,
-	INodeProperties,
-	NodeOperationError,
-	IDataObject,
-	IHttpRequestOptions,
-} from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions } from 'n8n-workflow';
 
 export const timestampOperations: INodeProperties[] = [
 	{
@@ -131,8 +125,7 @@ export const timestampFields: INodeProperties[] = [
 		name: 'from',
 		type: 'number' as const,
 		default: 0,
-		description:
-			'Timestamp of start of period. If omitted, beginning of current day is used by the API.',
+		description: 'Timestamp of start of period. If omitted, beginning of current day is used by the API.',
 		displayOptions: {
 			show: {
 				resource: ['timestamps'],
@@ -158,8 +151,7 @@ export const timestampFields: INodeProperties[] = [
 		name: 'employeeIds',
 		type: 'string' as const,
 		default: '',
-		description:
-			'Comma-separated list of employee IDs for which statistics shall be generated (only for statistics operation)',
+		description: 'Comma-separated list of employee IDs for which statistics shall be generated (only for statistics operation)',
 		displayOptions: { show: { resource: ['timestamps'], operation: ['getTimestampStatistics'] } },
 	},
 
@@ -272,8 +264,7 @@ export const timestampFields: INodeProperties[] = [
 		name: 'dayClosingsJson',
 		type: 'string' as const,
 		default: '[]',
-		description:
-			'JSON array of day closing identifiers [{ "employeeId": 1, "date":"YYYY-mm-dd" }, ...]',
+		description: 'JSON array of day closing identifiers [{ "employeeId": 1, "date":"YYYY-mm-dd" }, ...]',
 		displayOptions: {
 			show: { resource: ['timestamps'], operation: ['createDayClosing', 'deleteDayClosing'] },
 		},
@@ -372,10 +363,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		'deletePauseConfig',
 	] as const;
 	if (!allowed.includes(operation as (typeof allowed)[number])) {
-		throw new NodeOperationError(
-			this.getNode(),
-			`Operation "${operation}" not supported by Timestamps.`,
-		);
+		throw new NodeOperationError(this.getNode(), `Operation "${operation}" not supported by Timestamps.`);
 	}
 
 	const credentials = await this.getCredentials('tanssApi');
@@ -406,9 +394,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -436,9 +422,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -455,8 +439,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const params: string[] = [];
 		if (from && from > 0) params.push(`from=${encodeURIComponent(String(from))}`);
 		if (till && till > 0) params.push(`till=${encodeURIComponent(String(till))}`);
-		if (employeeIds && employeeIds.trim() !== '')
-			params.push(`employeeIds=${encodeURIComponent(employeeIds)}`);
+		if (employeeIds && employeeIds.trim() !== '') params.push(`employeeIds=${encodeURIComponent(employeeIds)}`);
 
 		const query = params.length ? `?${params.join('&')}` : '';
 		const url = `${baseURL}/backend/api/v1/timestamps/statistics${query}`;
@@ -469,16 +452,11 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(
-				this.getNode(),
-				`Failed to fetch timestamp statistics: ${message}`,
-			);
+			throw new NodeOperationError(this.getNode(), `Failed to fetch timestamp statistics: ${message}`);
 		}
 	}
 
@@ -490,10 +468,8 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const state = this.getNodeParameter('state', i, '') as string;
 		const type = this.getNodeParameter('type', i, '') as string;
 
-		if (!employeeId || employeeId <= 0)
-			throw new NodeOperationError(this.getNode(), 'Valid employeeId is required.');
-		if (!date || date <= 0)
-			throw new NodeOperationError(this.getNode(), 'Valid date (timestamp) is required.');
+		if (!employeeId || employeeId <= 0) throw new NodeOperationError(this.getNode(), 'Valid employeeId is required.');
+		if (!date || date <= 0) throw new NodeOperationError(this.getNode(), 'Valid date (timestamp) is required.');
 		if (!state) throw new NodeOperationError(this.getNode(), 'State is required.');
 		if (!type) throw new NodeOperationError(this.getNode(), 'Type is required.');
 
@@ -509,9 +485,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -527,12 +501,9 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const state = this.getNodeParameter('state', i, '') as string;
 		const type = this.getNodeParameter('type', i, '') as string;
 
-		if (!timestampId || timestampId <= 0)
-			throw new NodeOperationError(this.getNode(), 'Valid timestampId is required.');
-		if (!employeeId || employeeId <= 0)
-			throw new NodeOperationError(this.getNode(), 'Valid employeeId is required.');
-		if (!date || date <= 0)
-			throw new NodeOperationError(this.getNode(), 'Valid date (timestamp) is required.');
+		if (!timestampId || timestampId <= 0) throw new NodeOperationError(this.getNode(), 'Valid timestampId is required.');
+		if (!employeeId || employeeId <= 0) throw new NodeOperationError(this.getNode(), 'Valid employeeId is required.');
+		if (!date || date <= 0) throw new NodeOperationError(this.getNode(), 'Valid date (timestamp) is required.');
 		if (!state) throw new NodeOperationError(this.getNode(), 'State is required.');
 		if (!type) throw new NodeOperationError(this.getNode(), 'Type is required.');
 
@@ -548,9 +519,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -564,8 +533,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const day = this.getNodeParameter('day', i, '') as string;
 		const timestampsJson = this.getNodeParameter('timestampsJson', i, '[]') as string;
 
-		if (!employeeIdDay || employeeIdDay <= 0)
-			throw new NodeOperationError(this.getNode(), 'Valid employeeId is required.');
+		if (!employeeIdDay || employeeIdDay <= 0) throw new NodeOperationError(this.getNode(), 'Valid employeeId is required.');
 		if (!day) throw new NodeOperationError(this.getNode(), 'Day (YYYY-mm-dd) is required.');
 
 		let timestampsArray: unknown;
@@ -574,8 +542,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		} catch {
 			throw new NodeOperationError(this.getNode(), 'timestampsJson must be valid JSON.');
 		}
-		if (!Array.isArray(timestampsArray))
-			throw new NodeOperationError(this.getNode(), 'timestampsJson must be a JSON array.');
+		if (!Array.isArray(timestampsArray)) throw new NodeOperationError(this.getNode(), 'timestampsJson must be a JSON array.');
 
 		const url = `${baseURL}/backend/api/v1/timestamps/${employeeIdDay}/day/${encodeURIComponent(day)}`;
 		const requestOptions: IDataObject = {
@@ -587,9 +554,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -606,23 +571,15 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		} catch {
 			throw new NodeOperationError(this.getNode(), 'dayClosingsJson must be valid JSON.');
 		}
-		if (!Array.isArray(payload))
-			throw new NodeOperationError(this.getNode(), 'dayClosingsJson must be an array.');
+		if (!Array.isArray(payload)) throw new NodeOperationError(this.getNode(), 'dayClosingsJson must be an array.');
 
 		for (const entry of payload) {
-			if (typeof entry !== 'object' || entry === null)
-				throw new NodeOperationError(this.getNode(), 'Each day closing must be an object.');
+			if (typeof entry !== 'object' || entry === null) throw new NodeOperationError(this.getNode(), 'Each day closing must be an object.');
 			const obj = entry as { employeeId?: number; date?: string };
 			if (!obj.employeeId || typeof obj.employeeId !== 'number' || obj.employeeId <= 0)
-				throw new NodeOperationError(
-					this.getNode(),
-					'Each day closing requires a valid employeeId.',
-				);
+				throw new NodeOperationError(this.getNode(), 'Each day closing requires a valid employeeId.');
 			if (!obj.date || typeof obj.date !== 'string')
-				throw new NodeOperationError(
-					this.getNode(),
-					'Each day closing requires a valid date string (YYYY-mm-dd).',
-				);
+				throw new NodeOperationError(this.getNode(), 'Each day closing requires a valid date string (YYYY-mm-dd).');
 		}
 
 		const url = `${baseURL}/backend/api/v1/timestamps/dayClosing`;
@@ -635,9 +592,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -654,23 +609,15 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		} catch {
 			throw new NodeOperationError(this.getNode(), 'dayClosingsJson must be valid JSON.');
 		}
-		if (!Array.isArray(payload))
-			throw new NodeOperationError(this.getNode(), 'dayClosingsJson must be an array.');
+		if (!Array.isArray(payload)) throw new NodeOperationError(this.getNode(), 'dayClosingsJson must be an array.');
 
 		for (const entry of payload) {
-			if (typeof entry !== 'object' || entry === null)
-				throw new NodeOperationError(this.getNode(), 'Each day closing must be an object.');
+			if (typeof entry !== 'object' || entry === null) throw new NodeOperationError(this.getNode(), 'Each day closing must be an object.');
 			const obj = entry as { employeeId?: number; date?: string };
 			if (!obj.employeeId || typeof obj.employeeId !== 'number' || obj.employeeId <= 0)
-				throw new NodeOperationError(
-					this.getNode(),
-					'Each day closing requires a valid employeeId.',
-				);
+				throw new NodeOperationError(this.getNode(), 'Each day closing requires a valid employeeId.');
 			if (!obj.date || typeof obj.date !== 'string')
-				throw new NodeOperationError(
-					this.getNode(),
-					'Each day closing requires a valid date string (YYYY-mm-dd).',
-				);
+				throw new NodeOperationError(this.getNode(), 'Each day closing requires a valid date string (YYYY-mm-dd).');
 		}
 
 		const url = `${baseURL}/backend/api/v1/timestamps/dayClosing`;
@@ -683,9 +630,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -704,16 +649,11 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(
-				this.getNode(),
-				`Failed to fetch day closing till date: ${message}`,
-			);
+			throw new NodeOperationError(this.getNode(), `Failed to fetch day closing till date: ${message}`);
 		}
 	}
 
@@ -729,8 +669,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		} catch {
 			throw new NodeOperationError(this.getNode(), 'employeeIdsJson must be valid JSON array.');
 		}
-		if (!Array.isArray(employeeIds))
-			throw new NodeOperationError(this.getNode(), 'employeeIdsJson must be an array of integers.');
+		if (!Array.isArray(employeeIds)) throw new NodeOperationError(this.getNode(), 'employeeIdsJson must be an array of integers.');
 
 		const url = `${baseURL}/backend/api/v1/timestamps/dayClosing/tillDate`;
 		const requestOptions: IDataObject = {
@@ -742,16 +681,11 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(
-				this.getNode(),
-				`Failed to create day closings till date: ${message}`,
-			);
+			throw new NodeOperationError(this.getNode(), `Failed to create day closings till date: ${message}`);
 		}
 	}
 
@@ -760,10 +694,8 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const employeeIdInitial = this.getNodeParameter('employeeIdInitial', i, 0) as number;
 		const initialBalance = this.getNodeParameter('initialBalance', i, 0) as number;
 
-		if (!employeeIdInitial || employeeIdInitial <= 0)
-			throw new NodeOperationError(this.getNode(), 'Valid employeeId is required.');
-		if (typeof initialBalance !== 'number')
-			throw new NodeOperationError(this.getNode(), 'initialBalance must be a number.');
+		if (!employeeIdInitial || employeeIdInitial <= 0) throw new NodeOperationError(this.getNode(), 'Valid employeeId is required.');
+		if (typeof initialBalance !== 'number') throw new NodeOperationError(this.getNode(), 'initialBalance must be a number.');
 
 		const url = `${baseURL}/backend/api/v1/timestamps/employee/${employeeIdInitial}/initialBalance`;
 		const requestOptions: IDataObject = {
@@ -775,9 +707,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -796,9 +726,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -811,10 +739,8 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const fromMinutes = this.getNodeParameter('fromMinutes', i, 0) as number;
 		const minimumPause = this.getNodeParameter('minimumPause', i, 0) as number;
 
-		if (typeof fromMinutes !== 'number')
-			throw new NodeOperationError(this.getNode(), 'fromMinutes must be a number.');
-		if (typeof minimumPause !== 'number')
-			throw new NodeOperationError(this.getNode(), 'minimumPause must be a number.');
+		if (typeof fromMinutes !== 'number') throw new NodeOperationError(this.getNode(), 'fromMinutes must be a number.');
+		if (typeof minimumPause !== 'number') throw new NodeOperationError(this.getNode(), 'minimumPause must be a number.');
 
 		const url = `${baseURL}/backend/api/v1/timestamps/pauseConfigs`;
 		const requestOptions: IDataObject = {
@@ -826,9 +752,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -842,12 +766,9 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const fromMinutes = this.getNodeParameter('fromMinutes', i, 0) as number;
 		const minimumPause = this.getNodeParameter('minimumPause', i, 0) as number;
 
-		if (!pauseConfigId || pauseConfigId <= 0)
-			throw new NodeOperationError(this.getNode(), 'Valid pauseConfigId is required.');
-		if (typeof fromMinutes !== 'number')
-			throw new NodeOperationError(this.getNode(), 'fromMinutes must be a number.');
-		if (typeof minimumPause !== 'number')
-			throw new NodeOperationError(this.getNode(), 'minimumPause must be a number.');
+		if (!pauseConfigId || pauseConfigId <= 0) throw new NodeOperationError(this.getNode(), 'Valid pauseConfigId is required.');
+		if (typeof fromMinutes !== 'number') throw new NodeOperationError(this.getNode(), 'fromMinutes must be a number.');
+		if (typeof minimumPause !== 'number') throw new NodeOperationError(this.getNode(), 'minimumPause must be a number.');
 
 		const url = `${baseURL}/backend/api/v1/timestamps/pauseConfigs/${pauseConfigId}`;
 		const requestOptions: IDataObject = {
@@ -859,9 +780,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -872,8 +791,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 	// DELETE pause config
 	if (operation === 'deletePauseConfig') {
 		const pauseConfigId = this.getNodeParameter('pauseConfigId', i, 0) as number;
-		if (!pauseConfigId || pauseConfigId <= 0)
-			throw new NodeOperationError(this.getNode(), 'Valid pauseConfigId is required.');
+		if (!pauseConfigId || pauseConfigId <= 0) throw new NodeOperationError(this.getNode(), 'Valid pauseConfigId is required.');
 
 		const url = `${baseURL}/backend/api/v1/timestamps/pauseConfigs/${pauseConfigId}`;
 		const requestOptions: IDataObject = {
@@ -884,9 +802,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);

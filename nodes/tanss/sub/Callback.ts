@@ -212,8 +212,7 @@ export const callbackFields: INodeProperties[] = [
 		name: 'filterJson',
 		type: 'string' as const,
 		default: '',
-		description:
-			'If provided (valid JSON), this object will be sent as the request body for the list call (overrides Filter Settings)',
+		description: 'If provided (valid JSON), this object will be sent as the request body for the list call (overrides Filter Settings)',
 		displayOptions: {
 			show: {
 				resource: ['callbacks'],
@@ -336,12 +335,8 @@ export async function handleCallback(this: IExecuteFunctions, i: number) {
 		case 'createCallback': {
 			url = `${credentials.baseURL}/backend/api/v1/callbacks`;
 			requestOptions.method = 'POST';
-			const createFields = this.getNodeParameter('createCallbackFields', i, {}) as Record<
-				string,
-				unknown
-			>;
-			if (Object.keys(createFields).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No fields provided for callback creation.');
+			const createFields = this.getNodeParameter('createCallbackFields', i, {}) as Record<string, unknown>;
+			if (Object.keys(createFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for callback creation.');
 			requestOptions.body = createFields;
 			break;
 		}
@@ -387,29 +382,15 @@ export async function handleCallback(this: IExecuteFunctions, i: number) {
 
 				if (filters.toAllEmployeesWithAccessTo === true) body.toAllEmployeesWithAccessTo = true;
 
-				if (
-					filters.toDepartmentIds &&
-					typeof filters.toDepartmentIds === 'string' &&
-					filters.toDepartmentIds.trim() !== ''
-				) {
-					body.toDepartmentIds = filters.toDepartmentIds
-						.split(',')
-						.map((s: string) => Number(s.trim()));
+				if (filters.toDepartmentIds && typeof filters.toDepartmentIds === 'string' && filters.toDepartmentIds.trim() !== '') {
+					body.toDepartmentIds = filters.toDepartmentIds.split(',').map((s: string) => Number(s.trim()));
 				}
 
-				if (
-					filters.companyIds &&
-					typeof filters.companyIds === 'string' &&
-					filters.companyIds.trim() !== ''
-				) {
+				if (filters.companyIds && typeof filters.companyIds === 'string' && filters.companyIds.trim() !== '') {
 					body.companyIds = filters.companyIds.split(',').map((s: string) => Number(s.trim()));
 				}
 
-				if (
-					filters.employeeIds &&
-					typeof filters.employeeIds === 'string' &&
-					filters.employeeIds.trim() !== ''
-				) {
+				if (filters.employeeIds && typeof filters.employeeIds === 'string' && filters.employeeIds.trim() !== '') {
 					body.employeeIds = filters.employeeIds.split(',').map((s: string) => Number(s.trim()));
 				}
 
@@ -431,27 +412,19 @@ export async function handleCallback(this: IExecuteFunctions, i: number) {
 
 		case 'getCallbackById': {
 			const callbackId = this.getNodeParameter('callbackId', i, 0) as number;
-			if (!callbackId || callbackId <= 0)
-				throw new NodeOperationError(this.getNode(), 'A valid Callback ID is required.');
+			if (!callbackId || callbackId <= 0) throw new NodeOperationError(this.getNode(), 'A valid Callback ID is required.');
 
-			url = `${credentials.baseURL}/backend/api/v1/callbacks/${encodeURIComponent(
-				String(callbackId),
-			)}`;
+			url = `${credentials.baseURL}/backend/api/v1/callbacks/${encodeURIComponent(String(callbackId))}`;
 			requestOptions.method = 'GET';
 			break;
 		}
 
 		case 'updateCallback': {
 			const callbackId = this.getNodeParameter('callbackId', i, 0) as number;
-			if (!callbackId || callbackId <= 0)
-				throw new NodeOperationError(this.getNode(), 'A valid Callback ID is required.');
+			if (!callbackId || callbackId <= 0) throw new NodeOperationError(this.getNode(), 'A valid Callback ID is required.');
 
-			const updateFields = this.getNodeParameter('updateCallbackFields', i, {}) as Record<
-				string,
-				unknown
-			>;
-			if (Object.keys(updateFields).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No fields to update were provided.');
+			const updateFields = this.getNodeParameter('updateCallbackFields', i, {}) as Record<string, unknown>;
+			if (Object.keys(updateFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields to update were provided.');
 
 			url = `${credentials.baseURL}/backend/api/v1/callbacks/${encodeURIComponent(String(callbackId))}`;
 			requestOptions.method = 'PUT';
@@ -460,18 +433,13 @@ export async function handleCallback(this: IExecuteFunctions, i: number) {
 		}
 
 		default:
-			throw new NodeOperationError(
-				this.getNode(),
-				`The operation "${operation}" is not recognized.`,
-			);
+			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized.`);
 	}
 
 	requestOptions.url = url;
 
 	try {
-		const responseData = await this.helpers.httpRequest(
-			requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-		);
+		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
 		const errorMessage = error instanceof Error ? error.message : String(error);

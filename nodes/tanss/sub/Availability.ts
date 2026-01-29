@@ -69,9 +69,7 @@ export async function handleAvailability(this: IExecuteFunctions, i: number) {
 	};
 
 	if (apiToken && String(apiToken).trim() !== '') {
-		const tokenValue = String(apiToken).startsWith('Bearer ')
-			? String(apiToken)
-			: `Bearer ${String(apiToken)}`;
+		const tokenValue = String(apiToken).startsWith('Bearer ') ? String(apiToken) : `Bearer ${String(apiToken)}`;
 		requestOptions.headers.Authorization = tokenValue;
 		requestOptions.headers.apiToken = tokenValue;
 	}
@@ -80,9 +78,7 @@ export async function handleAvailability(this: IExecuteFunctions, i: number) {
 	requestOptions.url = `${url}?employeeIds=${encoded}`;
 
 	try {
-		const response = await this.helpers.httpRequest(
-			requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-		);
+		const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return response;
 	} catch (err: unknown) {
 		const message = err instanceof Error ? err.message : String(err);

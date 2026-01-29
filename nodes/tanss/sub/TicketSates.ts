@@ -1,10 +1,4 @@
-import {
-	IExecuteFunctions,
-	INodeProperties,
-	NodeOperationError,
-	IDataObject,
-	IHttpRequestOptions,
-} from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions } from 'n8n-workflow';
 
 export const ticketStatesOperations: INodeProperties[] = [
 	{
@@ -147,17 +141,9 @@ export const ticketStatesFields: INodeProperties[] = [
 
 export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const allowed = [
-		'getTicketStates',
-		'createTicketState',
-		'updateTicketState',
-		'deleteTicketState',
-	] as const;
+	const allowed = ['getTicketStates', 'createTicketState', 'updateTicketState', 'deleteTicketState'] as const;
 	if (!allowed.includes(operation as (typeof allowed)[number])) {
-		throw new NodeOperationError(
-			this.getNode(),
-			`Operation "${operation}" not supported by TicketStates.`,
-		);
+		throw new NodeOperationError(this.getNode(), `Operation "${operation}" not supported by TicketStates.`);
 	}
 
 	const credentials = await this.getCredentials('tanssApi');
@@ -178,9 +164,7 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 			json: true,
 		};
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -191,8 +175,7 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 	// CREATE
 	if (operation === 'createTicketState') {
 		const name = this.getNodeParameter('name', i) as string;
-		if (!name)
-			throw new NodeOperationError(this.getNode(), 'Name is required to create a ticket state.');
+		if (!name) throw new NodeOperationError(this.getNode(), 'Name is required to create a ticket state.');
 		const image = this.getNodeParameter('image', i, '') as string;
 		const waitState = this.getNodeParameter('waitState', i, false) as boolean;
 		const rank = this.getNodeParameter('rank', i, 0) as number;
@@ -216,9 +199,7 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -229,8 +210,7 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 	// UPDATE
 	if (operation === 'updateTicketState') {
 		const id = this.getNodeParameter('id', i, 0) as number;
-		if (!id || id <= 0)
-			throw new NodeOperationError(this.getNode(), 'Valid ID is required to update.');
+		if (!id || id <= 0) throw new NodeOperationError(this.getNode(), 'Valid ID is required to update.');
 		const name = this.getNodeParameter('name', i, '') as string;
 		const image = this.getNodeParameter('image', i, '') as string;
 		const waitState = this.getNodeParameter('waitState', i, false) as boolean;
@@ -255,9 +235,7 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -268,8 +246,7 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 	// DELETE
 	if (operation === 'deleteTicketState') {
 		const id = this.getNodeParameter('id', i, 0) as number;
-		if (!id || id <= 0)
-			throw new NodeOperationError(this.getNode(), 'Valid ID is required to delete.');
+		if (!id || id <= 0) throw new NodeOperationError(this.getNode(), 'Valid ID is required to delete.');
 		const url = `${baseURL}/backend/api/v1/admin/ticketStates/${id}`;
 		const requestOptions: IDataObject = {
 			method: 'DELETE',
@@ -278,9 +255,7 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 			json: true,
 		};
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);

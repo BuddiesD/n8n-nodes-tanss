@@ -272,27 +272,19 @@ export async function handleTicketList(this: IExecuteFunctions, i: number) {
 			break;
 		case 'getCustomTicketList': {
 			url = `${credentials.baseURL}/backend/api/v1/tickets`;
-			const customTicketQuery = this.getNodeParameter('customTicketQuery', i, {}) as Record<
-				string,
-				unknown
-			>;
+			const customTicketQuery = this.getNodeParameter('customTicketQuery', i, {}) as Record<string, unknown>;
 			requestOptions.method = 'PUT';
 			requestOptions.body = customTicketQuery;
 			break;
 		}
 		default:
-			throw new NodeOperationError(
-				this.getNode(),
-				`The operation "${operation}" is not recognized.`,
-			);
+			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized.`);
 	}
 
 	requestOptions.url = url;
 
 	try {
-		const responseData = await this.helpers.httpRequest(
-			requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-		);
+		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
 		const errorMessage = error instanceof Error ? error.message : String(error);

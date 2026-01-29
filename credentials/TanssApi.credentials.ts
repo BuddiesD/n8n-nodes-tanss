@@ -43,8 +43,7 @@ export class TanssApi implements ICredentialType {
 			},
 			default: '',
 			required: false,
-			description:
-				'Base32 secret for TOTP-based 2FA. The 6-digit code will be generated automatically from this secret.',
+			description: 'Base32 secret for TOTP-based 2FA. The 6-digit code will be generated automatically from this secret.',
 		},
 	];
 

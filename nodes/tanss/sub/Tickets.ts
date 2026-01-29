@@ -81,14 +81,7 @@ export const ticketFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['ticket'],
-				operation: [
-					'getTicketById',
-					'createComment',
-					'getTicketHistory',
-					'updateTicket',
-					'deleteTicket',
-					'mergeTickets',
-				],
+				operation: ['getTicketById', 'createComment', 'getTicketHistory', 'updateTicket', 'deleteTicket', 'mergeTickets'],
 			},
 		},
 		default: 0,
@@ -414,8 +407,7 @@ export const ticketFields: INodeProperties[] = [
 				name: 'tags',
 				type: 'json' as const,
 				default: '',
-				description:
-					'An array of objects with tag assignments which will be assigned to the ticket',
+				description: 'An array of objects with tag assignments which will be assigned to the ticket',
 			},
 			{ displayName: 'Title', name: 'title', type: 'string' as const, default: '' },
 			{ displayName: 'Type ID', name: 'typeId', type: 'number' as const, default: 0 },
@@ -450,12 +442,8 @@ export async function handleTicket(this: IExecuteFunctions, i: number) {
 		case 'createTicket': {
 			url = `${credentials.baseURL}/backend/api/v1/tickets`;
 			requestOptions.method = 'POST';
-			const createTicketFields = this.getNodeParameter('createTicketFields', i, {}) as Record<
-				string,
-				unknown
-			>;
-			if (Object.keys(createTicketFields).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No fields provided for ticket creation.');
+			const createTicketFields = this.getNodeParameter('createTicketFields', i, {}) as Record<string, unknown>;
+			if (Object.keys(createTicketFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for ticket creation.');
 			requestOptions.body = createTicketFields;
 			break;
 		}
@@ -479,8 +467,7 @@ export async function handleTicket(this: IExecuteFunctions, i: number) {
 		case 'updateTicket': {
 			url = `${credentials.baseURL}/backend/api/v1/tickets/${ticketId}`;
 			const updateFields = this.getNodeParameter('updateFields', i, {}) as Record<string, unknown>;
-			if (Object.keys(updateFields).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No fields to update were provided.');
+			if (Object.keys(updateFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields to update were provided.');
 			requestOptions.method = 'PUT';
 			requestOptions.body = updateFields;
 			break;
@@ -499,18 +486,13 @@ export async function handleTicket(this: IExecuteFunctions, i: number) {
 			break;
 		}
 		default:
-			throw new NodeOperationError(
-				this.getNode(),
-				`The operation "${operation}" is not recognized.`,
-			);
+			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized.`);
 	}
 
 	requestOptions.url = url;
 
 	try {
-		const responseData = await this.helpers.httpRequest(
-			requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-		);
+		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
 		const errorMessage = error instanceof Error ? error.message : String(error);

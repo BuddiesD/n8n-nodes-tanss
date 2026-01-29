@@ -43,11 +43,7 @@ export function generateTOTP(secret: string, window = 0): string {
 	const hmac = createHmac('sha1', key).update(buffer).digest();
 
 	const offset = hmac[hmac.length - 1] & 0xf;
-	const code =
-		((hmac[offset] & 0x7f) << 24) |
-		((hmac[offset + 1] & 0xff) << 16) |
-		((hmac[offset + 2] & 0xff) << 8) |
-		(hmac[offset + 3] & 0xff);
+	const code = ((hmac[offset] & 0x7f) << 24) | ((hmac[offset + 1] & 0xff) << 16) | ((hmac[offset + 2] & 0xff) << 8) | (hmac[offset + 3] & 0xff);
 
 	return (code % 1_000_000).toString().padStart(6, '0');
 }

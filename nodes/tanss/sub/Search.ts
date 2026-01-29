@@ -38,8 +38,7 @@ export const searchFields: INodeProperties[] = [
 		name: 'filterJson',
 		type: 'string' as const,
 		default: '',
-		description:
-			'If provided (valid JSON), this object will be sent as the request body for the search call (overrides fields below)',
+		description: 'If provided (valid JSON), this object will be sent as the request body for the search call (overrides fields below)',
 		displayOptions: { show: { resource: ['search'], operation: ['globalSearch'] } },
 	},
 
@@ -139,8 +138,7 @@ export async function handleSearch(this: IExecuteFunctions, i: number) {
 	if (filterJson && filterJson.trim() !== '') {
 		try {
 			const parsed = JSON.parse(filterJson);
-			if (typeof parsed !== 'object' || parsed === null)
-				throw new Error('filterJson must be a JSON object.');
+			if (typeof parsed !== 'object' || parsed === null) throw new Error('filterJson must be a JSON object.');
 			body = parsed as IDataObject;
 		} catch (err) {
 			const msg = err instanceof Error ? err.message : String(err);
@@ -149,12 +147,10 @@ export async function handleSearch(this: IExecuteFunctions, i: number) {
 	} else {
 		const cfg = this.getNodeParameter('searchConfig', i, {}) as IDataObject;
 		if (cfg.areas && Array.isArray(cfg.areas) && cfg.areas.length) body.areas = cfg.areas;
-		if (cfg.query && typeof cfg.query === 'string' && cfg.query.trim() !== '')
-			body.query = cfg.query;
+		if (cfg.query && typeof cfg.query === 'string' && cfg.query.trim() !== '') body.query = cfg.query;
 
 		const configs: IDataObject = {};
-		if (cfg.companyMaxResults && Number(cfg.companyMaxResults) > 0)
-			configs.company = { maxResults: Number(cfg.companyMaxResults) };
+		if (cfg.companyMaxResults && Number(cfg.companyMaxResults) > 0) configs.company = { maxResults: Number(cfg.companyMaxResults) };
 
 		if (
 			(cfg.employeeMaxResults && Number(cfg.employeeMaxResults) > 0) ||
@@ -164,10 +160,8 @@ export async function handleSearch(this: IExecuteFunctions, i: number) {
 			cfg.employeeCallbacks === true
 		) {
 			const emp: IDataObject = {};
-			if (cfg.employeeMaxResults && Number(cfg.employeeMaxResults) > 0)
-				emp.maxResults = Number(cfg.employeeMaxResults);
-			if (cfg.employeeCompanyId && Number(cfg.employeeCompanyId) > 0)
-				emp.companyId = Number(cfg.employeeCompanyId);
+			if (cfg.employeeMaxResults && Number(cfg.employeeMaxResults) > 0) emp.maxResults = Number(cfg.employeeMaxResults);
+			if (cfg.employeeCompanyId && Number(cfg.employeeCompanyId) > 0) emp.companyId = Number(cfg.employeeCompanyId);
 			if (typeof cfg.employeeInactive === 'boolean') emp.inactive = cfg.employeeInactive;
 			if (cfg.employeeCategories === true) emp.categories = true;
 			if (cfg.employeeCallbacks === true) emp.callbacks = true;
@@ -180,12 +174,10 @@ export async function handleSearch(this: IExecuteFunctions, i: number) {
 			(cfg.ticketCompanyId && Number(cfg.ticketCompanyId) > 0)
 		) {
 			const t: IDataObject = {};
-			if (cfg.ticketMaxResults && Number(cfg.ticketMaxResults) > 0)
-				t.maxResults = Number(cfg.ticketMaxResults);
+			if (cfg.ticketMaxResults && Number(cfg.ticketMaxResults) > 0) t.maxResults = Number(cfg.ticketMaxResults);
 			if (cfg.ticketPreviewContentMaxChars && Number(cfg.ticketPreviewContentMaxChars) > 0)
 				t.previewContentMaxChars = Number(cfg.ticketPreviewContentMaxChars);
-			if (cfg.ticketCompanyId && Number(cfg.ticketCompanyId) > 0)
-				t.companyId = Number(cfg.ticketCompanyId);
+			if (cfg.ticketCompanyId && Number(cfg.ticketCompanyId) > 0) t.companyId = Number(cfg.ticketCompanyId);
 			configs.ticket = t;
 		}
 
@@ -206,9 +198,7 @@ export async function handleSearch(this: IExecuteFunctions, i: number) {
 	};
 
 	if (apiToken && apiToken.toString().trim() !== '') {
-		const tokenValue = String(apiToken).startsWith('Bearer ')
-			? String(apiToken)
-			: `Bearer ${String(apiToken)}`;
+		const tokenValue = String(apiToken).startsWith('Bearer ') ? String(apiToken) : `Bearer ${String(apiToken)}`;
 		requestOptions.headers.Authorization = tokenValue;
 		requestOptions.headers.apiToken = tokenValue;
 	}
@@ -219,9 +209,7 @@ export async function handleSearch(this: IExecuteFunctions, i: number) {
 	requestOptions.body = body;
 
 	try {
-		const responseData = await this.helpers.httpRequest(
-			requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-		);
+		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
 		const errorMessage = error instanceof Error ? error.message : String(error);

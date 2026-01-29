@@ -1,10 +1,4 @@
-import {
-	IExecuteFunctions,
-	INodeProperties,
-	NodeOperationError,
-	IDataObject,
-	IHttpRequestOptions,
-} from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions } from 'n8n-workflow';
 
 export const mailsOperations: INodeProperties[] = [
 	{
@@ -92,8 +86,7 @@ export async function handleMails(this: IExecuteFunctions, i: number) {
 
 	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const receiver = this.getNodeParameter('receiver', i, '') as string;
-	if (!receiver || String(receiver).trim() === '')
-		throw new NodeOperationError(this.getNode(), 'receiver is required');
+	if (!receiver || String(receiver).trim() === '') throw new NodeOperationError(this.getNode(), 'receiver is required');
 
 	const base = credentials.baseURL as string;
 	if (!base) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');
@@ -112,9 +105,7 @@ export async function handleMails(this: IExecuteFunctions, i: number) {
 	};
 
 	if (apiToken && apiToken.toString().trim() !== '') {
-		const tokenValue = String(apiToken).startsWith('Bearer ')
-			? String(apiToken)
-			: `Bearer ${String(apiToken)}`;
+		const tokenValue = String(apiToken).startsWith('Bearer ') ? String(apiToken) : `Bearer ${String(apiToken)}`;
 		requestOptions.headers.Authorization = tokenValue;
 		requestOptions.headers.apiToken = tokenValue;
 	}
@@ -124,19 +115,14 @@ export async function handleMails(this: IExecuteFunctions, i: number) {
 			const fields = this.getNodeParameter('mailObject', i, {}) as IDataObject;
 			const body: IDataObject = {};
 
-			if (fields.smtpAddress && String(fields.smtpAddress).trim() !== '')
-				body.smtpAddress = String(fields.smtpAddress).trim();
-			if (fields.smtpHost && String(fields.smtpHost).trim() !== '')
-				body.smtpHost = String(fields.smtpHost).trim();
-			if (fields.smtpUser && String(fields.smtpUser).trim() !== '')
-				body.smtpUser = String(fields.smtpUser).trim();
-			if (fields.smtpPassword && String(fields.smtpPassword).trim() !== '')
-				body.smtpPassword = String(fields.smtpPassword).trim();
+			if (fields.smtpAddress && String(fields.smtpAddress).trim() !== '') body.smtpAddress = String(fields.smtpAddress).trim();
+			if (fields.smtpHost && String(fields.smtpHost).trim() !== '') body.smtpHost = String(fields.smtpHost).trim();
+			if (fields.smtpUser && String(fields.smtpUser).trim() !== '') body.smtpUser = String(fields.smtpUser).trim();
+			if (fields.smtpPassword && String(fields.smtpPassword).trim() !== '') body.smtpPassword = String(fields.smtpPassword).trim();
 			if (fields.smtpAuth !== undefined) body.smtpAuth = Boolean(fields.smtpAuth);
 			if (fields.smtpEncryptionType && String(fields.smtpEncryptionType).trim() !== '')
 				body.smtpEncryptionType = String(fields.smtpEncryptionType).trim();
-			if (fields.smtpSenderName && String(fields.smtpSenderName).trim() !== '')
-				body.smtpSenderName = String(fields.smtpSenderName).trim();
+			if (fields.smtpSenderName && String(fields.smtpSenderName).trim() !== '') body.smtpSenderName = String(fields.smtpSenderName).trim();
 
 			const url = `${base}/backend/api/v1/mails/test/smtp?receiver=${encodeURIComponent(String(receiver))}`;
 			requestOptions.method = 'POST';
@@ -147,10 +133,7 @@ export async function handleMails(this: IExecuteFunctions, i: number) {
 		}
 
 		default:
-			throw new NodeOperationError(
-				this.getNode(),
-				`The operation "${operation}" is not recognized.`,
-			);
+			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized.`);
 	}
 
 	try {

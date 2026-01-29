@@ -1,10 +1,4 @@
-import {
-	IExecuteFunctions,
-	INodeProperties,
-	NodeOperationError,
-	IDataObject,
-	IHttpRequestOptions,
-} from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions } from 'n8n-workflow';
 
 export const employeesOperations: INodeProperties[] = [
 	{
@@ -139,9 +133,7 @@ export const employeesFields: INodeProperties[] = [
 					{
 						displayName: 'Assignment',
 						name: 'assignment',
-						values: [
-							{ displayName: 'Company ID', name: 'companyId', type: 'number' as const, default: 0 },
-						],
+						values: [{ displayName: 'Company ID', name: 'companyId', type: 'number' as const, default: 0 }],
 					},
 				],
 			},
@@ -172,9 +164,7 @@ export async function handleEmployees(this: IExecuteFunctions, i: number) {
 	};
 
 	if (apiToken && apiToken.toString().trim() !== '') {
-		const tokenValue = String(apiToken).startsWith('Bearer ')
-			? String(apiToken)
-			: `Bearer ${String(apiToken)}`;
+		const tokenValue = String(apiToken).startsWith('Bearer ') ? String(apiToken) : `Bearer ${String(apiToken)}`;
 		requestOptions.headers.Authorization = tokenValue;
 		requestOptions.headers.apiToken = tokenValue;
 	}
@@ -196,55 +186,36 @@ export async function handleEmployees(this: IExecuteFunctions, i: number) {
 			const fields = this.getNodeParameter('employeeObject', i, {}) as IDataObject;
 			const body: IDataObject = {};
 
-			if (fields.id !== undefined && String(fields.id).trim() !== '')
-				body.id = Number(fields.id) || 0;
+			if (fields.id !== undefined && String(fields.id).trim() !== '') body.id = Number(fields.id) || 0;
 			if (fields.name && String(fields.name).trim() !== '') body.name = String(fields.name).trim();
-			if (fields.firstName && String(fields.firstName).trim() !== '')
-				body.firstName = String(fields.firstName).trim();
-			if (fields.lastName && String(fields.lastName).trim() !== '')
-				body.lastName = String(fields.lastName).trim();
-			if (fields.salutationId !== undefined && String(fields.salutationId).trim() !== '')
-				body.salutationId = Number(fields.salutationId) || 0;
-			if (fields.departmentId !== undefined && String(fields.departmentId).trim() !== '')
-				body.departmentId = Number(fields.departmentId) || 0;
+			if (fields.firstName && String(fields.firstName).trim() !== '') body.firstName = String(fields.firstName).trim();
+			if (fields.lastName && String(fields.lastName).trim() !== '') body.lastName = String(fields.lastName).trim();
+			if (fields.salutationId !== undefined && String(fields.salutationId).trim() !== '') body.salutationId = Number(fields.salutationId) || 0;
+			if (fields.departmentId !== undefined && String(fields.departmentId).trim() !== '') body.departmentId = Number(fields.departmentId) || 0;
 			if (fields.room && String(fields.room).trim() !== '') body.room = String(fields.room).trim();
-			if (fields.telephoneNumber && String(fields.telephoneNumber).trim() !== '')
-				body.telephoneNumber = String(fields.telephoneNumber).trim();
-			if (fields.emailAddress && String(fields.emailAddress).trim() !== '')
-				body.emailAddress = String(fields.emailAddress).trim();
-			if (fields.carId !== undefined && String(fields.carId).trim() !== '')
-				body.carId = Number(fields.carId) || 0;
-			if (fields.mobilePhone && String(fields.mobilePhone).trim() !== '')
-				body.mobilePhone = String(fields.mobilePhone).trim();
-			if (fields.initials && String(fields.initials).trim() !== '')
-				body.initials = String(fields.initials).trim();
-			if (
-				fields.workingHourModelId !== undefined &&
-				String(fields.workingHourModelId).trim() !== ''
-			)
+			if (fields.telephoneNumber && String(fields.telephoneNumber).trim() !== '') body.telephoneNumber = String(fields.telephoneNumber).trim();
+			if (fields.emailAddress && String(fields.emailAddress).trim() !== '') body.emailAddress = String(fields.emailAddress).trim();
+			if (fields.carId !== undefined && String(fields.carId).trim() !== '') body.carId = Number(fields.carId) || 0;
+			if (fields.mobilePhone && String(fields.mobilePhone).trim() !== '') body.mobilePhone = String(fields.mobilePhone).trim();
+			if (fields.initials && String(fields.initials).trim() !== '') body.initials = String(fields.initials).trim();
+			if (fields.workingHourModelId !== undefined && String(fields.workingHourModelId).trim() !== '')
 				body.workingHourModelId = Number(fields.workingHourModelId) || 0;
 			if (fields.accountingTypeId !== undefined && String(fields.accountingTypeId).trim() !== '')
 				body.accountingTypeId = Number(fields.accountingTypeId) || 0;
 			if (fields.privatePhoneNumber && String(fields.privatePhoneNumber).trim() !== '')
 				body.privatePhoneNumber = String(fields.privatePhoneNumber).trim();
 			if (fields.active !== undefined) body.active = Boolean(fields.active);
-			if (fields.erpNumber && String(fields.erpNumber).trim() !== '')
-				body.erpNumber = String(fields.erpNumber).trim();
+			if (fields.erpNumber && String(fields.erpNumber).trim() !== '') body.erpNumber = String(fields.erpNumber).trim();
 			if (fields.personalFaxNumber && String(fields.personalFaxNumber).trim() !== '')
 				body.personalFaxNumber = String(fields.personalFaxNumber).trim();
 			if (fields.role && String(fields.role).trim() !== '') body.role = String(fields.role).trim();
-			if (fields.titleId !== undefined && String(fields.titleId).trim() !== '')
-				body.titleId = Number(fields.titleId) || 0;
-			if (fields.language && String(fields.language).trim() !== '')
-				body.language = String(fields.language).trim();
+			if (fields.titleId !== undefined && String(fields.titleId).trim() !== '') body.titleId = Number(fields.titleId) || 0;
+			if (fields.language && String(fields.language).trim() !== '') body.language = String(fields.language).trim();
 			if (fields.telephoneNumberTwo && String(fields.telephoneNumberTwo).trim() !== '')
 				body.telephoneNumberTwo = String(fields.telephoneNumberTwo).trim();
-			if (fields.mobileNumberTwo && String(fields.mobileNumberTwo).trim() !== '')
-				body.mobileNumberTwo = String(fields.mobileNumberTwo).trim();
-			if (fields.restrictedUserLicense !== undefined)
-				body.restrictedUserLicense = Boolean(fields.restrictedUserLicense);
-			if (fields.birthday && String(fields.birthday).trim() !== '')
-				body.birthday = String(fields.birthday).trim();
+			if (fields.mobileNumberTwo && String(fields.mobileNumberTwo).trim() !== '') body.mobileNumberTwo = String(fields.mobileNumberTwo).trim();
+			if (fields.restrictedUserLicense !== undefined) body.restrictedUserLicense = Boolean(fields.restrictedUserLicense);
+			if (fields.birthday && String(fields.birthday).trim() !== '') body.birthday = String(fields.birthday).trim();
 
 			if (fields.companyAssignments) {
 				const raw = fields.companyAssignments as unknown;
@@ -257,13 +228,11 @@ export async function handleEmployees(this: IExecuteFunctions, i: number) {
 							if (Array.isArray(obj.assignment)) {
 								for (const a of obj.assignment as unknown[]) {
 									const ai = a as IDataObject;
-									if (ai && ai.companyId !== undefined)
-										assignments.push({ companyId: Number(String(ai.companyId)) || 0 });
+									if (ai && ai.companyId !== undefined) assignments.push({ companyId: Number(String(ai.companyId)) || 0 });
 								}
 							} else {
 								const ai = obj.assignment as IDataObject;
-								if (ai && ai.companyId !== undefined)
-									assignments.push({ companyId: Number(String(ai.companyId)) || 0 });
+								if (ai && ai.companyId !== undefined) assignments.push({ companyId: Number(String(ai.companyId)) || 0 });
 							}
 						} else if (obj && obj.companyId !== undefined) {
 							assignments.push({ companyId: Number(String(obj.companyId)) || 0 });
@@ -275,13 +244,11 @@ export async function handleEmployees(this: IExecuteFunctions, i: number) {
 						if (Array.isArray(obj.assignment)) {
 							for (const a of obj.assignment as unknown[]) {
 								const ai = a as IDataObject;
-								if (ai && ai.companyId !== undefined)
-									assignments.push({ companyId: Number(String(ai.companyId)) || 0 });
+								if (ai && ai.companyId !== undefined) assignments.push({ companyId: Number(String(ai.companyId)) || 0 });
 							}
 						} else {
 							const ai = obj.assignment as IDataObject;
-							if (ai && ai.companyId !== undefined)
-								assignments.push({ companyId: Number(String(ai.companyId)) || 0 });
+							if (ai && ai.companyId !== undefined) assignments.push({ companyId: Number(String(ai.companyId)) || 0 });
 						}
 					} else if (obj.companyId !== undefined) {
 						assignments.push({ companyId: Number(String(obj.companyId)) || 0 });
@@ -299,16 +266,11 @@ export async function handleEmployees(this: IExecuteFunctions, i: number) {
 		}
 
 		default:
-			throw new NodeOperationError(
-				this.getNode(),
-				`The operation "${operation}" is not recognized.`,
-			);
+			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized.`);
 	}
 
 	try {
-		const response = await this.helpers.httpRequest(
-			requestOptions as unknown as IHttpRequestOptions,
-		);
+		const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 		return response;
 	} catch (err: unknown) {
 		const message = err instanceof Error ? err.message : String(err);

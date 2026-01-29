@@ -342,10 +342,7 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 	switch (operation) {
 		case 'getPcById':
 			if (!pcId || typeof pcId !== 'number' || pcId <= 0)
-				throw new NodeOperationError(
-					this.getNode(),
-					'Field "PC ID" is required and must be a valid ID.',
-				);
+				throw new NodeOperationError(this.getNode(), 'Field "PC ID" is required and must be a valid ID.');
 			url = `${credentials.baseURL}/backend/api/v1/pcs/${pcId}`;
 			requestOptions.method = 'GET';
 			break;
@@ -353,8 +350,7 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 		case 'updatePc': {
 			url = `${credentials.baseURL}/backend/api/v1/pcs/${pcId}`;
 			const body = { ...pcData, companyId, model };
-			if (Object.keys(body).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No data provided for updating the PC.');
+			if (Object.keys(body).length === 0) throw new NodeOperationError(this.getNode(), 'No data provided for updating the PC.');
 			requestOptions.method = 'PUT';
 			requestOptions.body = body;
 			break;
@@ -363,18 +359,10 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 		case 'createPc': {
 			url = `${credentials.baseURL}/backend/api/v1/pcs`;
 			const body = { ...pcData, companyId, model };
-			if (Object.keys(body).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No data provided for creating the PC.');
-			if (!body.model)
-				throw new NodeOperationError(
-					this.getNode(),
-					'Field "Model" is required for creating a PC.',
-				);
+			if (Object.keys(body).length === 0) throw new NodeOperationError(this.getNode(), 'No data provided for creating the PC.');
+			if (!body.model) throw new NodeOperationError(this.getNode(), 'Field "Model" is required for creating a PC.');
 			if (!body.companyId || typeof body.companyId !== 'number' || body.companyId <= 0)
-				throw new NodeOperationError(
-					this.getNode(),
-					'Field "Company ID" is required and must be a valid company ID.',
-				);
+				throw new NodeOperationError(this.getNode(), 'Field "Company ID" is required and must be a valid company ID.');
 			requestOptions.method = 'POST';
 			requestOptions.body = body;
 			break;
@@ -394,23 +382,15 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 		}
 
 		default:
-			throw new NodeOperationError(
-				this.getNode(),
-				`The operation "${operation}" is not recognized.`,
-			);
+			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized.`);
 	}
 
 	requestOptions.url = url;
 
 	try {
-		const responseData = await this.helpers.httpRequest(
-			requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-		);
+		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 
-		if (
-			operation === 'deletePc' &&
-			(responseData === undefined || responseData === null || responseData === '')
-		) {
+		if (operation === 'deletePc' && (responseData === undefined || responseData === null || responseData === '')) {
 			return { success: true, message: 'PC deleted successfully.' };
 		}
 

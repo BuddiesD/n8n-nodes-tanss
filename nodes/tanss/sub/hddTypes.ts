@@ -120,12 +120,8 @@ export async function handleHddTypes(this: IExecuteFunctions, i: number) {
 		case 'createHddType': {
 			url = `${credentials.baseURL}/backend/api/v1/hddTypes`;
 			requestOptions.method = 'POST';
-			const createHddTypeFields = this.getNodeParameter('createHddTypeFields', i, {}) as Record<
-				string,
-				unknown
-			>;
-			if (Object.keys(createHddTypeFields).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No fields provided for HDD type creation.');
+			const createHddTypeFields = this.getNodeParameter('createHddTypeFields', i, {}) as Record<string, unknown>;
+			if (Object.keys(createHddTypeFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for HDD type creation.');
 			requestOptions.body = createHddTypeFields;
 			break;
 		}
@@ -147,20 +143,13 @@ export async function handleHddTypes(this: IExecuteFunctions, i: number) {
 		case 'updateHddType': {
 			url = `${credentials.baseURL}/backend/api/v1/hddTypes/${hddTypeId}`;
 			requestOptions.method = 'PUT';
-			const updateHddTypeFields = this.getNodeParameter('updateHddTypeFields', i, {}) as Record<
-				string,
-				unknown
-			>;
-			if (Object.keys(updateHddTypeFields).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No fields provided for HDD type update.');
+			const updateHddTypeFields = this.getNodeParameter('updateHddTypeFields', i, {}) as Record<string, unknown>;
+			if (Object.keys(updateHddTypeFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for HDD type update.');
 			requestOptions.body = updateHddTypeFields;
 			break;
 		}
 		default:
-			throw new NodeOperationError(
-				this.getNode(),
-				`The operation "${operation}" is not recognized for HDD Types.`,
-			);
+			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized for HDD Types.`);
 	}
 
 	requestOptions.url = url;

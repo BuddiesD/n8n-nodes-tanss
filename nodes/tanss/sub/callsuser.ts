@@ -50,8 +50,7 @@ export const callsUserFields: INodeProperties[] = [
 		name: 'filterJson',
 		type: 'string' as const,
 		default: '',
-		description:
-			'If provided (valid JSON), this object will be sent as the request body for the list call (overrides Filter Settings)',
+		description: 'If provided (valid JSON), this object will be sent as the request body for the list call (overrides Filter Settings)',
 		displayOptions: {
 			show: { resource: ['callsuser'], operation: ['getCalls'] },
 		},
@@ -198,11 +197,7 @@ export async function handleCallsUser(this: IExecuteFunctions, i: number) {
 
 				if (filters.showTrysAsWell === true) body.showTrysAsWell = true;
 
-				if (
-					filters.numberFilters &&
-					typeof filters.numberFilters === 'string' &&
-					filters.numberFilters.trim() !== ''
-				) {
+				if (filters.numberFilters && typeof filters.numberFilters === 'string' && filters.numberFilters.trim() !== '') {
 					body.numberFilters = filters.numberFilters.split(',').map((s) => s.trim());
 				}
 
@@ -214,8 +209,7 @@ export async function handleCallsUser(this: IExecuteFunctions, i: number) {
 
 				if (filters.numberInfos === true) body.numberInfos = true;
 
-				if (filters.directions && Array.isArray(filters.directions) && filters.directions.length)
-					body.directions = filters.directions;
+				if (filters.directions && Array.isArray(filters.directions) && filters.directions.length) body.directions = filters.directions;
 			}
 
 			url = `${base.replace(/\/+$/, '')}/backend/api/v1/phoneCalls`;
@@ -227,8 +221,7 @@ export async function handleCallsUser(this: IExecuteFunctions, i: number) {
 
 		case 'getCallById': {
 			const phoneCallId = this.getNodeParameter('phoneCallId', i, 0) as number;
-			if (!phoneCallId || phoneCallId <= 0)
-				throw new NodeOperationError(this.getNode(), 'A valid Phone Call ID is required.');
+			if (!phoneCallId || phoneCallId <= 0) throw new NodeOperationError(this.getNode(), 'A valid Phone Call ID is required.');
 
 			url = `${base.replace(/\/+$/, '')}/backend/api/v1/phoneCalls/${encodeURIComponent(String(phoneCallId))}`;
 			requestOptions.method = 'GET';
@@ -241,15 +234,9 @@ export async function handleCallsUser(this: IExecuteFunctions, i: number) {
 			const toPhoneNumber = this.getNodeParameter('toPhoneNumber', i, '') as string;
 
 			if (!fromPhoneNumber || fromPhoneNumber.trim() === '')
-				throw new NodeOperationError(
-					this.getNode(),
-					'fromPhoneNumber is required for identification.',
-				);
+				throw new NodeOperationError(this.getNode(), 'fromPhoneNumber is required for identification.');
 			if (!toPhoneNumber || toPhoneNumber.trim() === '')
-				throw new NodeOperationError(
-					this.getNode(),
-					'toPhoneNumber is required for identification.',
-				);
+				throw new NodeOperationError(this.getNode(), 'toPhoneNumber is required for identification.');
 
 			const body: IDataObject = {
 				fromPhoneNumber: fromPhoneNumber.trim(),
@@ -268,9 +255,7 @@ export async function handleCallsUser(this: IExecuteFunctions, i: number) {
 	}
 
 	try {
-		const responseData = await this.helpers.httpRequest(
-			requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-		);
+		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
 		const message = error instanceof Error ? error.message : String(error);

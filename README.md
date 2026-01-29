@@ -106,7 +106,7 @@ Tested with TANSS API. Version: 10.10.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **99 / 256 (1 not in API Docs)** (39%)
+Progress: **104 / 256 (1 not in API Docs)** (41%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -323,13 +323,13 @@ Progress: **99 / 256 (1 not in API Docs)** (39%)
   - [x] [PUT] global search
 </details>
 <details>
-<summary><strong>checklists [0/5] - ToDo</strong></summary>
+<summary><strong>checklists [5/5] - Done</strong></summary>
 
-  - [ ] [POST] Assigns a checklist to a ticket
-  - [ ] [DEL] Removes a checklist from a ticket
-  - [ ] [GET] Gets checklists for a ticket
-  - [ ] [GET] Gets checklist for ticket
-  - [ ] [PUT] Check an item
+  - [x] [POST] Assigns a checklist to a ticket
+  - [x] [DEL] Removes a checklist from a ticket
+  - [x] [GET] Gets checklists for a ticket
+  - [x] [GET] Gets checklist for ticket
+  - [x] [PUT] Check an item
 </details>
 <details>
 <summary><strong>supports [0/5] - ToDo</strong></summary>

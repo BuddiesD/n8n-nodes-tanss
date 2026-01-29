@@ -233,9 +233,7 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 	};
 
 	if (apiToken && apiToken.toString().trim() !== '') {
-		const tokenValue = String(apiToken).startsWith('Bearer ')
-			? String(apiToken)
-			: `Bearer ${String(apiToken)}`;
+		const tokenValue = String(apiToken).startsWith('Bearer ') ? String(apiToken) : `Bearer ${String(apiToken)}`;
 		requestOptions.headers.Authorization = tokenValue;
 		requestOptions.headers.apiToken = tokenValue;
 	}
@@ -248,20 +246,16 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 			if (fields.remoteMaintenanceId && String(fields.remoteMaintenanceId).trim() !== '')
 				body.remoteMaintenanceId = String(fields.remoteMaintenanceId).trim();
 
-			if (fields.userId && String(fields.userId).trim() !== '')
-				body.userId = String(fields.userId).trim();
+			if (fields.userId && String(fields.userId).trim() !== '') body.userId = String(fields.userId).trim();
 
-			if (fields.userName && String(fields.userName).trim() !== '')
-				body.userName = String(fields.userName).trim();
+			if (fields.userName && String(fields.userName).trim() !== '') body.userName = String(fields.userName).trim();
 
 			const employeeId = Number(fields.employeeId) || 0;
 			if (employeeId > 0) body.employeeId = employeeId;
 
-			if (fields.deviceId && String(fields.deviceId).trim() !== '')
-				body.deviceId = String(fields.deviceId).trim();
+			if (fields.deviceId && String(fields.deviceId).trim() !== '') body.deviceId = String(fields.deviceId).trim();
 
-			if (fields.deviceName && String(fields.deviceName).trim() !== '')
-				body.deviceName = String(fields.deviceName).trim();
+			if (fields.deviceName && String(fields.deviceName).trim() !== '') body.deviceName = String(fields.deviceName).trim();
 
 			const companyId = Number(fields.companyId) || 0;
 			if (companyId > 0) body.companyId = companyId;
@@ -278,8 +272,7 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 			const endTime = Number(fields.endTime) || 0;
 			if (endTime > 0) body.endTime = endTime;
 
-			if (fields.comment && String(fields.comment).trim() !== '')
-				body.comment = String(fields.comment).trim();
+			if (fields.comment && String(fields.comment).trim() !== '') body.comment = String(fields.comment).trim();
 
 			url = `${credentials.baseURL}/backend/api/remoteSupports/v1`;
 			requestOptions.method = 'POST';
@@ -310,8 +303,7 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 			const typeId = Number(filters.typeId) || 0;
 			if (typeId > 0) body.typeId = typeId;
 
-			if (filters.text && String(filters.text).trim() !== '')
-				body.text = String(filters.text).trim();
+			if (filters.text && String(filters.text).trim() !== '') body.text = String(filters.text).trim();
 
 			url = `${credentials.baseURL}/backend/api/remoteSupports/v1`;
 			requestOptions.method = 'PUT';
@@ -335,20 +327,15 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 			if (assignJson && assignJson.trim() !== '') {
 				try {
 					const parsed = JSON.parse(assignJson);
-					if (typeof parsed !== 'object' || parsed === null)
-						throw new Error('assignDeviceJson must be a JSON object.');
+					if (typeof parsed !== 'object' || parsed === null) throw new Error('assignDeviceJson must be a JSON object.');
 					body = parsed as IDataObject;
 				} catch (err) {
 					const msg = err instanceof Error ? err.message : String(err);
-					throw new NodeOperationError(
-						this.getNode(),
-						`assignDeviceJson must be valid JSON: ${msg}`,
-					);
+					throw new NodeOperationError(this.getNode(), `assignDeviceJson must be valid JSON: ${msg}`);
 				}
 			} else {
 				const fields = this.getNodeParameter('assignDeviceObject', i, {}) as IDataObject;
-				if (fields.deviceId && String(fields.deviceId).trim() !== '')
-					body.deviceId = String(fields.deviceId).trim();
+				if (fields.deviceId && String(fields.deviceId).trim() !== '') body.deviceId = String(fields.deviceId).trim();
 				const companyId = Number(fields.companyId) || 0;
 				if (companyId > 0) body.companyId = companyId;
 				const linkTypeId = Number(fields.linkTypeId) || 0;
@@ -371,20 +358,15 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 			if (assignJson && assignJson.trim() !== '') {
 				try {
 					const parsed = JSON.parse(assignJson);
-					if (typeof parsed !== 'object' || parsed === null)
-						throw new Error('assignDeviceJson must be a JSON object.');
+					if (typeof parsed !== 'object' || parsed === null) throw new Error('assignDeviceJson must be a JSON object.');
 					body = parsed as IDataObject;
 				} catch (err) {
 					const msg = err instanceof Error ? err.message : String(err);
-					throw new NodeOperationError(
-						this.getNode(),
-						`assignDeviceJson must be valid JSON: ${msg}`,
-					);
+					throw new NodeOperationError(this.getNode(), `assignDeviceJson must be valid JSON: ${msg}`);
 				}
 			} else {
 				const fields = this.getNodeParameter('assignDeviceObject', i, {}) as IDataObject;
-				if (fields.deviceId && String(fields.deviceId).trim() !== '')
-					body.deviceId = String(fields.deviceId).trim();
+				if (fields.deviceId && String(fields.deviceId).trim() !== '') body.deviceId = String(fields.deviceId).trim();
 			}
 
 			url = `${credentials.baseURL}/backend/api/remoteSupports/v1/assignDevice`;
@@ -418,17 +400,13 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 					} as unknown as IDataObject;
 				}
 				const msg = err instanceof Error ? err.message : String(err);
-				throw new NodeOperationError(
-					this.getNode(),
-					`Failed to execute deleteAssignDevice: ${msg}`,
-				);
+				throw new NodeOperationError(this.getNode(), `Failed to execute deleteAssignDevice: ${msg}`);
 			}
 		}
 
 		case 'getRemoteSupportById': {
 			const remoteSupportId = Number(this.getNodeParameter('remoteSupportId', i, 0)) || 0;
-			if (remoteSupportId <= 0)
-				throw new NodeOperationError(this.getNode(), 'remoteSupportId must be set and > 0');
+			if (remoteSupportId <= 0) throw new NodeOperationError(this.getNode(), 'remoteSupportId must be set and > 0');
 
 			url = `${credentials.baseURL}/backend/api/remoteSupports/v1/${remoteSupportId}`;
 			requestOptions.method = 'GET';
@@ -439,8 +417,7 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 
 		case 'updateRemoteSupport': {
 			const remoteSupportId = Number(this.getNodeParameter('remoteSupportId', i, 0)) || 0;
-			if (remoteSupportId <= 0)
-				throw new NodeOperationError(this.getNode(), 'remoteSupportId must be set and > 0');
+			if (remoteSupportId <= 0) throw new NodeOperationError(this.getNode(), 'remoteSupportId must be set and > 0');
 
 			const remoteJson = this.getNodeParameter('remoteJson', i, '') as string;
 			let body: IDataObject = {};
@@ -462,20 +439,16 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 				if (fields.remoteMaintenanceId && String(fields.remoteMaintenanceId).trim() !== '')
 					body.remoteMaintenanceId = String(fields.remoteMaintenanceId).trim();
 
-				if (fields.userId && String(fields.userId).trim() !== '')
-					body.userId = String(fields.userId).trim();
+				if (fields.userId && String(fields.userId).trim() !== '') body.userId = String(fields.userId).trim();
 
-				if (fields.userName && String(fields.userName).trim() !== '')
-					body.userName = String(fields.userName).trim();
+				if (fields.userName && String(fields.userName).trim() !== '') body.userName = String(fields.userName).trim();
 
 				const employeeId = Number(fields.employeeId) || 0;
 				if (employeeId > 0) body.employeeId = employeeId;
 
-				if (fields.deviceId && String(fields.deviceId).trim() !== '')
-					body.deviceId = String(fields.deviceId).trim();
+				if (fields.deviceId && String(fields.deviceId).trim() !== '') body.deviceId = String(fields.deviceId).trim();
 
-				if (fields.deviceName && String(fields.deviceName).trim() !== '')
-					body.deviceName = String(fields.deviceName).trim();
+				if (fields.deviceName && String(fields.deviceName).trim() !== '') body.deviceName = String(fields.deviceName).trim();
 
 				const companyId = Number(fields.companyId) || 0;
 				if (companyId > 0) body.companyId = companyId;
@@ -492,8 +465,7 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 				const endTime = Number(fields.endTime) || 0;
 				if (endTime > 0) body.endTime = endTime;
 
-				if (fields.comment && String(fields.comment).trim() !== '')
-					body.comment = String(fields.comment).trim();
+				if (fields.comment && String(fields.comment).trim() !== '') body.comment = String(fields.comment).trim();
 			}
 
 			url = `${credentials.baseURL}/backend/api/remoteSupports/v1/${remoteSupportId}`;
@@ -506,8 +478,7 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 
 		case 'deleteRemoteSupport': {
 			const remoteSupportId = Number(this.getNodeParameter('remoteSupportId', i, 0)) || 0;
-			if (remoteSupportId <= 0)
-				throw new NodeOperationError(this.getNode(), 'remoteSupportId must be set and > 0');
+			if (remoteSupportId <= 0) throw new NodeOperationError(this.getNode(), 'remoteSupportId must be set and > 0');
 
 			url = `${credentials.baseURL}/backend/api/remoteSupports/v1/${remoteSupportId}`;
 			requestOptions.method = 'DELETE';
@@ -538,24 +509,16 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 					} as unknown as IDataObject;
 				}
 				const msg = err instanceof Error ? err.message : String(err);
-				throw new NodeOperationError(
-					this.getNode(),
-					`Failed to execute deleteRemoteSupport: ${msg}`,
-				);
+				throw new NodeOperationError(this.getNode(), `Failed to execute deleteRemoteSupport: ${msg}`);
 			}
 		}
 
 		default:
-			throw new NodeOperationError(
-				this.getNode(),
-				`The operation "${operation}" is not recognized.`,
-			);
+			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized.`);
 	}
 
 	try {
-		const responseData = await this.helpers.httpRequest(
-			requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-		);
+		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
 		const message = error instanceof Error ? error.message : String(error);

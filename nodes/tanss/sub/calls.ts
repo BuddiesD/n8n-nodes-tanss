@@ -91,8 +91,7 @@ export const callsFields: INodeProperties[] = [
 		name: 'callJson',
 		type: 'string' as const,
 		default: '',
-		description:
-			'If provided (valid JSON), this object will be posted as-is. Otherwise the fields below / collection are used to build the payload.',
+		description: 'If provided (valid JSON), this object will be posted as-is. Otherwise the fields below / collection are used to build the payload.',
 		displayOptions: {
 			show: {
 				resource: ['calls'],
@@ -236,8 +235,7 @@ export const callsFields: INodeProperties[] = [
 		name: 'filterJson',
 		type: 'string' as const,
 		default: '',
-		description:
-			'If provided (valid JSON), this object will be sent as the request body for the list call',
+		description: 'If provided (valid JSON), this object will be sent as the request body for the list call',
 		displayOptions: {
 			show: {
 				resource: ['calls'],
@@ -384,8 +382,7 @@ export const callsFields: INodeProperties[] = [
 		name: 'employeeAssignmentJson',
 		type: 'string' as const,
 		default: '',
-		description:
-			'If provided (valid JSON), this object will be posted as-is to employeeAssignment endpoints',
+		description: 'If provided (valid JSON), this object will be posted as-is to employeeAssignment endpoints',
 		displayOptions: {
 			show: {
 				resource: ['calls'],
@@ -598,8 +595,10 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 					typeof createCallFields.phoneParticipants === 'object' &&
 					'participant' in (createCallFields.phoneParticipants as Record<string, unknown>)
 				) {
-					const parts = (createCallFields.phoneParticipants as Record<string, unknown>)
-						.participant as unknown as Array<{ idString?: string; employeeId?: number }>;
+					const parts = (createCallFields.phoneParticipants as Record<string, unknown>).participant as unknown as Array<{
+						idString?: string;
+						employeeId?: number;
+					}>;
 					const list = parts.map((p) => {
 						const obj: IDataObject = {};
 						if (p.idString) obj.idString = p.idString;
@@ -618,10 +617,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 						const parsed = JSON.parse(createCallFields.phoneParticipantsJson as string);
 						if (Array.isArray(parsed)) body.phoneParticipants = parsed;
 					} catch {
-						throw new NodeOperationError(
-							this.getNode(),
-							'createCallFields.phoneParticipantsJson must be valid JSON array.',
-						);
+						throw new NodeOperationError(this.getNode(), 'createCallFields.phoneParticipantsJson must be valid JSON array.');
 					}
 				}
 			} else {
@@ -680,10 +676,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 						if (!Array.isArray(parsed)) throw new Error('phoneParticipantsJson must be an array');
 						body.phoneParticipants = parsed;
 					} catch {
-						throw new NodeOperationError(
-							this.getNode(),
-							'phoneParticipantsJson must be valid JSON array.',
-						);
+						throw new NodeOperationError(this.getNode(), 'phoneParticipantsJson must be valid JSON array.');
 					}
 				} else {
 					const parts = this.getNodeParameter('phoneParticipants', i, { participant: [] }) as {
@@ -712,9 +705,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -750,11 +741,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 
 			if (filters.showTrysAsWell === true) body.showTrysAsWell = true;
 
-			if (
-				filters.numberFilters &&
-				typeof filters.numberFilters === 'string' &&
-				(filters.numberFilters as string).trim() !== ''
-			) {
+			if (filters.numberFilters && typeof filters.numberFilters === 'string' && (filters.numberFilters as string).trim() !== '') {
 				const arr = (filters.numberFilters as string)
 					.split(',')
 					.map((s) => s.trim())
@@ -762,25 +749,13 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 				if (arr.length) body.numberFilters = arr;
 			}
 
-			if (
-				filters.employeeIdFilter &&
-				typeof filters.employeeIdFilter === 'number' &&
-				filters.employeeIdFilter > 0
-			)
+			if (filters.employeeIdFilter && typeof filters.employeeIdFilter === 'number' && filters.employeeIdFilter > 0)
 				body.employeeId = filters.employeeIdFilter;
-			if (
-				filters.companyIdFilter &&
-				typeof filters.companyIdFilter === 'number' &&
-				filters.companyIdFilter > 0
-			)
+			if (filters.companyIdFilter && typeof filters.companyIdFilter === 'number' && filters.companyIdFilter > 0)
 				body.companyId = filters.companyIdFilter;
 			if (filters.numberInfos === true) body.numberInfos = true;
 
-			if (
-				filters.directions &&
-				Array.isArray(filters.directions) &&
-				(filters.directions as string[]).length
-			) {
+			if (filters.directions && Array.isArray(filters.directions) && (filters.directions as string[]).length) {
 				body.directions = filters.directions;
 			}
 		}
@@ -795,9 +770,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -820,9 +793,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -860,8 +831,10 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 					typeof createCallFields.phoneParticipants === 'object' &&
 					'participant' in (createCallFields.phoneParticipants as Record<string, unknown>)
 				) {
-					const parts = (createCallFields.phoneParticipants as Record<string, unknown>)
-						.participant as unknown as Array<{ idString?: string; employeeId?: number }>;
+					const parts = (createCallFields.phoneParticipants as Record<string, unknown>).participant as unknown as Array<{
+						idString?: string;
+						employeeId?: number;
+					}>;
 					const list = parts.map((p) => {
 						const obj: IDataObject = {};
 						if (p.idString) obj.idString = p.idString;
@@ -880,10 +853,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 						const parsed = JSON.parse(createCallFields.phoneParticipantsJson as string);
 						if (Array.isArray(parsed)) body.phoneParticipants = parsed;
 					} catch {
-						throw new NodeOperationError(
-							this.getNode(),
-							'createCallFields.phoneParticipantsJson must be valid JSON array.',
-						);
+						throw new NodeOperationError(this.getNode(), 'createCallFields.phoneParticipantsJson must be valid JSON array.');
 					}
 				}
 			} else {
@@ -942,10 +912,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 						if (!Array.isArray(parsed)) throw new Error('phoneParticipantsJson must be an array');
 						body.phoneParticipants = parsed;
 					} catch {
-						throw new NodeOperationError(
-							this.getNode(),
-							'phoneParticipantsJson must be valid JSON array.',
-						);
+						throw new NodeOperationError(this.getNode(), 'phoneParticipantsJson must be valid JSON array.');
 					}
 				} else {
 					const parts = this.getNodeParameter('phoneParticipants', i, { participant: [] }) as {
@@ -974,9 +941,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -991,8 +956,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		if (identifyJson && identifyJson.trim() !== '') {
 			try {
 				const parsed = JSON.parse(identifyJson);
-				if (typeof parsed !== 'object' || parsed === null)
-					throw new Error('identifyJson must be an object');
+				if (typeof parsed !== 'object' || parsed === null) throw new Error('identifyJson must be an object');
 				body = parsed as IDataObject;
 			} catch {
 				throw new NodeOperationError(this.getNode(), 'identifyJson must be valid JSON object.');
@@ -1002,10 +966,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 			const from = (identifyFields.fromPhoneNumber as string) || '';
 			const to = (identifyFields.toPhoneNumber as string) || '';
 			if (!from || !to) {
-				throw new NodeOperationError(
-					this.getNode(),
-					'Both From Phone Number and To Phone Number are required to identify a call.',
-				);
+				throw new NodeOperationError(this.getNode(), 'Both From Phone Number and To Phone Number are required to identify a call.');
 			}
 			body.fromPhoneNumber = from;
 			body.toPhoneNumber = to;
@@ -1021,9 +982,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
@@ -1045,16 +1004,11 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(
-				this.getNode(),
-				`Failed to fetch employee assignments: ${message}`,
-			);
+			throw new NodeOperationError(this.getNode(), `Failed to fetch employee assignments: ${message}`);
 		}
 	}
 
@@ -1065,29 +1019,17 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		if (raw && raw.trim() !== '') {
 			try {
 				const parsed = JSON.parse(raw);
-				if (typeof parsed !== 'object' || parsed === null)
-					throw new Error('employeeAssignmentJson must be an object');
+				if (typeof parsed !== 'object' || parsed === null) throw new Error('employeeAssignmentJson must be an object');
 				body = parsed as IDataObject;
 			} catch {
-				throw new NodeOperationError(
-					this.getNode(),
-					'employeeAssignmentJson must be valid JSON object.',
-				);
+				throw new NodeOperationError(this.getNode(), 'employeeAssignmentJson must be valid JSON object.');
 			}
 		} else {
 			const fields = this.getNodeParameter('employeeAssignmentFields', i, {}) as IDataObject;
 			const employeeId = (fields.employeeId as number) || 0;
 			const username = (fields.username as string) || '';
-			if (!employeeId || employeeId <= 0)
-				throw new NodeOperationError(
-					this.getNode(),
-					'Employee ID is required for creating assignment.',
-				);
-			if (!username)
-				throw new NodeOperationError(
-					this.getNode(),
-					'Username (idString) is required for creating assignment.',
-				);
+			if (!employeeId || employeeId <= 0) throw new NodeOperationError(this.getNode(), 'Employee ID is required for creating assignment.');
+			if (!username) throw new NodeOperationError(this.getNode(), 'Username (idString) is required for creating assignment.');
 			body.employeeId = employeeId;
 			body.username = username;
 		}
@@ -1102,16 +1044,11 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(
-				this.getNode(),
-				`Failed to create employee assignment: ${message}`,
-			);
+			throw new NodeOperationError(this.getNode(), `Failed to create employee assignment: ${message}`);
 		}
 	}
 
@@ -1122,29 +1059,17 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		if (raw && raw.trim() !== '') {
 			try {
 				const parsed = JSON.parse(raw);
-				if (typeof parsed !== 'object' || parsed === null)
-					throw new Error('employeeAssignmentJson must be an object');
+				if (typeof parsed !== 'object' || parsed === null) throw new Error('employeeAssignmentJson must be an object');
 				body = parsed as IDataObject;
 			} catch {
-				throw new NodeOperationError(
-					this.getNode(),
-					'employeeAssignmentJson must be valid JSON object.',
-				);
+				throw new NodeOperationError(this.getNode(), 'employeeAssignmentJson must be valid JSON object.');
 			}
 		} else {
 			const fields = this.getNodeParameter('employeeAssignmentFields', i, {}) as IDataObject;
 			const employeeId = (fields.employeeId as number) || 0;
 			const username = (fields.username as string) || '';
-			if (!employeeId || employeeId <= 0)
-				throw new NodeOperationError(
-					this.getNode(),
-					'Employee ID is required for deleting assignment.',
-				);
-			if (!username)
-				throw new NodeOperationError(
-					this.getNode(),
-					'Username (idString) is required for deleting assignment.',
-				);
+			if (!employeeId || employeeId <= 0) throw new NodeOperationError(this.getNode(), 'Employee ID is required for deleting assignment.');
+			if (!username) throw new NodeOperationError(this.getNode(), 'Username (idString) is required for deleting assignment.');
 			body.employeeId = employeeId;
 			body.username = username;
 		}
@@ -1159,16 +1084,11 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(
-				requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-			);
+			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(
-				this.getNode(),
-				`Failed to delete employee assignment: ${message}`,
-			);
+			throw new NodeOperationError(this.getNode(), `Failed to delete employee assignment: ${message}`);
 		}
 	}
 

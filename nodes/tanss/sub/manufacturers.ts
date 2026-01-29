@@ -120,16 +120,9 @@ export async function handleManufacturers(this: IExecuteFunctions, i: number) {
 		case 'createManufacturer': {
 			url = `${credentials.baseURL}/backend/api/v1/manufacturers`;
 			requestOptions.method = 'POST';
-			const createManufacturerFields = this.getNodeParameter(
-				'createManufacturerFields',
-				i,
-				{},
-			) as Record<string, unknown>;
+			const createManufacturerFields = this.getNodeParameter('createManufacturerFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(createManufacturerFields).length === 0)
-				throw new NodeOperationError(
-					this.getNode(),
-					'No fields provided for manufacturer creation.',
-				);
+				throw new NodeOperationError(this.getNode(), 'No fields provided for manufacturer creation.');
 			requestOptions.body = createManufacturerFields;
 			break;
 		}
@@ -151,21 +144,14 @@ export async function handleManufacturers(this: IExecuteFunctions, i: number) {
 		case 'updateManufacturer': {
 			url = `${credentials.baseURL}/backend/api/v1/manufacturers/${manufacturerId}`;
 			requestOptions.method = 'PUT';
-			const updateManufacturerFields = this.getNodeParameter(
-				'updateManufacturerFields',
-				i,
-				{},
-			) as Record<string, unknown>;
+			const updateManufacturerFields = this.getNodeParameter('updateManufacturerFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(updateManufacturerFields).length === 0)
 				throw new NodeOperationError(this.getNode(), 'No fields provided for manufacturer update.');
 			requestOptions.body = updateManufacturerFields;
 			break;
 		}
 		default:
-			throw new NodeOperationError(
-				this.getNode(),
-				`The operation "${operation}" is not recognized for Manufacturers.`,
-			);
+			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized for Manufacturers.`);
 	}
 
 	requestOptions.url = url;

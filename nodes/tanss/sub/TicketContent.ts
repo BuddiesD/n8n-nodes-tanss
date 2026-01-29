@@ -130,18 +130,9 @@ export const ticketContentFields: INodeProperties[] = [
 
 export async function handleTicketContent(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const supported = [
-		'getTicketDocuments',
-		'getTicketDocument',
-		'getTicketImages',
-		'getTicketImage',
-		'uploadTicketContent',
-	] as const;
+	const supported = ['getTicketDocuments', 'getTicketDocument', 'getTicketImages', 'getTicketImage', 'uploadTicketContent'] as const;
 	if (!supported.includes(operation as (typeof supported)[number])) {
-		throw new NodeOperationError(
-			this.getNode(),
-			`Operation "${operation}" not supported by TicketContent.`,
-		);
+		throw new NodeOperationError(this.getNode(), `Operation "${operation}" not supported by TicketContent.`);
 	}
 
 	const credentials = await this.getCredentials('tanssApi');
@@ -152,8 +143,7 @@ export async function handleTicketContent(this: IExecuteFunctions, i: number) {
 	const typedCredentials = credentials as { baseURL?: string };
 	const baseURL = typedCredentials.baseURL;
 	if (!baseURL) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');
-	if (!ticketId || ticketId <= 0)
-		throw new NodeOperationError(this.getNode(), 'Valid Ticket ID is required.');
+	if (!ticketId || ticketId <= 0) throw new NodeOperationError(this.getNode(), 'Valid Ticket ID is required.');
 
 	let url = '';
 	const requestOptions: IDataObject = {
@@ -167,15 +157,13 @@ export async function handleTicketContent(this: IExecuteFunctions, i: number) {
 		url = `${baseURL}/backend/api/v1/tickets/${ticketId}/documents`;
 	} else if (operation === 'getTicketDocument') {
 		const documentId = this.getNodeParameter('documentId', i, 0) as number;
-		if (!documentId || documentId <= 0)
-			throw new NodeOperationError(this.getNode(), 'Valid Document ID is required.');
+		if (!documentId || documentId <= 0) throw new NodeOperationError(this.getNode(), 'Valid Document ID is required.');
 		url = `${baseURL}/backend/api/v1/tickets/${ticketId}/documents/${documentId}`;
 	} else if (operation === 'getTicketImages') {
 		url = `${baseURL}/backend/api/v1/tickets/${ticketId}/screenshots`;
 	} else if (operation === 'getTicketImage') {
 		const imageId = this.getNodeParameter('imageId', i, 0) as number;
-		if (!imageId || imageId <= 0)
-			throw new NodeOperationError(this.getNode(), 'Valid Image ID is required.');
+		if (!imageId || imageId <= 0) throw new NodeOperationError(this.getNode(), 'Valid Image ID is required.');
 		url = `${baseURL}/backend/api/v1/tickets/${ticketId}/screenshots/${imageId}`;
 	} else {
 		const binaryPropertyName = this.getNodeParameter('binaryPropertyName', i, 'data') as string;
@@ -184,10 +172,7 @@ export async function handleTicketContent(this: IExecuteFunctions, i: number) {
 		const items = this.getInputData();
 		const item = items[i];
 		if (!item.binary || !item.binary[binaryPropertyName]) {
-			throw new NodeOperationError(
-				this.getNode(),
-				`No binary found on item index ${i} with property name "${binaryPropertyName}"`,
-			);
+			throw new NodeOperationError(this.getNode(), `No binary found on item index ${i} with property name "${binaryPropertyName}"`);
 		}
 
 		const binaryEntry = item.binary[binaryPropertyName] as {
@@ -201,10 +186,7 @@ export async function handleTicketContent(this: IExecuteFunctions, i: number) {
 		}
 
 		let BufferCtor: { from: (data: string, encoding?: string) => Uint8Array } | undefined;
-		if (
-			typeof Buffer !== 'undefined' &&
-			typeof (Buffer as unknown as { from?: unknown }).from === 'function'
-		) {
+		if (typeof Buffer !== 'undefined' && typeof (Buffer as unknown as { from?: unknown }).from === 'function') {
 			BufferCtor = Buffer as unknown as { from: (data: string, encoding?: string) => Uint8Array };
 		}
 		if (BufferCtor === undefined) {
@@ -222,8 +204,7 @@ export async function handleTicketContent(this: IExecuteFunctions, i: number) {
 		const closeDelimiter = `${crlf}--${boundary}--${crlf}`;
 
 		const filePartHeader =
-			`Content-Disposition: form-data; name="files"; filename="${fileName}"${crlf}` +
-			`Content-Type: ${contentType}${crlf}${crlf}`;
+			`Content-Disposition: form-data; name="files"; filename="${fileName}"${crlf}` + `Content-Type: ${contentType}${crlf}${crlf}`;
 
 		const descPartHeader = `${crlf}--${boundary}${crlf}Content-Disposition: form-data; name="descriptions"${crlf}${crlf}`;
 
@@ -252,9 +233,7 @@ export async function handleTicketContent(this: IExecuteFunctions, i: number) {
 	}
 
 	try {
-		const response = await this.helpers.httpRequest(
-			requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions,
-		);
+		const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return response;
 	} catch (error: unknown) {
 		const err = error as unknown as { response?: unknown; statusCode?: number; message?: string };
@@ -272,9 +251,6 @@ export async function handleTicketContent(this: IExecuteFunctions, i: number) {
 			// nothing here
 		}
 		const statusTxt = status ? ` Status: ${status}.` : '';
-		throw new NodeOperationError(
-			this.getNode(),
-			`Failed to fetch ticket content: ${message}.${statusTxt}${extra}`,
-		);
+		throw new NodeOperationError(this.getNode(), `Failed to fetch ticket content: ${message}.${statusTxt}${extra}`);
 	}
 }
