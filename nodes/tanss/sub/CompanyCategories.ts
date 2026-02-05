@@ -182,7 +182,7 @@ export async function handleCompanyCategories(this: IExecuteFunctions, i: number
       url = `${credentials.baseURL}/backend/api/v1/companyCategories/types`;
       requestOptions.method = 'POST';
       requestOptions.body = createType;
-      break; // waiting for Tanss Support Response
+      break;
     }
     case 'getCompanyType': {
       const typeId = this.getNodeParameter('companyTypeId', i, 0) as number;

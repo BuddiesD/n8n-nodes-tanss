@@ -106,7 +106,7 @@ Tested with TANSS API. Version: 10.12.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **128 / 271 (1 not in API Docs)** (47%)
+Progress: **138 / 271 (1 not in API Docs)** (51%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -413,18 +413,18 @@ Progress: **128 / 271 (1 not in API Docs)** (47%)
   - [ ] [GET] Gets all employees of a company
 </details>
 <details>
-<summary><strong>company category [0/10] - ToDo</strong></summary>
+<summary><strong>company category [10/10] - Done</strong></summary>
 
-  - [ ] [GET] list of categories
-  - [ ] [POST] Creates a new company category
-  - [ ] [GET] gets a category
-  - [ ] [PUT] updates a category
-  - [ ] [DEL] Deletes a company category
-  - [ ] [GET] list of company types
-  - [ ] [POST] Creates a new company type
-  - [ ] [GET] gets a company type
-  - [ ] [PUT] updates a company type
-  - [ ] [DEL] Deletes a company type
+  - [x] [GET] list of categories
+  - [x] [POST] Creates a new company category
+  - [x] [GET] gets a category
+  - [x] [PUT] updates a category
+  - [x] [DEL] Deletes a company category
+  - [x] [GET] list of company types
+  - [x] [POST] Creates a new company type -- This option is experiencing a error right now. A fix will be included in the next Tanss update.
+  - [x] [GET] gets a company type
+  - [x] [PUT] updates a company type
+  - [x] [DEL] Deletes a company type
 </details>
 <details>
 <summary><strong>documents [0/6] - ?</strong></summary>
