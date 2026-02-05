@@ -19,6 +19,7 @@ import { handleHddTypes, hddTypesOperations, hddTypesFields } from './sub/hddTyp
 import { handleManufacturers, manufacturersOperations, manufacturersFields } from './sub/manufacturers';
 import { handlePeriphery, peripheryOperations, peripheryFields } from './sub/Periphery';
 import { handleComponents, componentsOperations, componentsFields } from './sub/Components';
+import { handleCompanyCategories, companyCategoriesOperations, companyCategoriesFields } from './sub/CompanyCategories';
 import { handleOperatingSystems, operatingSystemsOperations, operatingSystemsFields } from './sub/OperatingSystems';
 import { handleSearch, searchOperations, searchFields } from './sub/Search';
 import { handleCallback, callbackOperations, callbackFields } from './sub/Callback';
@@ -63,12 +64,13 @@ export class Tanss implements INodeType {
 					{ name: 'Manufacturer', value: 'manufacturers' },
 					{ name: 'Operating System', value: 'operatingSystems' },
 					{ name: 'PC', value: 'pc' },
-						{ name: 'Component', value: 'components' },
+					{ name: 'Component', value: 'components' },
 					{ name: 'IP', value: 'ips' },
 					{ name: 'Remote Support', value: 'remoteSupports' },
 					{ name: 'Ticket', value: 'ticket' },
 					{ name: 'Checklist', value: 'checklists' },
 					{ name: 'Periphery', value: 'peripheries' },
+					{ name: 'Company Categories', value: 'companyCategories' },
 					{ name: 'Ticket Content', value: 'ticketContent' },
 					{ name: 'Ticket List', value: 'ticketList' },
 					{ name: 'Ticket State', value: 'ticketStates' },
@@ -114,6 +116,8 @@ export class Tanss implements INodeType {
 			...ipsFields,
 			...componentsOperations,
 			...componentsFields,
+			...companyCategoriesOperations,
+			...companyCategoriesFields,
 			...peripheryOperations,
 			...peripheryFields,
 			...manufacturersOperations,
@@ -143,6 +147,7 @@ export class Tanss implements INodeType {
 			else if (resource === 'checklists') responseData = await handleChecklists.call(this, i);
 			else if (resource === 'peripheries') responseData = await handlePeriphery.call(this, i);
 			else if (resource === 'components') responseData = await handleComponents.call(this, i);
+			else if (resource === 'companyCategories') responseData = await handleCompanyCategories.call(this, i);
 			else if (resource === 'ips') responseData = await handleIps.call(this, i);
 			else if (resource === 'ticketContent') responseData = await handleTicketContent.call(this, i);
 			else if (resource === 'ticketList') responseData = await handleTicketList.call(this, i);
