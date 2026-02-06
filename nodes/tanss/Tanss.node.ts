@@ -2,6 +2,7 @@ import { INodeType, INodeTypeDescription, IExecuteFunctions, NodeOperationError 
 import { handleAuth, authOperations, authFields } from './sub/Authentication';
 import { handlePc, pcOperations, pcFields } from './sub/PCs';
 import { handleTicket, ticketOperations, ticketFields } from './sub/Tickets';
+import { handleDomains, domainOperations, domainFields } from './sub/Domains';
 import { handleIps, ipsOperations, ipsFields } from './sub/ips';
 import { handleChecklists, checklistsOperations, checklistsFields } from './sub/Checklists';
 import { handleTicketList, ticketListOperations, ticketListFields } from './sub/TicketLists';
@@ -68,6 +69,7 @@ export class Tanss implements INodeType {
 					{ name: 'IP', value: 'ips' },
 					{ name: 'Remote Support', value: 'remoteSupports' },
 					{ name: 'Ticket', value: 'ticket' },
+					{ name: 'Domain', value: 'domain' },
 					{ name: 'Checklist', value: 'checklists' },
 					{ name: 'Periphery', value: 'peripheries' },
 					{ name: 'Company Categories', value: 'companyCategories' },
@@ -88,6 +90,8 @@ export class Tanss implements INodeType {
 			...pcFields,
 			...ticketOperations,
 			...ticketFields,
+			...domainOperations,
+			...domainFields,
 			...checklistsOperations,
 			...checklistsFields,
 			...ticketContentOperations,
@@ -144,6 +148,7 @@ export class Tanss implements INodeType {
 			else if (resource === 'pc') responseData = await handlePc.call(this, i);
 			else if (resource === 'cpus') responseData = await handleCpu.call(this, i);
 			else if (resource === 'ticket') responseData = await handleTicket.call(this, i);
+			else if (resource === 'domain') responseData = await handleDomains.call(this, i);
 			else if (resource === 'checklists') responseData = await handleChecklists.call(this, i);
 			else if (resource === 'peripheries') responseData = await handlePeriphery.call(this, i);
 			else if (resource === 'components') responseData = await handleComponents.call(this, i);

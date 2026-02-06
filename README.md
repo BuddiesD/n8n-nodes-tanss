@@ -106,7 +106,7 @@ Tested with TANSS API. Version: 10.12.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **138 / 271 (1 not in API Docs)** (51%)
+Progress: **143 / 271 (1 not in API Docs)** (53%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -530,13 +530,13 @@ Progress: **138 / 271 (1 not in API Docs)** (51%)
   - [ ] [POST] Marks all as seen
 </details>
 <details>
-<summary><strong>domains [0/5] - ToDo</strong></summary>
+<summary><strong>domains [5/5] - Done</strong></summary>
 
-  - [ ] [POST] Creates a domain
-  - [ ] [GET] Gets a single domain
-  - [ ] [PUT] Updates a domain
-  - [ ] [DEL] Deletes a domain
-  - [ ] [GET] List of domains of a company
+  - [x] [POST] Creates a domain -- This option is experiencing a error right now, Waiting for Support
+  - [x] [GET] Gets a single domain
+  - [x] [PUT] Updates a domain
+  - [x] [DEL] Deletes a domain
+  - [x] [GET] List of domains of a company
 </details>
 <details>
 <summary><strong>software licenses [0/10] - ?</strong></summary>
