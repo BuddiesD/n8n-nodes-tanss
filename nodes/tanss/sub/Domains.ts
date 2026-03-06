@@ -189,6 +189,7 @@ export async function handleDomains(this: IExecuteFunctions, i: number) {
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 
 	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
+	const baseURL = credentials.baseURL as string;
 
 	let url = '';
 	const requestOptions: {
@@ -206,7 +207,7 @@ export async function handleDomains(this: IExecuteFunctions, i: number) {
 
 	switch (operation) {
 		case 'createDomain': {
-			url = `${(credentials as any).baseURL}/backend/api/v1/domains`;
+			url = `${baseURL}/backend/api/v1/domains`;
 			requestOptions.method = 'POST';
 			const createDomainFields = this.getNodeParameter('createDomainFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(createDomainFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for domain creation.');
@@ -217,7 +218,7 @@ export async function handleDomains(this: IExecuteFunctions, i: number) {
 			const domainIdRaw = this.getNodeParameter('domainId', i, '') as string;
 			const domainId = Number(domainIdRaw);
 			if (Number.isNaN(domainId) || domainId <= 0) throw new NodeOperationError(this.getNode(), 'A valid domainId must be provided.');
-			url = `${(credentials as any).baseURL}/backend/api/v1/domains/${domainId}`;
+			url = `${baseURL}/backend/api/v1/domains/${domainId}`;
 			requestOptions.method = 'GET';
 			break;
 		}
@@ -225,7 +226,7 @@ export async function handleDomains(this: IExecuteFunctions, i: number) {
 			const domainIdRaw = this.getNodeParameter('domainId', i, '') as string;
 			const domainId = Number(domainIdRaw);
 			if (Number.isNaN(domainId) || domainId <= 0) throw new NodeOperationError(this.getNode(), 'A valid domainId must be provided.');
-			url = `${(credentials as any).baseURL}/backend/api/v1/domains/${domainId}`;
+			url = `${baseURL}/backend/api/v1/domains/${domainId}`;
 			requestOptions.method = 'PUT';
 			const updateDomainFields = this.getNodeParameter('updateDomainFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(updateDomainFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields to update were provided.');
@@ -236,7 +237,7 @@ export async function handleDomains(this: IExecuteFunctions, i: number) {
 			const domainIdRaw = this.getNodeParameter('domainId', i, '') as string;
 			const domainId = Number(domainIdRaw);
 			if (Number.isNaN(domainId) || domainId <= 0) throw new NodeOperationError(this.getNode(), 'A valid domainId must be provided.');
-			url = `${(credentials as any).baseURL}/backend/api/v1/domains/${domainId}`;
+			url = `${baseURL}/backend/api/v1/domains/${domainId}`;
 			requestOptions.method = 'DELETE';
 			break;
 		}
@@ -244,7 +245,7 @@ export async function handleDomains(this: IExecuteFunctions, i: number) {
 			const companyIdRaw = this.getNodeParameter('companyId', i, '') as string;
 			const companyId = Number(companyIdRaw);
 			if (Number.isNaN(companyId) || companyId <= 0) throw new NodeOperationError(this.getNode(), 'A valid companyId must be provided.');
-			url = `${(credentials as any).baseURL}/backend/api/v1/domains/company/${companyId}`;
+			url = `${baseURL}/backend/api/v1/domains/company/${companyId}`;
 			requestOptions.method = 'GET';
 			break;
 		}

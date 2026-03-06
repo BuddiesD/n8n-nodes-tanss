@@ -252,11 +252,7 @@ export async function handleCompanyCategories(this: IExecuteFunctions, i: number
 
 			const tanssError = (parsedBody as { error?: { localizedText?: string; text?: string; type?: string } } | null)?.error;
 			const fallbackMessage =
-				error instanceof Error
-					? error.message
-					: statusCode > 0
-						? `Delete request failed (status ${statusCode})`
-						: 'Delete request failed.';
+				error instanceof Error ? error.message : statusCode > 0 ? `Delete request failed (status ${statusCode})` : 'Delete request failed.';
 
 			return {
 				success: false,

@@ -545,9 +545,7 @@ export async function handleTicket(this: IExecuteFunctions, i: number) {
 				success: false,
 				statusCode,
 				message:
-					tanssError?.localizedText ??
-					tanssError?.text ??
-					(error instanceof Error ? error.message : `Delete request failed (status ${statusCode})`),
+					tanssError?.localizedText ?? tanssError?.text ?? (error instanceof Error ? error.message : `Delete request failed (status ${statusCode})`),
 				error: tanssError ?? parsedBody,
 			};
 		}

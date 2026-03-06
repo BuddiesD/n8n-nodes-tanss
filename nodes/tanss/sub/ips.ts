@@ -162,26 +162,31 @@ export async function handleIps(this: IExecuteFunctions, i: number) {
 	} catch (error: unknown) {
 		let message = '';
 		if (error instanceof Error) message = error.message;
-		const anyErr = error as any;
+		const anyErr = error as {
+			response?: {
+				status?: number;
+				data?: { error?: { localizedText?: string; text?: string } } | Record<string, unknown>;
+			};
+		};
 		if (anyErr && anyErr.response) {
 			try {
 				const status = anyErr.response.status;
 				const respData = anyErr.response.data;
 				if (operation === 'deleteIp') {
-					const tanssError = respData?.error;
+					const tanssError = respData && 'error' in respData ? respData.error : undefined;
 					return {
 						success: false,
 						statusCode: status,
 						message:
-							tanssError?.localizedText ??
-							tanssError?.text ??
-							(status === 403 ? 'error response' : `Delete request failed (status ${status})`),
+							tanssError?.localizedText ?? tanssError?.text ?? (status === 403 ? 'error response' : `Delete request failed (status ${status})`),
 						error: tanssError ?? respData,
 					};
 				}
 				message += `; Status: ${status}`;
 				if (respData) message += `; Response: ${JSON.stringify(respData)}`;
-			} catch (e) {}
+			} catch {
+				message += '; Response parse failed';
+			}
 		}
 
 		if (operation === 'deleteIp') {

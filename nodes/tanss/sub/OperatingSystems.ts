@@ -221,7 +221,8 @@ export async function handleOperatingSystems(this: IExecuteFunctions, i: number)
 			return {
 				success: false,
 				statusCode,
-				message: tanssError?.localizedText ?? tanssError?.text ?? (error instanceof Error ? error.message : `Delete request failed (status ${statusCode})`),
+				message:
+					tanssError?.localizedText ?? tanssError?.text ?? (error instanceof Error ? error.message : `Delete request failed (status ${statusCode})`),
 				error: tanssError ?? parsedBody,
 			};
 		}

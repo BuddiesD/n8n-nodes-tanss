@@ -49,28 +49,28 @@ export const componentsFields: INodeProperties[] = [
 		default: {},
 		displayOptions: { show: { resource: ['components'], operation: ['createComponent'] } },
 		options: [
-			{ displayName: 'id', name: 'id', type: 'number' as const, default: 0 },
+			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
 			{ displayName: 'inventoryNumber', name: 'inventoryNumber', type: 'string' as const, default: '' },
 			{ displayName: 'componentTypeId', name: 'componentTypeId', type: 'number' as const, default: 0 },
 			{ displayName: 'pcId', name: 'pcId', type: 'number' as const, default: 0 },
 			{ displayName: 'peripheryId', name: 'peripheryId', type: 'number' as const, default: 0 },
 			{ displayName: 'manufacturerId', name: 'manufacturerId', type: 'number' as const, default: 0 },
-			{ displayName: 'type', name: 'type', type: 'string' as const, default: '' },
+			{ displayName: 'Type', name: 'type', type: 'string' as const, default: '' },
 			{ displayName: 'serialNumber', name: 'serialNumber', type: 'string' as const, default: '' },
-			{ displayName: 'megabytes', name: 'megabytes', type: 'number' as const, default: 0 },
+			{ displayName: 'Megabytes', name: 'megabytes', type: 'number' as const, default: 0 },
 			{ displayName: 'hddTypeId', name: 'hddTypeId', type: 'number' as const, default: 0 },
 			{ displayName: 'scsiId', name: 'scsiId', type: 'string' as const, default: '' },
 			{ displayName: 'onBoard', name: 'onBoard', type: 'boolean' as const, default: false },
 			{ displayName: 'companyId', name: 'companyId', type: 'number' as const, default: 0 },
-			{ displayName: 'remark', name: 'remark', type: 'string' as const, default: '' },
-			{ displayName: 'active', name: 'active', type: 'boolean' as const, default: true },
-			{ displayName: 'date (timestamp)', name: 'date', type: 'number' as const, default: 0 },
+			{ displayName: 'Remark', name: 'remark', type: 'string' as const, default: '' },
+			{ displayName: 'Active', name: 'active', type: 'boolean' as const, default: true },
+			{ displayName: 'Date (Timestamp)', name: 'date', type: 'number' as const, default: 0 },
 			{ displayName: 'billingNumber', name: 'billingNumber', type: 'string' as const, default: '' },
 			{ displayName: 'articleNumber', name: 'articleNumber', type: 'string' as const, default: '' },
 			{ displayName: 'storageId', name: 'storageId', type: 'number' as const, default: 0 },
 			{ displayName: 'purchasePrice', name: 'purchasePrice', type: 'number' as const, default: 0 },
 			{ displayName: 'sellingPrice', name: 'sellingPrice', type: 'number' as const, default: 0 },
-			{ displayName: 'description', name: 'description', type: 'string' as const, default: '' },
+			{ displayName: 'Description', name: 'description', type: 'string' as const, default: '' },
 		],
 	},
 	{
@@ -86,22 +86,22 @@ export const componentsFields: INodeProperties[] = [
 			{ displayName: 'pcId', name: 'pcId', type: 'number' as const, default: 0 },
 			{ displayName: 'peripheryId', name: 'peripheryId', type: 'number' as const, default: 0 },
 			{ displayName: 'manufacturerId', name: 'manufacturerId', type: 'number' as const, default: 0 },
-			{ displayName: 'type', name: 'type', type: 'string' as const, default: '' },
+			{ displayName: 'Type', name: 'type', type: 'string' as const, default: '' },
 			{ displayName: 'serialNumber', name: 'serialNumber', type: 'string' as const, default: '' },
-			{ displayName: 'megabytes', name: 'megabytes', type: 'number' as const, default: 0 },
+			{ displayName: 'Megabytes', name: 'megabytes', type: 'number' as const, default: 0 },
 			{ displayName: 'hddTypeId', name: 'hddTypeId', type: 'number' as const, default: 0 },
 			{ displayName: 'scsiId', name: 'scsiId', type: 'string' as const, default: '' },
 			{ displayName: 'onBoard', name: 'onBoard', type: 'boolean' as const, default: false },
 			{ displayName: 'companyId', name: 'companyId', type: 'number' as const, default: 0 },
-			{ displayName: 'remark', name: 'remark', type: 'string' as const, default: '' },
-			{ displayName: 'active', name: 'active', type: 'boolean' as const, default: true },
-			{ displayName: 'date (timestamp)', name: 'date', type: 'number' as const, default: 0 },
+			{ displayName: 'Remark', name: 'remark', type: 'string' as const, default: '' },
+			{ displayName: 'Active', name: 'active', type: 'boolean' as const, default: true },
+			{ displayName: 'Date (Timestamp)', name: 'date', type: 'number' as const, default: 0 },
 			{ displayName: 'billingNumber', name: 'billingNumber', type: 'string' as const, default: '' },
 			{ displayName: 'articleNumber', name: 'articleNumber', type: 'string' as const, default: '' },
 			{ displayName: 'storageId', name: 'storageId', type: 'number' as const, default: 0 },
 			{ displayName: 'purchasePrice', name: 'purchasePrice', type: 'number' as const, default: 0 },
 			{ displayName: 'sellingPrice', name: 'sellingPrice', type: 'number' as const, default: 0 },
-			{ displayName: 'description', name: 'description', type: 'string' as const, default: '' },
+			{ displayName: 'Description', name: 'description', type: 'string' as const, default: '' },
 		],
 	},
 	{
@@ -112,9 +112,9 @@ export const componentsFields: INodeProperties[] = [
 		default: {},
 		displayOptions: { show: { resource: ['components'], operation: ['listComponents'] } },
 		options: [
-			{ displayName: 'companyId', name: 'companyId', type: 'number' as const, default: 0, description: 'show only entries of this company' },
+			{ displayName: 'companyId', name: 'companyId', type: 'number' as const, default: 0, description: 'Show only entries of this company' },
 			{
-				displayName: 'branches',
+				displayName: 'Branches',
 				name: 'branches',
 				type: 'options' as const,
 				options: [
@@ -126,7 +126,7 @@ export const componentsFields: INodeProperties[] = [
 				default: 'COMPANY_ONLY',
 			},
 			{
-				displayName: 'active',
+				displayName: 'Active',
 				name: 'active',
 				type: 'options' as const,
 				options: [
@@ -141,15 +141,15 @@ export const componentsFields: INodeProperties[] = [
 				name: 'componentTypeId',
 				type: 'number' as const,
 				default: 0,
-				description: 'id of the component type to be filtered',
+				description: 'ID of the component type to be filtered',
 			},
-			{ displayName: 'pcId', name: 'pcId', type: 'number' as const, default: 0, description: 'if only components of a given pc shall be displayed' },
+			{ displayName: 'pcId', name: 'pcId', type: 'number' as const, default: 0, description: 'If only components of a given pc shall be displayed' },
 			{
 				displayName: 'peripheryId',
 				name: 'peripheryId',
 				type: 'number' as const,
 				default: 0,
-				description: 'if only components of a given periphery shall be displayed',
+				description: 'If only components of a given periphery shall be displayed',
 			},
 			{
 				displayName: 'builtInFilter',
@@ -161,7 +161,7 @@ export const componentsFields: INodeProperties[] = [
 					{ name: 'COMPONENTS_IN_PERIPHERIES', value: 'COMPONENTS_IN_PERIPHERIES' },
 				],
 				default: 'NOT_BUILT_IN_COMPONENTS',
-				description: 'filter settings for built in state of the component',
+				description: 'Filter settings for built in state of the component',
 			},
 		],
 	},
@@ -183,10 +183,10 @@ export const componentsFields: INodeProperties[] = [
 		default: {},
 		displayOptions: { show: { resource: ['components'], operation: ['createComponentType'] } },
 		options: [
-			{ displayName: 'id', name: 'id', type: 'number' as const, default: 0 },
-			{ displayName: 'type', name: 'type', type: 'string' as const, default: '' },
+			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
+			{ displayName: 'Type', name: 'type', type: 'string' as const, default: '' },
 			{ displayName: 'shortName', name: 'shortName', type: 'string' as const, default: '' },
-			{ displayName: 'shown', name: 'shown', type: 'boolean' as const, default: true },
+			{ displayName: 'Shown', name: 'shown', type: 'boolean' as const, default: true },
 		],
 	},
 
@@ -198,10 +198,10 @@ export const componentsFields: INodeProperties[] = [
 		default: {},
 		displayOptions: { show: { resource: ['components'], operation: ['updateComponentType'] } },
 		options: [
-			{ displayName: 'id', name: 'id', type: 'number' as const, default: 0 },
-			{ displayName: 'type', name: 'type', type: 'string' as const, default: '' },
+			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
+			{ displayName: 'Type', name: 'type', type: 'string' as const, default: '' },
 			{ displayName: 'shortName', name: 'shortName', type: 'string' as const, default: '' },
-			{ displayName: 'shown', name: 'shown', type: 'boolean' as const, default: true },
+			{ displayName: 'Shown', name: 'shown', type: 'boolean' as const, default: true },
 		],
 	},
 ];
@@ -236,7 +236,7 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 			break;
 		}
 		case 'updateComponent': {
-			const updateFields = this.getNodeParameter('updateComponentFields', i, {}) as any;
+			const updateFields = this.getNodeParameter('updateComponentFields', i, {}) as Record<string, unknown>;
 			if (!componentId) throw new NodeOperationError(this.getNode(), 'componentId is required for update.');
 			if (Object.keys(updateFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for updating component.');
 			url = `${credentials.baseURL}/backend/api/v1/components/${componentId}`;
@@ -251,7 +251,7 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 			break;
 		}
 		case 'createComponent': {
-			const createFields = this.getNodeParameter('createComponentFields', i, {}) as any;
+			const createFields = this.getNodeParameter('createComponentFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(createFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for creating component.');
 			url = `${credentials.baseURL}/backend/api/v1/components`;
 			requestOptions.method = 'POST';
@@ -259,7 +259,7 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 			break;
 		}
 		case 'listComponents': {
-			const filters = this.getNodeParameter('listComponentFilters', i, {}) as any;
+			const filters = this.getNodeParameter('listComponentFilters', i, {}) as Record<string, unknown>;
 			url = `${credentials.baseURL}/backend/api/v1/components`;
 			requestOptions.method = 'PUT';
 			requestOptions.body = filters;
@@ -271,7 +271,7 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 			break;
 		}
 		case 'createComponentType': {
-			const createType = this.getNodeParameter('createComponentTypeFields', i, {}) as any;
+			const createType = this.getNodeParameter('createComponentTypeFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(createType).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for creating component type.');
 			url = `${credentials.baseURL}/backend/api/v1/components/types`;
 			requestOptions.method = 'POST';
@@ -281,7 +281,7 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 		case 'updateComponentType': {
 			const typeId = this.getNodeParameter('componentTypeIdParam', i, 0) as number;
 			if (!typeId) throw new NodeOperationError(this.getNode(), 'component type id is required for update.');
-			const updateType = this.getNodeParameter('updateComponentTypeFields', i, {}) as any;
+			const updateType = this.getNodeParameter('updateComponentTypeFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(updateType).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for updating component type.');
 			url = `${credentials.baseURL}/backend/api/v1/components/types/${typeId}`;
 			requestOptions.method = 'PUT';
@@ -324,33 +324,38 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 		}
 		return responseData;
 	} catch (error: unknown) {
-		const anyErr = error as any;
+		const anyErr = error as {
+			response?: {
+				status?: number;
+				data?: { error?: { localizedText?: string; text?: string } } | Record<string, unknown>;
+			};
+		};
 		let message = error instanceof Error ? error.message : String(error);
 		if (anyErr && anyErr.response) {
 			try {
 				const status = anyErr.response.status;
 				const respData = anyErr.response.data;
 				if (operation === 'deleteComponent' || operation === 'deleteComponentType') {
-					const tanssError = respData?.error;
+					const tanssError = respData && 'error' in respData ? respData.error : undefined;
 					return {
 						success: false,
 						statusCode: status,
 						message:
-							tanssError?.localizedText ??
-							tanssError?.text ??
-							(status === 403 ? 'error response' : `Delete request failed (status ${status})`),
+							tanssError?.localizedText ?? tanssError?.text ?? (status === 403 ? 'error response' : `Delete request failed (status ${status})`),
 						error: tanssError ?? respData,
 					};
 				}
 				message += `; Status: ${status}`;
 				if (respData) {
-					if (respData.error) {
+					if ('error' in respData && respData.error) {
 						message += `; Error: ${JSON.stringify(respData.error)}`;
 					} else {
 						message += `; Response: ${JSON.stringify(respData)}`;
 					}
 				}
-			} catch (e) {}
+			} catch {
+				message += '; Response parse failed';
+			}
 		}
 
 		if (operation === 'deleteComponent' || operation === 'deleteComponentType') {
