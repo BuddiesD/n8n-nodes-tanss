@@ -64,57 +64,57 @@ export const searchFields: INodeProperties[] = [
 			{ displayName: 'Query', name: 'query', type: 'string' as const, default: '' },
 
 			{
-				displayName: 'Company maxResults',
+				displayName: 'Company Max Results',
 				name: 'companyMaxResults',
 				type: 'number' as const,
 				default: 0,
 			},
 
 			{
-				displayName: 'Employee maxResults',
+				displayName: 'Employee Max Results',
 				name: 'employeeMaxResults',
 				type: 'number' as const,
 				default: 0,
 			},
 			{
-				displayName: 'Employee companyId',
+				displayName: 'Employee Company ID',
 				name: 'employeeCompanyId',
 				type: 'number' as const,
 				default: 0,
 			},
 			{
-				displayName: 'Employee inactive',
+				displayName: 'Employee Inactive',
 				name: 'employeeInactive',
 				type: 'boolean' as const,
 				default: true,
 			},
 			{
-				displayName: 'Employee categories',
+				displayName: 'Employee Categories',
 				name: 'employeeCategories',
 				type: 'boolean' as const,
 				default: false,
 			},
 			{
-				displayName: 'Employee callbacks',
+				displayName: 'Employee Callbacks',
 				name: 'employeeCallbacks',
 				type: 'boolean' as const,
 				default: false,
 			},
 
 			{
-				displayName: 'Ticket maxResults',
+				displayName: 'Ticket Max Results',
 				name: 'ticketMaxResults',
 				type: 'number' as const,
 				default: 0,
 			},
 			{
-				displayName: 'Ticket previewContentMaxChars',
+				displayName: 'Ticket Preview Content Max Chars',
 				name: 'ticketPreviewContentMaxChars',
 				type: 'number' as const,
 				default: 0,
 			},
 			{
-				displayName: 'Ticket companyId',
+				displayName: 'Ticket Company ID',
 				name: 'ticketCompanyId',
 				type: 'number' as const,
 				default: 0,

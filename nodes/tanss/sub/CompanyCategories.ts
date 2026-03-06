@@ -50,8 +50,8 @@ export const companyCategoriesFields: INodeProperties[] = [
 		default: {},
 		displayOptions: { show: { resource: ['companyCategories'], operation: ['createCategory'] } },
 		options: [
-			{ displayName: 'id', name: 'id', type: 'number' as const, default: 0 },
-			{ displayName: 'name', name: 'name', type: 'string' as const, default: '' },
+			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
+			{ displayName: 'Name', name: 'name', type: 'string' as const, default: '' },
 		],
 	},
 	{
@@ -62,8 +62,8 @@ export const companyCategoriesFields: INodeProperties[] = [
 		default: {},
 		displayOptions: { show: { resource: ['companyCategories'], operation: ['updateCategory'] } },
 		options: [
-			{ displayName: 'id', name: 'id', type: 'number' as const, default: 0 },
-			{ displayName: 'name', name: 'name', type: 'string' as const, default: '' },
+			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
+			{ displayName: 'Name', name: 'name', type: 'string' as const, default: '' },
 		],
 	},
 	{
@@ -82,12 +82,12 @@ export const companyCategoriesFields: INodeProperties[] = [
 		default: {},
 		displayOptions: { show: { resource: ['companyCategories'], operation: ['createCompanyType'] } },
 		options: [
-			{ displayName: 'id', name: 'id', type: 'number' as const, default: 0 },
-			{ displayName: 'name', name: 'name', type: 'string' as const, default: '' },
-			{ displayName: 'categoryId', name: 'categoryId', type: 'number' as const, default: 0 },
-			{ displayName: 'categoryName', name: 'categoryName', type: 'string' as const, default: '' },
-			{ displayName: 'icon', name: 'icon', type: 'string' as const, default: '' },
-			{ displayName: 'hidden', name: 'hidden', type: 'boolean' as const, default: false },
+			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
+			{ displayName: 'Name', name: 'name', type: 'string' as const, default: '' },
+			{ displayName: 'Category ID', name: 'categoryId', type: 'number' as const, default: 0 },
+			{ displayName: 'Category Name', name: 'categoryName', type: 'string' as const, default: '' },
+			{ displayName: 'Icon', name: 'icon', type: 'string' as const, default: '' },
+			{ displayName: 'Hidden', name: 'hidden', type: 'boolean' as const, default: false },
 		],
 	},
 	{
@@ -98,15 +98,21 @@ export const companyCategoriesFields: INodeProperties[] = [
 		default: {},
 		displayOptions: { show: { resource: ['companyCategories'], operation: ['updateCompanyType'] } },
 		options: [
-			{ displayName: 'id', name: 'id', type: 'number' as const, default: 0 },
-			{ displayName: 'name', name: 'name', type: 'string' as const, default: '' },
-			{ displayName: 'categoryId', name: 'categoryId', type: 'number' as const, default: 0 },
-			{ displayName: 'categoryName', name: 'categoryName', type: 'string' as const, default: '' },
-			{ displayName: 'icon', name: 'icon', type: 'string' as const, default: '' },
-			{ displayName: 'hidden', name: 'hidden', type: 'boolean' as const, default: false },
+			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
+			{ displayName: 'Name', name: 'name', type: 'string' as const, default: '' },
+			{ displayName: 'Category ID', name: 'categoryId', type: 'number' as const, default: 0 },
+			{ displayName: 'Category Name', name: 'categoryName', type: 'string' as const, default: '' },
+			{ displayName: 'Icon', name: 'icon', type: 'string' as const, default: '' },
+			{ displayName: 'Hidden', name: 'hidden', type: 'boolean' as const, default: false },
 		],
 	},
 ];
+
+type CompanyTypePayload = Record<string, unknown> & {
+	name?: string;
+	categoryId?: number;
+	categoryName?: string;
+};
 
 export async function handleCompanyCategories(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
@@ -138,7 +144,7 @@ export async function handleCompanyCategories(this: IExecuteFunctions, i: number
 			break;
 		}
 		case 'createCategory': {
-			const createFields = this.getNodeParameter('createCategoryFields', i, {}) as any;
+			const createFields = this.getNodeParameter('createCategoryFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(createFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for creating category.');
 			url = `${credentials.baseURL}/backend/api/v1/companyCategories`;
 			requestOptions.method = 'POST';
@@ -151,7 +157,7 @@ export async function handleCompanyCategories(this: IExecuteFunctions, i: number
 			break;
 		}
 		case 'updateCategory': {
-			const updateFields = this.getNodeParameter('updateCategoryFields', i, {}) as any;
+			const updateFields = this.getNodeParameter('updateCategoryFields', i, {}) as Record<string, unknown>;
 			if (!categoryId) throw new NodeOperationError(this.getNode(), 'category id is required for update.');
 			if (Object.keys(updateFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for updating category.');
 			url = `${credentials.baseURL}/backend/api/v1/companyCategories/${categoryId}`;
@@ -171,7 +177,7 @@ export async function handleCompanyCategories(this: IExecuteFunctions, i: number
 			break;
 		}
 		case 'createCompanyType': {
-			const createType = this.getNodeParameter('createCompanyTypeFields', i, {}) as any;
+			const createType = this.getNodeParameter('createCompanyTypeFields', i, {}) as CompanyTypePayload;
 			if (Object.keys(createType).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for creating company type.');
 			if (!createType.name || createType.name === '') {
 				throw new NodeOperationError(this.getNode(), 'Company type `name` is required for creation.');
@@ -193,7 +199,7 @@ export async function handleCompanyCategories(this: IExecuteFunctions, i: number
 		case 'updateCompanyType': {
 			const typeId = this.getNodeParameter('companyTypeId', i, 0) as number;
 			if (!typeId) throw new NodeOperationError(this.getNode(), 'company type id is required for update.');
-			const updateType = this.getNodeParameter('updateCompanyTypeFields', i, {}) as any;
+			const updateType = this.getNodeParameter('updateCompanyTypeFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(updateType).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for updating company type.');
 			url = `${credentials.baseURL}/backend/api/v1/companyCategories/types/${typeId}`;
 			requestOptions.method = 'PUT';
@@ -260,12 +266,17 @@ export async function handleCompanyCategories(this: IExecuteFunctions, i: number
 			};
 		}
 
-		const anyErr = error as any;
+		const anyErr = error as {
+			response?: {
+				status?: number;
+				data?: unknown;
+			};
+		};
 		let message = error instanceof Error ? error.message : String(error);
 		if (anyErr && anyErr.response) {
 			try {
 				const status = anyErr.response.status;
-				const respData = anyErr.response.data;
+				const respData = anyErr.response.data as { error?: unknown } | undefined;
 				message += `; Status: ${status}`;
 				if (respData) {
 					if (respData.error) {
@@ -274,7 +285,9 @@ export async function handleCompanyCategories(this: IExecuteFunctions, i: number
 						message += `; Response: ${JSON.stringify(respData)}`;
 					}
 				}
-			} catch (e) {}
+			} catch {
+				message += '; Response parse failed';
+			}
 		}
 		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${message}`);
 	}
