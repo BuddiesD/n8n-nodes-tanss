@@ -87,7 +87,7 @@ export const pcFields: INodeProperties[] = [
 			},
 		},
 		default: 0,
-		description: 'ID der Firma',
+		description: 'Company ID',
 	},
 	{
 		displayName: 'Model',
@@ -101,7 +101,7 @@ export const pcFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'Modell des PCs oder Servers',
+		description: 'Model of the PC or server',
 	},
 	{
 		displayName: 'PC Data',

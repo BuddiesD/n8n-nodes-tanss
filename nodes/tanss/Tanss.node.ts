@@ -174,10 +174,18 @@ export class Tanss implements INodeType {
 					itemIndex: i,
 				});
 
-			if (Array.isArray(responseData)) returnData.push(...responseData);
-			else returnData.push(responseData);
+			const executionData = this.helpers.constructExecutionMetaData(
+				this.helpers.returnJsonArray(Array.isArray(responseData) ? responseData : [responseData]),
+				{
+					itemData: {
+						item: i,
+					},
+				},
+			);
+
+			returnData.push(...executionData);
 		}
 
-		return [this.helpers.returnJsonArray(returnData)];
+		return [returnData];
 	}
 }
