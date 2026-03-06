@@ -1084,11 +1084,54 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
-			return response;
+			const fullResponse = (await this.helpers.httpRequest({
+				...(requestOptions as unknown as Record<string, unknown>),
+				simple: false,
+				resolveWithFullResponse: true,
+			} as unknown as import('n8n-workflow').IHttpRequestOptions)) as unknown as {
+				statusCode?: number;
+				body?: unknown;
+			};
+
+			const statusCode = fullResponse?.statusCode ?? 0;
+			if (statusCode === 204) {
+				return { success: true, statusCode, message: 'Employee assignment deleted successfully.' };
+			}
+
+			const tanssBody = (fullResponse?.body ?? null) as { error?: { localizedText?: string; text?: string; type?: string } } | null;
+			const tanssError = tanssBody?.error;
+
+			return {
+				success: false,
+				statusCode,
+				message: tanssError?.localizedText ?? tanssError?.text ?? `Delete request failed (status ${statusCode})`,
+				error: tanssError ?? tanssBody,
+			};
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to delete employee assignment: ${message}`);
+			const anyErr = error as {
+				statusCode?: number;
+				response?: { status?: number; statusCode?: number; body?: unknown; data?: unknown };
+			};
+			const statusCode = anyErr?.response?.statusCode ?? anyErr?.response?.status ?? anyErr?.statusCode ?? 0;
+			const rawBody = anyErr?.response?.body ?? anyErr?.response?.data;
+
+			let parsedBody: unknown = rawBody;
+			if (typeof rawBody === 'string') {
+				try {
+					parsedBody = JSON.parse(rawBody);
+				} catch {
+					parsedBody = rawBody;
+				}
+			}
+
+			const tanssError = (parsedBody as { error?: { localizedText?: string; text?: string; type?: string } } | null)?.error;
+
+			return {
+				success: false,
+				statusCode,
+				message: tanssError?.localizedText ?? tanssError?.text ?? (error instanceof Error ? error.message : `Delete request failed (status ${statusCode})`),
+				error: tanssError ?? parsedBody,
+			};
 		}
 	}
 

@@ -305,7 +305,11 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		if (operation === 'deleteComponent' || operation === 'deleteComponentType') {
 			if (responseData === '' || responseData == null) {
-				return { statusCode: 204, message: 'deleted succesfully' };
+				return {
+					success: true,
+					statusCode: 204,
+					message: operation === 'deleteComponentType' ? 'component type deleted' : 'component deleted',
+				};
 			}
 		}
 		if (
@@ -326,6 +330,18 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 			try {
 				const status = anyErr.response.status;
 				const respData = anyErr.response.data;
+				if (operation === 'deleteComponent' || operation === 'deleteComponentType') {
+					const tanssError = respData?.error;
+					return {
+						success: false,
+						statusCode: status,
+						message:
+							tanssError?.localizedText ??
+							tanssError?.text ??
+							(status === 403 ? 'error response' : `Delete request failed (status ${status})`),
+						error: tanssError ?? respData,
+					};
+				}
 				message += `; Status: ${status}`;
 				if (respData) {
 					if (respData.error) {
@@ -335,6 +351,15 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 					}
 				}
 			} catch (e) {}
+		}
+
+		if (operation === 'deleteComponent' || operation === 'deleteComponentType') {
+			return {
+				success: false,
+				statusCode: 0,
+				message: message || 'Delete request failed.',
+				error: null,
+			};
 		}
 		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${message}`);
 	}

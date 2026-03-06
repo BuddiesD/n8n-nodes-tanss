@@ -390,17 +390,36 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 				}
 				return fullResponse && fullResponse.body ? fullResponse.body : fullResponse;
 			} catch (err: unknown) {
-				const e = err as unknown as { statusCode?: number; response?: { statusCode?: number } };
-				const status = e?.statusCode ?? e?.response?.statusCode;
-				if (status === 403) {
-					return {
-						success: false,
-						statusCode: 403,
-						message: 'forbidden',
-					} as unknown as IDataObject;
+				const e = err as unknown as {
+					statusCode?: number;
+					response?: { status?: number; statusCode?: number; body?: unknown; data?: unknown };
+				};
+				const statusCode = e?.response?.statusCode ?? e?.response?.status ?? e?.statusCode ?? 0;
+				const rawBody = e?.response?.body ?? e?.response?.data;
+
+				let parsedBody: unknown = rawBody;
+				if (typeof rawBody === 'string') {
+					try {
+						parsedBody = JSON.parse(rawBody);
+					} catch {
+						parsedBody = rawBody;
+					}
 				}
-				const msg = err instanceof Error ? err.message : String(err);
-				throw new NodeOperationError(this.getNode(), `Failed to execute deleteAssignDevice: ${msg}`);
+
+				const tanssError = (parsedBody as { error?: { localizedText?: string; text?: string; type?: string } } | null)?.error;
+				const fallbackMessage =
+					statusCode === 403
+						? 'Forbidden: Assignment not found or not allowed for this remote support type.'
+						: err instanceof Error
+							? err.message
+							: `Delete request failed (status ${statusCode})`;
+
+				return {
+					success: false,
+					statusCode,
+					message: tanssError?.localizedText ?? tanssError?.text ?? fallbackMessage,
+					error: tanssError ?? parsedBody,
+				} as unknown as IDataObject;
 			}
 		}
 
@@ -499,17 +518,36 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 				}
 				return fullResponse && fullResponse.body ? fullResponse.body : fullResponse;
 			} catch (err: unknown) {
-				const e = err as unknown as { statusCode?: number; response?: { statusCode?: number } };
-				const status = e?.statusCode ?? e?.response?.statusCode;
-				if (status === 403) {
-					return {
-						success: false,
-						statusCode: 403,
-						message: 'forbidden',
-					} as unknown as IDataObject;
+				const e = err as unknown as {
+					statusCode?: number;
+					response?: { status?: number; statusCode?: number; body?: unknown; data?: unknown };
+				};
+				const statusCode = e?.response?.statusCode ?? e?.response?.status ?? e?.statusCode ?? 0;
+				const rawBody = e?.response?.body ?? e?.response?.data;
+
+				let parsedBody: unknown = rawBody;
+				if (typeof rawBody === 'string') {
+					try {
+						parsedBody = JSON.parse(rawBody);
+					} catch {
+						parsedBody = rawBody;
+					}
 				}
-				const msg = err instanceof Error ? err.message : String(err);
-				throw new NodeOperationError(this.getNode(), `Failed to execute deleteRemoteSupport: ${msg}`);
+
+				const tanssError = (parsedBody as { error?: { localizedText?: string; text?: string; type?: string } } | null)?.error;
+				const fallbackMessage =
+					statusCode === 403
+						? 'Forbidden: external ID is missing or does not belong to an external remote support system.'
+						: err instanceof Error
+							? err.message
+							: `Delete request failed (status ${statusCode})`;
+
+				return {
+					success: false,
+					statusCode,
+					message: tanssError?.localizedText ?? tanssError?.text ?? fallbackMessage,
+					error: tanssError ?? parsedBody,
+				} as unknown as IDataObject;
 			}
 		}
 

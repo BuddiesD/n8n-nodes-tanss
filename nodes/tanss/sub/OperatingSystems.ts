@@ -185,10 +185,47 @@ export async function handleOperatingSystems(this: IExecuteFunctions, i: number)
 		} as unknown as import('n8n-workflow').IHttpRequestOptions;
 		const fullResponse = (await this.helpers.httpRequest(options)) as unknown as FullResponse;
 		if (requestOptions.method === 'DELETE') {
-			return { success: fullResponse.statusCode === 204, statusCode: fullResponse.statusCode };
+			if (fullResponse.statusCode === 204) {
+				return { success: true, statusCode: 204, message: 'Operating system deleted successfully.' };
+			}
+			const tanssBody = (fullResponse.body ?? null) as { error?: { localizedText?: string; text?: string; type?: string } } | null;
+			const tanssError = tanssBody?.error;
+			return {
+				success: false,
+				statusCode: fullResponse.statusCode,
+				message: tanssError?.localizedText ?? tanssError?.text ?? `Delete request failed (status ${fullResponse.statusCode})`,
+				error: tanssError ?? tanssBody,
+			};
 		}
 		return fullResponse.body ?? (fullResponse as unknown);
 	} catch (error: unknown) {
+		if (requestOptions.method === 'DELETE') {
+			const anyErr = error as {
+				statusCode?: number;
+				response?: { status?: number; statusCode?: number; body?: unknown; data?: unknown };
+			};
+			const statusCode = anyErr?.response?.statusCode ?? anyErr?.response?.status ?? anyErr?.statusCode ?? 0;
+			const rawBody = anyErr?.response?.body ?? anyErr?.response?.data;
+
+			let parsedBody: unknown = rawBody;
+			if (typeof rawBody === 'string') {
+				try {
+					parsedBody = JSON.parse(rawBody);
+				} catch {
+					parsedBody = rawBody;
+				}
+			}
+
+			const tanssError = (parsedBody as { error?: { localizedText?: string; text?: string; type?: string } } | null)?.error;
+
+			return {
+				success: false,
+				statusCode,
+				message: tanssError?.localizedText ?? tanssError?.text ?? (error instanceof Error ? error.message : `Delete request failed (status ${statusCode})`),
+				error: tanssError ?? parsedBody,
+			};
+		}
+
 		const errorMessage = error instanceof Error ? error.message : String(error);
 		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${errorMessage}`);
 	}

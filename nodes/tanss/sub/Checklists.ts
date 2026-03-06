@@ -187,9 +187,62 @@ export async function handleChecklists(this: IExecuteFunctions, i: number) {
 	requestOptions.url = url;
 
 	try {
+		if (operation === 'removeChecklist') {
+			const fullResponse = (await this.helpers.httpRequest({
+				...(requestOptions as unknown as Record<string, unknown>),
+				simple: false,
+				resolveWithFullResponse: true,
+			} as unknown as import('n8n-workflow').IHttpRequestOptions)) as unknown as {
+				statusCode?: number;
+				body?: unknown;
+			};
+
+			const statusCode = fullResponse?.statusCode ?? 0;
+			if (statusCode === 200) {
+				return { success: true, statusCode, message: 'Checklist removed successfully.' };
+			}
+
+			const tanssBody = (fullResponse?.body ?? null) as { error?: { localizedText?: string; text?: string; type?: string } } | null;
+			const tanssError = tanssBody?.error;
+
+			return {
+				success: false,
+				statusCode,
+				message: tanssError?.localizedText ?? tanssError?.text ?? `Delete request failed (status ${statusCode})`,
+				error: tanssError ?? tanssBody,
+			};
+		}
+
 		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
+		if (operation === 'removeChecklist') {
+			const anyErr = error as {
+				statusCode?: number;
+				response?: { status?: number; statusCode?: number; body?: unknown; data?: unknown };
+			};
+			const statusCode = anyErr?.response?.statusCode ?? anyErr?.response?.status ?? anyErr?.statusCode ?? 0;
+			const rawBody = anyErr?.response?.body ?? anyErr?.response?.data;
+
+			let parsedBody: unknown = rawBody;
+			if (typeof rawBody === 'string') {
+				try {
+					parsedBody = JSON.parse(rawBody);
+				} catch {
+					parsedBody = rawBody;
+				}
+			}
+
+			const tanssError = (parsedBody as { error?: { localizedText?: string; text?: string; type?: string } } | null)?.error;
+
+			return {
+				success: false,
+				statusCode,
+				message: tanssError?.localizedText ?? tanssError?.text ?? (error instanceof Error ? error.message : `Delete request failed (status ${statusCode})`),
+				error: tanssError ?? parsedBody,
+			};
+		}
+
 		const errorMessage = error instanceof Error ? error.message : String(error);
 		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${errorMessage}`);
 	}

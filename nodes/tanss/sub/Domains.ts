@@ -263,6 +263,31 @@ export async function handleDomains(this: IExecuteFunctions, i: number) {
 		}
 		return responseData;
 	} catch (error: unknown) {
+		if (operation === 'deleteDomain') {
+			const anyErr = error as {
+				statusCode?: number;
+				response?: { status?: number; statusCode?: number; body?: unknown; data?: unknown };
+			};
+			const statusCode = anyErr?.response?.statusCode ?? anyErr?.response?.status ?? anyErr?.statusCode ?? 0;
+			const rawBody = anyErr?.response?.body ?? anyErr?.response?.data;
+
+			let parsedBody: unknown = rawBody;
+			if (typeof rawBody === 'string') {
+				try {
+					parsedBody = JSON.parse(rawBody);
+				} catch {
+					parsedBody = rawBody;
+				}
+			}
+
+			return {
+				success: false,
+				statusCode,
+				message: error instanceof Error ? error.message : `Delete request failed (status ${statusCode})`,
+				error: parsedBody,
+			};
+		}
+
 		const errorMessage = error instanceof Error ? error.message : String(error);
 		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${errorMessage}`);
 	}

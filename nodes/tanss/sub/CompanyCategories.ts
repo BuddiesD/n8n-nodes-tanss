@@ -227,6 +227,39 @@ export async function handleCompanyCategories(this: IExecuteFunctions, i: number
 		}
 		return responseData;
 	} catch (error: unknown) {
+		if (operation === 'deleteCategory' || operation === 'deleteCompanyType') {
+			const anyErr = error as {
+				statusCode?: number;
+				response?: { status?: number; statusCode?: number; body?: unknown; data?: unknown };
+			};
+			const statusCode = anyErr?.response?.statusCode ?? anyErr?.response?.status ?? anyErr?.statusCode ?? 0;
+			const rawBody = anyErr?.response?.body ?? anyErr?.response?.data;
+
+			let parsedBody: unknown = rawBody;
+			if (typeof rawBody === 'string') {
+				try {
+					parsedBody = JSON.parse(rawBody);
+				} catch {
+					parsedBody = rawBody;
+				}
+			}
+
+			const tanssError = (parsedBody as { error?: { localizedText?: string; text?: string; type?: string } } | null)?.error;
+			const fallbackMessage =
+				error instanceof Error
+					? error.message
+					: statusCode > 0
+						? `Delete request failed (status ${statusCode})`
+						: 'Delete request failed.';
+
+			return {
+				success: false,
+				statusCode,
+				message: tanssError?.localizedText ?? tanssError?.text ?? fallbackMessage,
+				error: tanssError ?? parsedBody,
+			};
+		}
+
 		const anyErr = error as any;
 		let message = error instanceof Error ? error.message : String(error);
 		if (anyErr && anyErr.response) {

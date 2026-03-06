@@ -564,7 +564,16 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		if (operation === 'deletePeriphery' || operation === 'deletePeripheryType' || operation === 'deletePeripheryAssignment') {
 			if (responseData === '' || responseData == null) {
-				return { statusCode: 204, message: 'deleted succesfully' };
+				return {
+					success: true,
+					statusCode: 204,
+					message:
+						operation === 'deletePeriphery'
+							? 'periphery was deleted succesfully'
+							: operation === 'deletePeripheryType'
+								? 'periphery type deleted'
+								: 'periphery assignment deleted',
+				};
 			}
 		}
 		if (operation === 'assignPeriphery') {
@@ -580,9 +589,30 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 			try {
 				const status = anyErr.response.status;
 				const respData = anyErr.response.data;
+				if (operation === 'deletePeriphery' || operation === 'deletePeripheryType' || operation === 'deletePeripheryAssignment') {
+					const tanssError = respData?.error;
+					return {
+						success: false,
+						statusCode: status,
+						message:
+							tanssError?.localizedText ??
+							tanssError?.text ??
+							(status === 403 ? 'error response' : `Delete request failed (status ${status})`),
+						error: tanssError ?? respData,
+					};
+				}
 				message += `; Status: ${status}`;
 				if (respData) message += `; Response: ${JSON.stringify(respData)}`;
 			} catch (e) {}
+		}
+
+		if (operation === 'deletePeriphery' || operation === 'deletePeripheryType' || operation === 'deletePeripheryAssignment') {
+			return {
+				success: false,
+				statusCode: 0,
+				message: message || 'Delete request failed.',
+				error: null,
+			};
 		}
 		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${message}`);
 	}

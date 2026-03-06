@@ -162,10 +162,43 @@ export async function handleHddTypes(this: IExecuteFunctions, i: number) {
 		} as unknown as import('n8n-workflow').IHttpRequestOptions;
 		const fullResponse = (await this.helpers.httpRequest(options)) as unknown as FullResponse;
 		if (requestOptions.method === 'DELETE') {
-			return { success: fullResponse.statusCode === 204, statusCode: fullResponse.statusCode };
+			if (fullResponse.statusCode === 204) {
+				return { success: true, statusCode: 204, message: 'HDD type deleted successfully.' };
+			}
+			return {
+				success: false,
+				statusCode: fullResponse.statusCode,
+				message: `Delete request failed (status ${fullResponse.statusCode})`,
+				error: fullResponse.body ?? null,
+			};
 		}
 		return fullResponse.body ?? (fullResponse as unknown);
 	} catch (error: unknown) {
+		if (requestOptions.method === 'DELETE') {
+			const anyErr = error as {
+				statusCode?: number;
+				response?: { status?: number; statusCode?: number; body?: unknown; data?: unknown };
+			};
+			const statusCode = anyErr?.response?.statusCode ?? anyErr?.response?.status ?? anyErr?.statusCode ?? 0;
+			const rawBody = anyErr?.response?.body ?? anyErr?.response?.data;
+
+			let parsedBody: unknown = rawBody;
+			if (typeof rawBody === 'string') {
+				try {
+					parsedBody = JSON.parse(rawBody);
+				} catch {
+					parsedBody = rawBody;
+				}
+			}
+
+			return {
+				success: false,
+				statusCode,
+				message: error instanceof Error ? error.message : `Delete request failed (status ${statusCode})`,
+				error: parsedBody,
+			};
+		}
+
 		const errorMessage = error instanceof Error ? error.message : String(error);
 		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${errorMessage}`);
 	}
