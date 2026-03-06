@@ -324,10 +324,15 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 		}
 		return responseData;
 	} catch (error: unknown) {
+		type TanssError = {
+			localizedText?: string;
+			text?: string;
+		};
+
 		const anyErr = error as {
 			response?: {
 				status?: number;
-				data?: { error?: { localizedText?: string; text?: string } } | Record<string, unknown>;
+				data?: unknown;
 			};
 		};
 		let message = error instanceof Error ? error.message : String(error);
@@ -336,7 +341,13 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 				const status = anyErr.response.status;
 				const respData = anyErr.response.data;
 				if (operation === 'deleteComponent' || operation === 'deleteComponentType') {
-					const tanssError = respData && 'error' in respData ? respData.error : undefined;
+					let tanssError: TanssError | undefined;
+					if (respData && typeof respData === 'object' && 'error' in respData) {
+						const maybeError = (respData as { error?: unknown }).error;
+						if (maybeError && typeof maybeError === 'object') {
+							tanssError = maybeError as TanssError;
+						}
+					}
 					return {
 						success: false,
 						statusCode: status,
@@ -347,8 +358,8 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 				}
 				message += `; Status: ${status}`;
 				if (respData) {
-					if ('error' in respData && respData.error) {
-						message += `; Error: ${JSON.stringify(respData.error)}`;
+					if (typeof respData === 'object' && 'error' in respData && (respData as { error?: unknown }).error) {
+						message += `; Error: ${JSON.stringify((respData as { error?: unknown }).error)}`;
 					} else {
 						message += `; Response: ${JSON.stringify(respData)}`;
 					}
