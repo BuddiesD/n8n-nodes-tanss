@@ -206,7 +206,7 @@ export const peripheryFields: INodeProperties[] = [
 								displayName: 'assignmentId',
 								name: 'assignmentId',
 								default: '',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'assignmentType',
@@ -226,37 +226,37 @@ export const peripheryFields: INodeProperties[] = [
 									},
 								],
 								default: 'PC',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'Dhcp',
 								name: 'dhcp',
 								default: '',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'ID',
 								name: 'id',
 								default: '',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'Ip',
 								name: 'ip',
 								default: '',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'Mac',
 								name: 'mac',
 								default: '',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'Remark',
 								name: 'remark',
 								default: '',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'serviceAssignments',
@@ -270,13 +270,13 @@ export const peripheryFields: INodeProperties[] = [
 												displayName: 'serviceId',
 												name: 'serviceId',
 												default: '',
-												type: 'string'
+												type: 'string',
 											},
 										],
 									},
 								],
 								type: 'string',
-								default: undefined
+								default: undefined,
 							},
 						],
 					},
@@ -381,7 +381,7 @@ export const peripheryFields: INodeProperties[] = [
 								displayName: 'assignmentId',
 								name: 'assignmentId',
 								default: '',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'assignmentType',
@@ -401,37 +401,37 @@ export const peripheryFields: INodeProperties[] = [
 									},
 								],
 								default: 'PC',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'Dhcp',
 								name: 'dhcp',
 								default: '',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'ID',
 								name: 'id',
 								default: '',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'Ip',
 								name: 'ip',
 								default: '',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'Mac',
 								name: 'mac',
 								default: '',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'Remark',
 								name: 'remark',
 								default: '',
-								type: 'string'
+								type: 'string',
 							},
 							{
 								displayName: 'serviceAssignments',
@@ -445,13 +445,13 @@ export const peripheryFields: INodeProperties[] = [
 												displayName: 'serviceId',
 												name: 'serviceId',
 												default: '',
-												type: 'string'
+												type: 'string',
 											},
 										],
 									},
 								],
 								type: 'string',
-								default: undefined
+								default: undefined,
 							},
 						],
 					},
