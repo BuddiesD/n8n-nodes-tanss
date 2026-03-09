@@ -89,6 +89,7 @@ A complete overview of all available operations can be found in the TANSS API do
 
 You only need to provide:
 
+- `backend url (api url)`
 - `username`
 - `password`
 - optionally: `TOTP Secret Key` (for two-factor authentication)
