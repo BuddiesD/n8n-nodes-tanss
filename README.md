@@ -12,7 +12,7 @@ New: [n8n-nodes-tanss](https://www.npmjs.com/package/n8n-nodes-tanss)
 # n8n-nodes-tanss
 
 <div align="center">
-<img src="./images/n8n_tanss.png" width="70%">
+<img src="./docs/images/n8n_tanss.png" width="70%">
 </div>
 <br>
 This is an n8n community node. It lets you use the TANSS API in your n8n workflows.<br>
