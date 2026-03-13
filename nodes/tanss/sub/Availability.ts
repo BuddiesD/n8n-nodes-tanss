@@ -24,6 +24,7 @@ export const availabilityFields: INodeProperties[] = [
 		displayName: 'API Token',
 		name: 'apiToken',
 		type: 'string' as const,
+		required: true,
 		typeOptions: { password: true },
 		default: '',
 		description: 'API token obtained from the TANSS API login',

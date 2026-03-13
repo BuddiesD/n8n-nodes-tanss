@@ -30,6 +30,7 @@ export const employeesFields: INodeProperties[] = [
 		displayName: 'API Token',
 		name: 'apiToken',
 		type: 'string' as const,
+		required: true,
 		typeOptions: { password: true },
 		default: '',
 		description: 'Optional API token (Bearer). If not provided the credentials are used.',
