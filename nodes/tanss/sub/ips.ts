@@ -36,6 +36,7 @@ export const ipsFields: INodeProperties[] = [
 		displayName: 'Assignment Type',
 		name: 'assignmentType',
 		type: 'options' as const,
+		required: true,
 		options: [
 			{ name: 'PC', value: 'PC' },
 			{ name: 'PERIPHERY', value: 'PERIPHERY' },
@@ -48,6 +49,7 @@ export const ipsFields: INodeProperties[] = [
 		displayName: 'Assignment ID',
 		name: 'assignmentId',
 		type: 'number' as const,
+		required: true,
 		default: 0,
 		displayOptions: { show: { resource: ['ips'], operation: ['getIps', 'createIp'] } },
 		description: 'ID of the pc / periphery',
@@ -56,6 +58,7 @@ export const ipsFields: INodeProperties[] = [
 		displayName: 'IP ID',
 		name: 'ipId',
 		type: 'number' as const,
+		required: true,
 		default: 0,
 		displayOptions: { show: { resource: ['ips'], operation: ['updateIp', 'deleteIp'] } },
 		description: 'ID of the ip address',
