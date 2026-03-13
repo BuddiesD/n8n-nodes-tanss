@@ -1,5 +1,7 @@
 # Calls Operations
 
+These API calls belong to the "phone call api". They can't be used from a "normal employee login", instead an external API token must be created for the role "PHONE".
+
 ## Create / Import Call
 
 **API Endpoint:** POST /api/v1/calls
@@ -60,7 +62,7 @@ Retrieve a specific phone call by its ID.
 **Parameters:**
 
 - **API Token** (required)
-- **Phone Call ID**
+- **Phone Call ID** (required)
 
 ## Update Phone Call
 
@@ -71,7 +73,7 @@ Update an existing phone call.
 **Parameters:**
 
 - **API Token** (required)
-- **Phone Call ID**
+- **Phone Call ID** (required)
 - **Use Raw Call JSON (Optional)**
 - **Date (Timestamp)**
 - **From Phone Number**

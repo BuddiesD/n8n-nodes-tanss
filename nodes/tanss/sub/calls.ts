@@ -325,6 +325,7 @@ export const callsFields: INodeProperties[] = [
 		displayName: 'Phone Call ID',
 		name: 'phoneCallId',
 		type: 'number' as const,
+		required: true,
 		default: 0,
 		description: 'ID of the phone call to fetch/update',
 		displayOptions: {
