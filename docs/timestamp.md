@@ -51,7 +51,7 @@ Update an existing timestamp.
 **Parameters:**
 
 - **API Token** (required)
-- **Timestamp ID**
+- **Timestamp ID** (required)
 - **Employee ID**
 - **Date (Timestamp)**
 - **State**
@@ -64,8 +64,8 @@ Write all timestamps for a full day at once.
 **Parameters:**
 
 - **API Token** (required)
-- **Employee ID (Day)**
-- **Day**
+- **Employee ID (Day)** (required)
+- **Day** (required)
 - **Timestamps JSON**
 
 ## Create Day Closings
@@ -111,7 +111,7 @@ Set the initial time balance for an employee.
 **Parameters:**
 
 - **API Token** (required)
-- **Employee ID (Initial)**
+- **Employee ID (Initial)** (required)
 - **Initial Balance (Minutes)**
 
 ## Get Pause Configs
@@ -139,7 +139,7 @@ Update an existing pause configuration.
 **Parameters:**
 
 - **API Token** (required)
-- **Pause Config ID**
+- **Pause Config ID** (required)
 - **From Minutes**
 - **Minimum Pause (Minutes)**
 
@@ -150,4 +150,4 @@ Delete a pause configuration.
 **Parameters:**
 
 - **API Token** (required)
-- **Pause Config ID**
+- **Pause Config ID** (required)
