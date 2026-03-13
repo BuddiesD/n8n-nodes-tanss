@@ -198,6 +198,7 @@ export const remoteSupportsFields: INodeProperties[] = [
 		displayName: 'Remote Support ID',
 		name: 'remoteSupportId',
 		type: 'number' as const,
+		required: true,
 		default: 0,
 		description: 'ID of the remote support to fetch / update / delete',
 		displayOptions: {

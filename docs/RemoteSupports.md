@@ -1,5 +1,7 @@
 # Remote Supports Operations
 
+These API calls belong to the "remote support api". They can't be used from a "normal employee login", instead an external API token must be created for the role "REMOTE_SUPPORT".
+
 ## Create / Import Remote Support
 
 **API Endpoint:** POST /api/remoteSupports/v1
@@ -47,7 +49,7 @@ Retrieve a specific remote support by its ID.
 **Parameters:**
 
 - **API Token** (required)
-- **Remote Support ID**
+- **Remote Support ID** (required)
 
 ## Update Remote Support
 
@@ -58,7 +60,7 @@ Update an existing remote support by its ID.
 **Parameters:**
 
 - **API Token** (required)
-- **Remote Support ID**
+- **Remote Support ID** (required)
 - **Remote Maintenance ID**
 - **User ID**
 - **User Name**
@@ -81,7 +83,7 @@ Delete a remote support by its ID.
 **Parameters:**
 
 - **API Token** (required)
-- **Remote Support ID**
+- **Remote Support ID** (required)
 
 ## Get Device Assignments
 
