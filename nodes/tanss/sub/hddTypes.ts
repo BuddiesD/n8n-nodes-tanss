@@ -58,6 +58,7 @@ export const hddTypesFields: INodeProperties[] = [
 		displayName: 'HDD Type ID',
 		name: 'hddTypeId',
 		type: 'number' as const,
+		required: true,
 		default: 0,
 		description: 'ID of the HDD type',
 		displayOptions: {

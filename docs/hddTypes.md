@@ -21,7 +21,7 @@ Delete an HDD type.
 **Parameters:**
 
 - **API Token** (required)
-- **HDD Type ID**
+- **HDD Type ID** (required)
 
 ## Get HDD Types
 
@@ -42,7 +42,7 @@ Retrieve a specific HDD type by its ID.
 **Parameters:**
 
 - **API Token** (required)
-- **HDD Type ID**
+- **HDD Type ID** (required)
 
 ## Update HDD Type
 
@@ -53,6 +53,6 @@ Update an existing HDD type.
 **Parameters:**
 
 - **API Token** (required)
-- **HDD Type ID**
+- **HDD Type ID** (required)
 - **ID**
 - **Name**
