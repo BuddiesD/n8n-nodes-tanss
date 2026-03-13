@@ -21,7 +21,7 @@ Delete a manufacturer.
 **Parameters:**
 
 - **API Token** (required)
-- **Manufacturer ID**
+- **Manufacturer ID** (required)
 
 ## Get Manufacturers
 
@@ -42,7 +42,7 @@ Retrieve a specific manufacturer by its ID.
 **Parameters:**
 
 - **API Token** (required)
-- **Manufacturer ID**
+- **Manufacturer ID** (required)
 
 ## Update Manufacturer
 
@@ -53,6 +53,6 @@ Update an existing manufacturer.
 **Parameters:**
 
 - **API Token** (required)
-- **Manufacturer ID**
+- **Manufacturer ID** (required)
 - **ID**
 - **Name**

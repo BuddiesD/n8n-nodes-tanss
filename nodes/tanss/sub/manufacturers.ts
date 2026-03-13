@@ -58,6 +58,7 @@ export const manufacturersFields: INodeProperties[] = [
 		displayName: 'Manufacturer ID',
 		name: 'manufacturerId',
 		type: 'number' as const,
+		required: true,
 		default: 0,
 		description: 'ID of the manufacturer',
 		displayOptions: {
