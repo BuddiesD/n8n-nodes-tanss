@@ -61,6 +61,7 @@ export const callbackFields: INodeProperties[] = [
 		displayName: 'Callback ID',
 		name: 'callbackId',
 		type: 'number' as const,
+		required: true,
 		default: 0,
 		description: 'ID of the callback to fetch or update',
 		displayOptions: {

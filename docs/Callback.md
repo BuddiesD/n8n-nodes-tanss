@@ -60,7 +60,7 @@ Retrieve a specific callback by its ID.
 **Parameters:**
 
 - **API Token** (required)
-- **Callback ID**
+- **Callback ID** (required)
 
 ## Update Callback
 
@@ -71,7 +71,7 @@ Update an existing callback.
 **Parameters:**
 
 - **API Token** (required)
-- **Callback ID**
+- **Callback ID** (required)
 - **From Employee ID**
 - **To Employee ID**
 - **To Department ID**
