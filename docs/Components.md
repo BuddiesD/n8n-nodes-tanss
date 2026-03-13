@@ -11,15 +11,13 @@ Fetches a component by a given id
 **Parameters:**
 
 - **API Token** (required)
-- **Component ID**
+- **Component ID** (required)
 
 ## Create Component
 
 **API Endpoint:** POST /api/v1/components
 
 Creates a component
-
-|
 
 **Parameters:**
 
@@ -54,12 +52,10 @@ Creates a component
 
 Updates a component
 
-|
-
 **Parameters:**
 
 - **API Token** (required)
-- **Component ID**
+- **Component ID** (required)
 - **Update Component Fields**
 - **Update Component Fields -> inventoryNumber**
 - **Update Component Fields -> componentTypeId**
@@ -89,20 +85,16 @@ Updates a component
 
 Deletes a component
 
-|
-
 **Parameters:**
 
 - **API Token** (required)
-- **Component ID**
+- **Component ID** (required)
 
 ## List Components
 
 **API Endpoint:** PUT /api/v1/components
 
 Gets a list of components
-
-|
 
 **Parameters:**
 
@@ -122,8 +114,6 @@ Gets a list of components
 
 Gets a list of component types
 
-|
-
 **Parameters:**
 
 - **API Token** (required)
@@ -133,8 +123,6 @@ Gets a list of component types
 **API Endpoint:** POST /api/v1/components/types
 
 Create component type
-
-|
 
 **Parameters:**
 
@@ -151,12 +139,10 @@ Create component type
 
 Update component type
 
-|
-
 **Parameters:**
 
 - **API Token** (required)
-- **Component Type ID**
+- **Component Type ID** (required)
 - **Update Component Type Fields**
 - **Update Component Type Fields -> ID**
 - **Update Component Type Fields -> Type**
@@ -169,9 +155,7 @@ Update component type
 
 Delete component type
 
-|
-
 **Parameters:**
 
 - **API Token** (required)
-- **Component Type ID**
+- **Component Type ID** (required)
