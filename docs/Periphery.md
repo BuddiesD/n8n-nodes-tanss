@@ -9,7 +9,7 @@ Retrieve a periphery device by its ID.
 **Parameters:**
 
 - **API Token** (required)
-- **Periphery ID**
+- **Periphery ID** (required)
 
 ## List Peripheries
 
@@ -57,7 +57,7 @@ Update an existing periphery type.
 **Parameters:**
 
 - **API Token** (required)
-- **Periphery Type ID**
+- **Periphery Type ID** (required)
 - **ID**
 - **Name**
 - **Image**
@@ -71,7 +71,7 @@ Delete a periphery type.
 **Parameters:**
 
 - **API Token** (required)
-- **Periphery Type ID**
+- **Periphery Type ID** (required)
 
 ## Assign Periphery
 
@@ -82,9 +82,9 @@ Assign a periphery to another entity.
 **Parameters:**
 
 - **API Token** (required)
-- **Periphery ID**
-- **Link Type ID**
-- **Link ID**
+- **Periphery ID** (required)
+- **Link Type ID** (required)
+- **Link ID** (required)
 
 ## Delete Periphery Assignment
 
@@ -95,9 +95,9 @@ Remove a periphery assignment.
 **Parameters:**
 
 - **API Token** (required)
-- **Periphery ID**
-- **Link Type ID**
-- **Link ID**
+- **Periphery ID** (required)
+- **Link Type ID** (required)
+- **Link ID** (required)
 
 ## Update Periphery
 
@@ -108,7 +108,7 @@ Update an existing periphery.
 **Parameters:**
 
 - **API Token** (required)
-- **Periphery ID**
+- **Periphery ID** (required)
 - **Company ID**
 - **Date (Timestamp)**
 - **Periphery Type ID**
@@ -210,4 +210,4 @@ Delete a periphery.
 **Parameters:**
 
 - **API Token** (required)
-- **Periphery ID**
+- **Periphery ID** (required)
