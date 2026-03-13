@@ -24,7 +24,7 @@ Delete a specific operating system.
 **Parameters:**
 
 - **API Token** (required)
-- **OS ID**
+- **OS ID** (required)
 
 ## Get Operating Systems
 
@@ -45,7 +45,7 @@ Retrieve a specific operating system by its ID.
 **Parameters:**
 
 - **API Token** (required)
-- **OS ID**
+- **OS ID** (required)
 
 ## Update OS
 
@@ -56,7 +56,7 @@ Update an existing operating system.
 **Parameters:**
 
 - **API Token** (required)
-- **OS ID**
+- **OS ID** (required)
 - **ID**
 - **Name**
 - **Server Operating System**

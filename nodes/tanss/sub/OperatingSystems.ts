@@ -58,6 +58,7 @@ export const operatingSystemsFields: INodeProperties[] = [
 		displayName: 'OS ID',
 		name: 'osId',
 		type: 'number' as const,
+		required: true,
 		default: 0,
 		description: 'ID of the operating system',
 		displayOptions: {
