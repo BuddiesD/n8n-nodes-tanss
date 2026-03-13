@@ -58,6 +58,7 @@ export const cpuFields: INodeProperties[] = [
 		displayName: 'CPU ID',
 		name: 'cpuId',
 		type: 'number' as const,
+		required: true,
 		default: 0,
 		description: 'ID of the CPU',
 		displayOptions: {

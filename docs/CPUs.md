@@ -21,7 +21,7 @@ Delete a CPU.
 **Parameters:**
 
 - **API Token** (required)
-- **CPU ID**
+- **CPU ID** (required)
 
 ## Get CPUs
 
@@ -42,7 +42,7 @@ Retrieve a specific CPU by its ID.
 **Parameters:**
 
 - **API Token** (required)
-- **CPU ID**
+- **CPU ID** (required)
 
 ## Update CPU
 
@@ -53,6 +53,6 @@ Update an existing CPU.
 **Parameters:**
 
 - **API Token** (required)
-- **CPU ID**
+- **CPU ID** (required)
 - **ID**
 - **Name**
