@@ -7,6 +7,7 @@
 Creates or imports a phone call into the database.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Use Raw Call JSON (Optional)**
 - **Date (Timestamp)**
@@ -38,6 +39,7 @@ Creates or imports a phone call into the database.
 Retrieve a list of phone calls using filter settings.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Use Raw Filter JSON (Optional)**
 - **Timeframe From (Timestamp)**
@@ -56,6 +58,7 @@ Retrieve a list of phone calls using filter settings.
 Retrieve a specific phone call by its ID.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Phone Call ID**
 
@@ -66,6 +69,7 @@ Retrieve a specific phone call by its ID.
 Update an existing phone call.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Phone Call ID**
 - **Use Raw Call JSON (Optional)**
@@ -98,6 +102,7 @@ Update an existing phone call.
 Identify a phone call and resolve company or employee IDs.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Use Raw Identify JSON (Optional)**
 - **From Phone Number**
@@ -110,6 +115,7 @@ Identify a phone call and resolve company or employee IDs.
 Retrieve all assignments between `idString` values and employees.
 
 **Parameters:**
+
 - **API Token** (required)
 
 ## Create Employee Assignment
@@ -119,6 +125,7 @@ Retrieve all assignments between `idString` values and employees.
 Create a new assignment between an `idString` and an employee.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Use Raw Employee Assignment JSON (Optional)**
 - **Employee ID**
@@ -131,6 +138,7 @@ Create a new assignment between an `idString` and an employee.
 Delete an assignment between an `idString` and an employee.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Use Raw Employee Assignment JSON (Optional)**
 - **Employee ID**
@@ -143,6 +151,7 @@ Delete an assignment between an `idString` and an employee.
 Generate a notification (popup) for an incoming or outgoing call.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Use Raw Notification JSON (Optional)**
 - **ID**

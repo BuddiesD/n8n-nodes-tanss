@@ -7,6 +7,7 @@
 Create a new manufacturer.
 
 **Parameters:**
+
 - **API Token** (required)
 - **ID**
 - **Name**
@@ -18,6 +19,7 @@ Create a new manufacturer.
 Delete a manufacturer.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Manufacturer ID**
 
@@ -28,6 +30,7 @@ Delete a manufacturer.
 Retrieve a list of all manufacturers.
 
 **Parameters:**
+
 - **API Token** (required)
 
 ## Get Manufacturer
@@ -37,6 +40,7 @@ Retrieve a list of all manufacturers.
 Retrieve a specific manufacturer by its ID.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Manufacturer ID**
 
@@ -47,6 +51,7 @@ Retrieve a specific manufacturer by its ID.
 Update an existing manufacturer.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Manufacturer ID**
 - **ID**

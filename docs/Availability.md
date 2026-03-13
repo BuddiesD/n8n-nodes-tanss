@@ -7,6 +7,6 @@
 Fetches availability infos
 
 **Parameters:**
+
 - **API Token** (required)
 - **Employee IDs (Comma Separated)** (required)
-

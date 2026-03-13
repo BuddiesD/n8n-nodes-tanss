@@ -7,6 +7,7 @@
 Create or import a remote support entry into the database.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Remote Maintenance ID**
 - **User ID**
@@ -28,6 +29,7 @@ Create or import a remote support entry into the database.
 Retrieve a list of remote supports using filter settings.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Timeframe From (Timestamp)**
 - **Timeframe To (Timestamp)**
@@ -43,6 +45,7 @@ Retrieve a list of remote supports using filter settings.
 Retrieve a specific remote support by its ID.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Remote Support ID**
 
@@ -53,6 +56,7 @@ Retrieve a specific remote support by its ID.
 Update an existing remote support by its ID.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Remote Support ID**
 - **Remote Maintenance ID**
@@ -75,6 +79,7 @@ Update an existing remote support by its ID.
 Delete a remote support by its ID.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Remote Support ID**
 
@@ -85,6 +90,7 @@ Delete a remote support by its ID.
 Retrieve all device assignments for remote supports.
 
 **Parameters:**
+
 - **API Token** (required)
 
 ## Create Device Assignment
@@ -94,6 +100,7 @@ Retrieve all device assignments for remote supports.
 Create a new device assignment.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Device ID**
 - **Company ID**
@@ -107,6 +114,7 @@ Create a new device assignment.
 Delete an existing device assignment.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Device ID**
 - **Company ID**
@@ -118,6 +126,7 @@ Delete an existing device assignment.
 Retrieve all technician assignments for the remote support type.
 
 **Parameters:**
+
 - **API Token** (required)
 
 ## Create Technician Assignment
@@ -125,6 +134,7 @@ Retrieve all technician assignments for the remote support type.
 Create an assignment mapping a `userId` to an `employeeId`.
 
 **Parameters:**
+
 - **API Token** (required)
 - **User ID**
 - **Employee ID**
@@ -134,6 +144,7 @@ Create an assignment mapping a `userId` to an `employeeId`.
 Delete a technician assignment by `userId`.
 
 **Parameters:**
+
 - **API Token** (required)
 - **User ID**
 - **Employee ID**

@@ -7,6 +7,7 @@
 Perform a global search across multiple areas.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Use Raw Filter JSON (Optional)**
 - **Areas**

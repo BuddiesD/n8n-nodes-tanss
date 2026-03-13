@@ -7,6 +7,7 @@
 Retrieve a list of all technicians.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Freelancer Company ID**
 
@@ -17,6 +18,7 @@ Retrieve a list of all technicians.
 Create a new employee.
 
 **Parameters:**
+
 - **API Token** (required)
 - **ID**
 - **Name**

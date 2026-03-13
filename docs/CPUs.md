@@ -7,6 +7,7 @@
 Create a new CPU entry.
 
 **Parameters:**
+
 - **API Token** (required)
 - **ID**
 - **Name**
@@ -18,6 +19,7 @@ Create a new CPU entry.
 Delete a CPU.
 
 **Parameters:**
+
 - **API Token** (required)
 - **CPU ID**
 
@@ -28,6 +30,7 @@ Delete a CPU.
 Retrieve a list of all CPUs.
 
 **Parameters:**
+
 - **API Token** (required)
 
 ## Get CPU
@@ -37,6 +40,7 @@ Retrieve a list of all CPUs.
 Retrieve a specific CPU by its ID.
 
 **Parameters:**
+
 - **API Token** (required)
 - **CPU ID**
 
@@ -47,6 +51,7 @@ Retrieve a specific CPU by its ID.
 Update an existing CPU.
 
 **Parameters:**
+
 - **API Token** (required)
 - **CPU ID**
 - **ID**

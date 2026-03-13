@@ -5,6 +5,7 @@
 Retrieve a list of timestamps within a given time period.
 
 **Parameters:**
+
 - **API Token** (required)
 - **From (Timestamp)**
 - **Till (Timestamp)**
@@ -14,6 +15,7 @@ Retrieve a list of timestamps within a given time period.
 Retrieve timestamp information for a given time period.
 
 **Parameters:**
+
 - **API Token** (required)
 - **From (Timestamp)**
 - **Till (Timestamp)**
@@ -23,6 +25,7 @@ Retrieve timestamp information for a given time period.
 Retrieve timestamp information with statistical values.
 
 **Parameters:**
+
 - **API Token** (required)
 - **From (Timestamp)**
 - **Till (Timestamp)**
@@ -33,6 +36,7 @@ Retrieve timestamp information with statistical values.
 Create a new timestamp entry.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Auto Pause**
 - **Employee ID**
@@ -45,6 +49,7 @@ Create a new timestamp entry.
 Update an existing timestamp.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Timestamp ID**
 - **Employee ID**
@@ -57,6 +62,7 @@ Update an existing timestamp.
 Write all timestamps for a full day at once.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Employee ID (Day)**
 - **Day**
@@ -67,6 +73,7 @@ Write all timestamps for a full day at once.
 Create one or more day closing entries.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Day Closings JSON**
 
@@ -75,6 +82,7 @@ Create one or more day closing entries.
 Delete (undo) one or more day closing entries.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Day Closings JSON**
 
@@ -83,6 +91,7 @@ Delete (undo) one or more day closing entries.
 Retrieve information about the latest day closings for employees.
 
 **Parameters:**
+
 - **API Token** (required)
 
 ## Create Day Closings Till Date
@@ -90,6 +99,7 @@ Retrieve information about the latest day closings for employees.
 Create missing day closings for specific employees until a given date.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Till Date**
 - **Employee IDs JSON**
@@ -99,6 +109,7 @@ Create missing day closings for specific employees until a given date.
 Set the initial time balance for an employee.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Employee ID (Initial)**
 - **Initial Balance (Minutes)**
@@ -108,6 +119,7 @@ Set the initial time balance for an employee.
 Retrieve all pause configuration rules.
 
 **Parameters:**
+
 - **API Token** (required)
 
 ## Create Pause Config
@@ -115,6 +127,7 @@ Retrieve all pause configuration rules.
 Create a new pause configuration.
 
 **Parameters:**
+
 - **API Token** (required)
 - **From Minutes**
 - **Minimum Pause (Minutes)**
@@ -124,6 +137,7 @@ Create a new pause configuration.
 Update an existing pause configuration.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Pause Config ID**
 - **From Minutes**
@@ -134,5 +148,6 @@ Update an existing pause configuration.
 Delete a pause configuration.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Pause Config ID**

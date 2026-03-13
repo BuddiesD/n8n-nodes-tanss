@@ -5,6 +5,7 @@
 Retrieve all documents attached to a ticket.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Ticket ID**
 
@@ -13,6 +14,7 @@ Retrieve all documents attached to a ticket.
 Generate a one-time download URL for a specific ticket document.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Ticket ID**
 - **Document ID**
@@ -22,6 +24,7 @@ Generate a one-time download URL for a specific ticket document.
 Retrieve all images (screenshots) attached to a ticket.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Ticket ID**
 
@@ -30,6 +33,7 @@ Retrieve all images (screenshots) attached to a ticket.
 Generate a one-time download URL for a specific ticket image.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Ticket ID**
 - **Image ID**
@@ -39,6 +43,7 @@ Generate a one-time download URL for a specific ticket image.
 Upload a document or image to a ticket using `multipart/form-data`.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Ticket ID**
 - **Binary Property Name**

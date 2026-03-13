@@ -7,6 +7,7 @@
 Create a new PC.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Company ID** (required)
 - **Model** (required)
@@ -60,6 +61,7 @@ Create a new PC.
 Delete a PC.
 
 **Parameters:**
+
 - **API Token** (required)
 - **PC ID**
 
@@ -70,6 +72,7 @@ Delete a PC.
 Retrieve a PC or server by its ID.
 
 **Parameters:**
+
 - **API Token** (required)
 - **PC ID**
 
@@ -80,6 +83,7 @@ Retrieve a PC or server by its ID.
 Retrieve a list of PCs.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Active**
 - **Branches**
@@ -94,6 +98,7 @@ Retrieve a list of PCs.
 Update an existing PC.
 
 **Parameters:**
+
 - **API Token** (required)
 - **PC ID**
 - **Company ID** (required)

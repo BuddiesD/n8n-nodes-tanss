@@ -7,6 +7,7 @@
 Create a new domain entry.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Company ID**
 - **Title**
@@ -44,6 +45,7 @@ Create a new domain entry.
 Retrieve a specific domain by its ID.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Domain ID** (required)
 
@@ -54,6 +56,7 @@ Retrieve a specific domain by its ID.
 Update an existing domain.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Domain ID** (required)
 - **Company ID**
@@ -92,6 +95,7 @@ Update an existing domain.
 Delete a domain.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Domain ID** (required)
 
@@ -102,5 +106,6 @@ Delete a domain.
 Retrieve all domains associated with a specific company.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Company ID** (required)

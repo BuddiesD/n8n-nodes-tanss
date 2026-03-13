@@ -7,6 +7,7 @@
 Test SMTP email settings by sending a test email.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Receiver** (required)
 - **SMTP Address**

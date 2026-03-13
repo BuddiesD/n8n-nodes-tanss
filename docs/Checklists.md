@@ -7,6 +7,7 @@
 Assign a checklist to a ticket.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Link Type ID**
 - **Link ID**
@@ -19,6 +20,7 @@ Assign a checklist to a ticket.
 Remove a checklist from a ticket.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Link Type ID**
 - **Link ID**
@@ -31,6 +33,7 @@ Remove a checklist from a ticket.
 Retrieve all checklists assigned to a specific ticket.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Link Type ID**
 - **Link ID**
@@ -42,6 +45,7 @@ Retrieve all checklists assigned to a specific ticket.
 Retrieve the process or progress information for a checklist linked to a ticket.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Link Type ID**
 - **Link ID**
@@ -54,6 +58,7 @@ Retrieve the process or progress information for a checklist linked to a ticket.
 Mark or update the value of a checklist item.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Item ID**
 - **Checklist ID**

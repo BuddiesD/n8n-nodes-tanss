@@ -7,6 +7,7 @@
 Create a comment for a specific ticket.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Ticket ID**
 - **Comment Title**
@@ -20,6 +21,7 @@ Create a comment for a specific ticket.
 Create a new ticket in the database.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Assigned to Department ID**
 - **Assigned to Employee ID**
@@ -65,6 +67,7 @@ Create a new ticket in the database.
 Delete a ticket.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Ticket ID**
 - **Target Ticket ID**
@@ -76,6 +79,7 @@ Delete a ticket.
 Retrieve a specific ticket with all details.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Ticket ID**
 
@@ -86,6 +90,7 @@ Retrieve a specific ticket with all details.
 Retrieve the history of a ticket.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Ticket ID**
 
@@ -96,6 +101,7 @@ Retrieve the history of a ticket.
 Merge one ticket into another.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Ticket ID**
 - **Target Ticket ID**
@@ -107,6 +113,7 @@ Merge one ticket into another.
 Update an existing ticket.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Ticket ID**
 - **Assigned to Department ID**

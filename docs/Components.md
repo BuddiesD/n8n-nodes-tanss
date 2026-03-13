@@ -9,6 +9,7 @@ Gets a component by id
 Fetches a component by a given id
 
 **Parameters:**
+
 - **API Token** (required)
 - **Component ID**
 
@@ -21,6 +22,7 @@ Creates a component
 |
 
 **Parameters:**
+
 - **API Token** (required)
 - **Create Component Fields**
 - **Create Component Fields -> ID**
@@ -55,6 +57,7 @@ Updates a component
 |
 
 **Parameters:**
+
 - **API Token** (required)
 - **Component ID**
 - **Update Component Fields**
@@ -89,6 +92,7 @@ Deletes a component
 |
 
 **Parameters:**
+
 - **API Token** (required)
 - **Component ID**
 
@@ -101,6 +105,7 @@ Gets a list of components
 |
 
 **Parameters:**
+
 - **API Token** (required)
 - **List Components Filters**
 - **List Components Filters -> companyId**
@@ -120,6 +125,7 @@ Gets a list of component types
 |
 
 **Parameters:**
+
 - **API Token** (required)
 
 ## Create Component Type
@@ -131,6 +137,7 @@ Create component type
 |
 
 **Parameters:**
+
 - **API Token** (required)
 - **Create Component Type Fields**
 - **Create Component Type Fields -> ID**
@@ -147,6 +154,7 @@ Update component type
 |
 
 **Parameters:**
+
 - **API Token** (required)
 - **Component Type ID**
 - **Update Component Type Fields**
@@ -164,6 +172,6 @@ Delete component type
 |
 
 **Parameters:**
+
 - **API Token** (required)
 - **Component Type ID**
-

@@ -7,6 +7,7 @@
 Creates a new callback entry.
 
 **Parameters:**
+
 - **API Token** (required)
 - **From Employee ID**
 - **To Employee ID**
@@ -32,6 +33,7 @@ Creates a new callback entry.
 Retrieve a list of callbacks with optional filtering.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Use Raw Filter JSON (Optional)**
 - **Timeframe From (Timestamp)**
@@ -56,6 +58,7 @@ Retrieve a list of callbacks with optional filtering.
 Retrieve a specific callback by its ID.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Callback ID**
 
@@ -66,6 +69,7 @@ Retrieve a specific callback by its ID.
 Update an existing callback.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Callback ID**
 - **From Employee ID**

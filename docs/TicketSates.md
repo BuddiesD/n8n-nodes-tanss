@@ -5,6 +5,7 @@
 Retrieve a list of all ticket states.
 
 **Parameters:**
+
 - **API Token** (required)
 
 ## Create Ticket State
@@ -12,6 +13,7 @@ Retrieve a list of all ticket states.
 Create a new ticket state.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Name** (required)
 - **Image**
@@ -24,6 +26,7 @@ Create a new ticket state.
 Update an existing ticket state.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Ticket State ID**
 - **Name** (required)
@@ -37,5 +40,6 @@ Update an existing ticket state.
 Delete a ticket state.
 
 **Parameters:**
+
 - **API Token** (required)
 - **Ticket State ID**
