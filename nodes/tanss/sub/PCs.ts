@@ -66,6 +66,7 @@ export const pcFields: INodeProperties[] = [
 		displayName: 'PC ID',
 		name: 'pcId',
 		type: 'number' as const,
+		required: true,
 		displayOptions: {
 			show: {
 				resource: ['pc'],
@@ -79,11 +80,10 @@ export const pcFields: INodeProperties[] = [
 		displayName: 'Company ID',
 		name: 'companyId',
 		type: 'number' as const,
-		required: true,
 		displayOptions: {
 			show: {
 				resource: ['pc'],
-				operation: ['createPc', 'updatePc'],
+				operation: ['updatePc'],
 			},
 		},
 		default: 0,
@@ -92,11 +92,37 @@ export const pcFields: INodeProperties[] = [
 		displayName: 'Model',
 		name: 'model',
 		type: 'string' as const,
+		displayOptions: {
+			show: {
+				resource: ['pc'],
+				operation: ['updatePc'],
+			},
+		},
+		default: '',
+		description: 'Model of the PC or server',
+	},
+	{
+		displayName: 'Company ID',
+		name: 'createCompanyId',
+		type: 'number' as const,
 		required: true,
 		displayOptions: {
 			show: {
 				resource: ['pc'],
-				operation: ['createPc', 'updatePc'],
+				operation: ['createPc'],
+			},
+		},
+		default: 0,
+	},
+	{
+		displayName: 'Model',
+		name: 'createModel',
+		type: 'string' as const,
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['pc'],
+				operation: ['createPc'],
 			},
 		},
 		default: '',
@@ -323,6 +349,8 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 	const pcData = this.getNodeParameter('pcData', i, {}) as Record<string, unknown>;
 	const companyId = this.getNodeParameter('companyId', i, 0) as number;
 	const model = this.getNodeParameter('model', i, '') as string;
+	const createCompanyId = this.getNodeParameter('createCompanyId', i, 0) as number;
+	const createModel = this.getNodeParameter('createModel', i, '') as string;
 
 	let url = '';
 	const requestOptions: {
@@ -347,8 +375,12 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 			break;
 
 		case 'updatePc': {
+			if (!pcId || typeof pcId !== 'number' || pcId <= 0)
+				throw new NodeOperationError(this.getNode(), 'Field "PC ID" is required and must be a valid ID.');
 			url = `${credentials.baseURL}/backend/api/v1/pcs/${pcId}`;
-			const body = { ...pcData, companyId, model };
+			const body: Record<string, unknown> = { ...pcData };
+			if (companyId && typeof companyId === 'number' && companyId > 0) body.companyId = companyId;
+			if (model && typeof model === 'string' && model.trim() !== '') body.model = model;
 			if (Object.keys(body).length === 0) throw new NodeOperationError(this.getNode(), 'No data provided for updating the PC.');
 			requestOptions.method = 'PUT';
 			requestOptions.body = body;
@@ -357,7 +389,7 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 
 		case 'createPc': {
 			url = `${credentials.baseURL}/backend/api/v1/pcs`;
-			const body = { ...pcData, companyId, model };
+			const body = { ...pcData, companyId: createCompanyId, model: createModel };
 			if (Object.keys(body).length === 0) throw new NodeOperationError(this.getNode(), 'No data provided for creating the PC.');
 			if (!body.model) throw new NodeOperationError(this.getNode(), 'Field "Model" is required for creating a PC.');
 			if (!body.companyId || typeof body.companyId !== 'number' || body.companyId <= 0)
@@ -368,6 +400,8 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 		}
 
 		case 'deletePc':
+			if (!pcId || typeof pcId !== 'number' || pcId <= 0)
+				throw new NodeOperationError(this.getNode(), 'Field "PC ID" is required and must be a valid ID.');
 			url = `${credentials.baseURL}/backend/api/v1/pcs/${pcId}`;
 			requestOptions.method = 'DELETE';
 			break;

@@ -63,7 +63,7 @@ Delete a PC.
 **Parameters:**
 
 - **API Token** (required)
-- **PC ID**
+- **PC ID** (required)
 
 ## Get PC by ID
 
@@ -74,7 +74,7 @@ Retrieve a PC or server by its ID.
 **Parameters:**
 
 - **API Token** (required)
-- **PC ID**
+- **PC ID** (required)
 
 ## List PCs
 
@@ -100,9 +100,9 @@ Update an existing PC.
 **Parameters:**
 
 - **API Token** (required)
-- **PC ID**
-- **Company ID** (required)
-- **Model** (required)
+- **PC ID** (required)
+- **Company ID**
+- **Model**
 - **Active**
 - **AnyDesk ID**
 - **AnyDesk Password**
