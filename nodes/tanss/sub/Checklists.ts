@@ -66,6 +66,7 @@ export const checklistsFields: INodeProperties[] = [
 		displayName: 'Link Type ID',
 		name: 'linkTypeId',
 		type: 'number' as const,
+		required: true,
 		displayOptions: {
 			show: {
 				resource: ['checklists'],
@@ -79,6 +80,7 @@ export const checklistsFields: INodeProperties[] = [
 		displayName: 'Link ID',
 		name: 'linkId',
 		type: 'number' as const,
+		required: true,
 		displayOptions: {
 			show: {
 				resource: ['checklists'],
@@ -92,6 +94,7 @@ export const checklistsFields: INodeProperties[] = [
 		displayName: 'Checklist ID',
 		name: 'checklistId',
 		type: 'number' as const,
+		required: true,
 		displayOptions: {
 			show: {
 				resource: ['checklists'],
