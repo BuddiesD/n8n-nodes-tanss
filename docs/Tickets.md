@@ -9,7 +9,7 @@ Create a comment for a specific ticket.
 **Parameters:**
 
 - **API Token** (required)
-- **Ticket ID**
+- **Ticket ID** (required)
 - **Comment Title**
 - **Comment Content**
 - **Internal**
@@ -69,7 +69,7 @@ Delete a ticket.
 **Parameters:**
 
 - **API Token** (required)
-- **Ticket ID**
+- **Ticket ID** (required)
 - **Target Ticket ID**
 
 ## Get Ticket by ID
@@ -81,7 +81,7 @@ Retrieve a specific ticket with all details.
 **Parameters:**
 
 - **API Token** (required)
-- **Ticket ID**
+- **Ticket ID** (required)
 
 ## Get Ticket History
 
@@ -92,7 +92,7 @@ Retrieve the history of a ticket.
 **Parameters:**
 
 - **API Token** (required)
-- **Ticket ID**
+- **Ticket ID** (required)
 
 ## Merge Tickets
 
@@ -115,7 +115,7 @@ Update an existing ticket.
 **Parameters:**
 
 - **API Token** (required)
-- **Ticket ID**
+- **Ticket ID** (required)
 - **Assigned to Department ID**
 - **Assigned to Employee ID**
 - **Attention**

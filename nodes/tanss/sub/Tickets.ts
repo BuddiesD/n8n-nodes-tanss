@@ -78,6 +78,7 @@ export const ticketFields: INodeProperties[] = [
 		displayName: 'Ticket ID',
 		name: 'ticketId',
 		type: 'number' as const,
+		required: true,
 		displayOptions: {
 			show: {
 				resource: ['ticket'],
