@@ -61,6 +61,7 @@ export const ticketStatesFields: INodeProperties[] = [
 		displayName: 'Ticket State ID',
 		name: 'id',
 		type: 'number' as const,
+		required: true,
 		default: 0,
 		description: 'ID of the ticket state',
 		displayOptions: {

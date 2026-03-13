@@ -28,7 +28,7 @@ Update an existing ticket state.
 **Parameters:**
 
 - **API Token** (required)
-- **Ticket State ID**
+- **Ticket State ID** (required)
 - **Name** (required)
 - **Image**
 - **Wait State**
@@ -42,4 +42,4 @@ Delete a ticket state.
 **Parameters:**
 
 - **API Token** (required)
-- **Ticket State ID**
+- **Ticket State ID** (required)
