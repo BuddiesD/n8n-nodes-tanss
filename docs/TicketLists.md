@@ -15,7 +15,7 @@ Retrieve tickets for a specific company.
 **Parameters:**
 
 - **API Token** (required)
-- **Company ID**
+- **Company ID** (required)
 
 ## Get Custom Ticket List
 
