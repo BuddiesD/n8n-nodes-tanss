@@ -1,5 +1,7 @@
 # Callsuser Operations
 
+Routes that are used to get phone calls (usable in the user "default" context).
+
 ## Get Phone Calls
 
 **API Endpoint:** PUT /api/v1/phoneCalls
@@ -28,7 +30,7 @@ Retrieve a specific phone call from the database by its ID.
 **Parameters:**
 
 - **API Token** (required)
-- **Phone Call ID**
+- **Phone Call ID** (required)
 
 ## Identify Phone Call
 
