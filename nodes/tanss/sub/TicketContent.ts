@@ -66,6 +66,7 @@ export const ticketContentFields: INodeProperties[] = [
 		displayName: 'Ticket ID',
 		name: 'ticketId',
 		type: 'number' as const,
+		required: true,
 		displayOptions: {
 			show: {
 				resource: ['ticketContent'],
@@ -78,6 +79,7 @@ export const ticketContentFields: INodeProperties[] = [
 		displayName: 'Document ID',
 		name: 'documentId',
 		type: 'number' as const,
+		required: true,
 		displayOptions: {
 			show: {
 				resource: ['ticketContent'],
@@ -91,6 +93,7 @@ export const ticketContentFields: INodeProperties[] = [
 		displayName: 'Image ID',
 		name: 'imageId',
 		type: 'number' as const,
+		required: true,
 		displayOptions: {
 			show: {
 				resource: ['ticketContent'],
