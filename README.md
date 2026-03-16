@@ -107,7 +107,7 @@ Tested with TANSS API. Version: 10.12.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **143 / 271 (1 not in API Docs)** (53%)
+Progress: **153 / 271 (1 not in API Docs)** (56%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -363,7 +363,7 @@ Progress: **143 / 271 (1 not in API Docs)** (53%)
   - [x] [PUT] Gets a list of pcs
 </details>
 <details>
-<summary><strong>periphery [11/11] - Testing</strong></summary>
+<summary><strong>periphery [11/11] - Done</strong></summary>
 
   - [x] [GET] Gets a periphery by id
   - [x] [PUT] Updates a periphery
@@ -378,7 +378,7 @@ Progress: **143 / 271 (1 not in API Docs)** (53%)
   - [x] [DEL] Delete periphery assignment
 </details>
 <details>
-<summary><strong>components [9/9] - Testing</strong></summary>
+<summary><strong>components [9/9] - Done</strong></summary>
 
   - [x] [GET] Gets a component by id
   - [x] [PUT] Updates a component
@@ -540,18 +540,18 @@ Progress: **143 / 271 (1 not in API Docs)** (53%)
   - [x] [GET] List of domains of a company
 </details>
 <details>
-<summary><strong>software licenses [0/10] - ?</strong></summary>
+<summary><strong>software licenses [10/10] - Testing</strong></summary>
 
-  - [ ] [PUT] Get a list of software licenses
-  - [ ] [POST] Creates a software license
-  - [ ] [GET] Gets a single software license by id
-  - [ ] [PUT] Updates a software license
-  - [ ] [DEL] Deletes a software license
-  - [ ] [GET] Gets all software license types
-  - [ ] [POST] Creates a new software license type
-  - [ ] [GET] Gets a single software license type
-  - [ ] [PUT] Updates a software license type
-  - [ ] [DEL] Deletes a software license type
+  - [x] [PUT] Get a list of software licenses
+  - [x] [POST] Creates a software license
+  - [x] [GET] Gets a single software license by id
+  - [x] [PUT] Updates a software license
+  - [x] [DEL] Deletes a software license
+  - [x] [GET] Gets all software license types
+  - [x] [POST] Creates a new software license type
+  - [x] [GET] Gets a single software license type
+  - [x] [PUT] Updates a software license type
+  - [x] [DEL] Deletes a software license type
 </details>
 
 </details>
