@@ -242,7 +242,13 @@ export const softwareLicensesFields: INodeProperties[] = [
 				default: 0,
 				description: 'Periphery type (software license type ID)',
 			},
-			{ displayName: 'Link Type ID', name: 'linkTypeId', type: 'number' as const, default: 0, description: 'Link type ID (assignment relation type)' },
+			{
+				displayName: 'Link Type ID',
+				name: 'linkTypeId',
+				type: 'number' as const,
+				default: 0,
+				description: 'Link type ID (assignment relation type)',
+			},
 			{
 				displayName: 'Link ID',
 				name: 'linkId',
@@ -402,8 +408,7 @@ export async function handleSoftwareLicenses(this: IExecuteFunctions, i: number)
 		}
 		case 'createSoftwareLicense': {
 			const createFields = this.getNodeParameter('createSoftwareLicenseFields', i, {}) as SoftwareLicenseFieldInput;
-			if (Object.keys(createFields).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No fields provided for creating software license.');
+			if (Object.keys(createFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for creating software license.');
 			url = `${credentials.baseURL}/backend/api/v1/softwarelicenses`;
 			requestOptions.method = 'POST';
 			requestOptions.body = normalizeSoftwareLicenseBody(createFields);
@@ -418,8 +423,7 @@ export async function handleSoftwareLicenses(this: IExecuteFunctions, i: number)
 		case 'updateSoftwareLicense': {
 			if (!softwareLicenseId) throw new NodeOperationError(this.getNode(), 'softwareLicenseId is required for update.');
 			const updateFields = this.getNodeParameter('updateSoftwareLicenseFields', i, {}) as SoftwareLicenseFieldInput;
-			if (Object.keys(updateFields).length === 0)
-				throw new NodeOperationError(this.getNode(), 'No fields provided for updating software license.');
+			if (Object.keys(updateFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for updating software license.');
 			url = `${credentials.baseURL}/backend/api/v1/softwarelicenses/${softwareLicenseId}`;
 			requestOptions.method = 'PUT';
 			requestOptions.body = normalizeSoftwareLicenseBody(updateFields);
