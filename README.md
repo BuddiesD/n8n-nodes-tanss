@@ -107,7 +107,7 @@ Tested with TANSS API. Version: 10.12.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **153 / 271 (1 not in API Docs)** (56%)
+Progress: **163 / 271 (1 not in API Docs)** (60%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -247,18 +247,18 @@ Progress: **153 / 271 (1 not in API Docs)** (56%)
   - [ ] [GET] gets all users with the associated departments
 </details>
 <details>
-<summary><strong>chats [0/10] - ToDo</strong></summary>
+<summary><strong>chats [10/10] - Testing</strong></summary>
 
-  - [ ] [POST] Creates a new chat
-  - [ ] [PUT] Get a list of chats
-  - [ ] [GET] Gets a chat
-  - [ ] [GET] Gets chat close requests
-  - [ ] [POST] Creates a new chat message
-  - [ ] [POST] Adds a participant
-  - [ ] [DEL] Deletes a participant
-  - [ ] [POST] Closes a chat
-  - [ ] [PUT] Accept/decline close request
-  - [ ] [POST] re-opens a chat
+  - [x] [POST] Creates a new chat
+  - [x] [PUT] Get a list of chats
+  - [x] [GET] Gets a chat
+  - [x] [GET] Gets chat close requests
+  - [x] [POST] Creates a new chat message
+  - [x] [POST] Adds a participant
+  - [x] [DEL] Deletes a participant
+  - [x] [POST] Closes a chat
+  - [x] [PUT] Accept/decline close request
+  - [x] [POST] re-opens a chat
 </details>
 <details>
 <summary><strong>offer [0/16] - ?</strong></summary>
