@@ -13,6 +13,7 @@ yarn.lock
 # Docs / meta
 README.md
 CHANGELOG.md
+docs-api/
 
 # Generated / vendor
 node_modules/
