@@ -399,8 +399,7 @@ export async function handleChats(this: IExecuteFunctions, i: number) {
 			const queryChatId = Number(participantFields.chatId || 0);
 			const queryEmployeeId = Number(participantFields.employeeId || 0);
 			const queryDepartmentId = Number(participantFields.departmentId || 0);
-			if (!queryChatId || queryChatId <= 0)
-				throw new NodeOperationError(this.getNode(), 'chatId is required for deleting a participant.');
+			if (!queryChatId || queryChatId <= 0) throw new NodeOperationError(this.getNode(), 'chatId is required for deleting a participant.');
 			if (!queryEmployeeId && !queryDepartmentId)
 				throw new NodeOperationError(this.getNode(), 'Either employeeId or departmentId is required for deleting a participant.');
 			const query = [`chatId=${encodeURIComponent(String(queryChatId))}`];

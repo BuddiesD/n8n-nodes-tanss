@@ -6,5 +6,4 @@ dist
 npm-debug.log*
 yarn.lock
 .vscode/launch.json
-Tanss API 10.12.0.yaml
 scripts/
