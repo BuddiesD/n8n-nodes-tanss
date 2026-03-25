@@ -251,7 +251,9 @@ export async function handleTicketContent(this: IExecuteFunctions, i: number) {
 				extra = ` ResponseBody: ${serialized}`;
 			}
 		} catch {
-			// nothing here
+			if (respBody !== undefined) {
+				extra = ` ResponseBody: ${String(respBody)}`;
+			}
 		}
 		const statusTxt = status ? ` Status: ${status}.` : '';
 		throw new NodeOperationError(this.getNode(), `Failed to fetch ticket content: ${message}.${statusTxt}${extra}`);
