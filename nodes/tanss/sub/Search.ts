@@ -198,9 +198,7 @@ export async function handleSearch(this: IExecuteFunctions, i: number) {
 	};
 
 	if (apiToken && apiToken.toString().trim() !== '') {
-		const tokenValue = String(apiToken).startsWith('Bearer ') ? String(apiToken) : `Bearer ${String(apiToken)}`;
-		requestOptions.headers.Authorization = tokenValue;
-		requestOptions.headers.apiToken = tokenValue;
+		requestOptions.headers.apiToken = apiToken;
 	}
 
 	const url = `${base}/backend/api/v1/search`;

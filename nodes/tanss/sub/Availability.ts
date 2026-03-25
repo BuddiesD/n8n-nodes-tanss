@@ -70,9 +70,7 @@ export async function handleAvailability(this: IExecuteFunctions, i: number) {
 	};
 
 	if (apiToken && String(apiToken).trim() !== '') {
-		const tokenValue = String(apiToken).startsWith('Bearer ') ? String(apiToken) : `Bearer ${String(apiToken)}`;
-		requestOptions.headers.Authorization = tokenValue;
-		requestOptions.headers.apiToken = tokenValue;
+		requestOptions.headers.apiToken = apiToken;
 	}
 
 	const encoded = encodeURIComponent(String(employeeIds).trim());

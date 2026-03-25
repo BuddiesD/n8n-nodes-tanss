@@ -998,7 +998,6 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 			url,
 			headers: {
 				apiToken,
-				Authorization: `Bearer ${apiToken}`,
 				Accept: 'application/json',
 			},
 			json: true,

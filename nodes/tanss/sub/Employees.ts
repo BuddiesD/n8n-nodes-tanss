@@ -165,9 +165,7 @@ export async function handleEmployees(this: IExecuteFunctions, i: number) {
 	};
 
 	if (apiToken && apiToken.toString().trim() !== '') {
-		const tokenValue = String(apiToken).startsWith('Bearer ') ? String(apiToken) : `Bearer ${String(apiToken)}`;
-		requestOptions.headers.Authorization = tokenValue;
-		requestOptions.headers.apiToken = tokenValue;
+		requestOptions.headers.apiToken = apiToken;
 	}
 
 	switch (operation) {
