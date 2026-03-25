@@ -3,7 +3,7 @@
     "version": "1.0.8",
     "description": "n8n community node to use the TANSS API",
     "license": "MIT",
-    "homepage": "https://github.com/BuddiesD",
+    "homepage": "https://github.com/BuddiesD/n8n-nodes-tanss",
     "keywords": [
         "n8n-community-node-package",
         "n8n-nodes-tanss",
