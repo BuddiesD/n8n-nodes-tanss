@@ -1,5 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
-import { getTanssBaseUrl, tanssHttpRequest } from './request';
+import { getTanssBaseUrl, isGeneratedTokenMode, tanssHttpRequest } from './request';
 
 export const operatingSystemsOperations: INodeProperties[] = [
 	{
@@ -111,6 +111,9 @@ export const operatingSystemsFields: INodeProperties[] = [
 export async function handleOperatingSystems(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const osBasePath = isGeneratedTokenMode.call(this, i)
+		? '/backend/api/deviceManagement/v1/os'
+		: '/backend/api/v1/os';
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const osId = this.getNodeParameter('osId', i, 0) as number;
 
@@ -131,7 +134,7 @@ export async function handleOperatingSystems(this: IExecuteFunctions, i: number)
 
 	switch (operation) {
 		case 'createOs': {
-			url = `${credentials.baseURL}/backend/api/v1/os`;
+			url = `${credentials.baseURL}${osBasePath}`;
 			requestOptions.method = 'POST';
 			const createOsFields = this.getNodeParameter('createOsFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(createOsFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for OS creation.');
@@ -139,22 +142,22 @@ export async function handleOperatingSystems(this: IExecuteFunctions, i: number)
 			break;
 		}
 		case 'deleteOs': {
-			url = `${credentials.baseURL}/backend/api/v1/os/${osId}`;
+			url = `${credentials.baseURL}${osBasePath}/${osId}`;
 			requestOptions.method = 'DELETE';
 			break;
 		}
 		case 'getAllOs': {
-			url = `${credentials.baseURL}/backend/api/v1/os`;
+			url = `${credentials.baseURL}${osBasePath}`;
 			requestOptions.method = 'GET';
 			break;
 		}
 		case 'getOsById': {
-			url = `${credentials.baseURL}/backend/api/v1/os/${osId}`;
+			url = `${credentials.baseURL}${osBasePath}/${osId}`;
 			requestOptions.method = 'GET';
 			break;
 		}
 		case 'updateOs': {
-			url = `${credentials.baseURL}/backend/api/v1/os/${osId}`;
+			url = `${credentials.baseURL}${osBasePath}/${osId}`;
 			requestOptions.method = 'PUT';
 			const updateOsFields = this.getNodeParameter('updateOsFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(updateOsFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for OS update.');
