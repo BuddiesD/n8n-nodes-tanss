@@ -1,10 +1,4 @@
-import type {
-	Icon,
-	IAuthenticateGeneric,
-	ICredentialTestRequest,
-	ICredentialType,
-	INodeProperties,
-} from 'n8n-workflow';
+import type { Icon, IAuthenticateGeneric, ICredentialTestRequest, ICredentialType, INodeProperties } from 'n8n-workflow';
 
 export class TanssGeneratedTokenApi implements ICredentialType {
 	name = 'tanssGeneratedTokenApi';

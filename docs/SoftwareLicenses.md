@@ -99,7 +99,6 @@ Retrieve all software license types.
 
 **Parameters:**
 
-
 ## Create Software License Type
 
 **API Endpoint:** POST /api/v1/softwarelicenses/types

@@ -88,7 +88,6 @@ Retrieve all device assignments for remote supports.
 
 **Parameters:**
 
-
 ## Create Device Assignment
 
 **API Endpoint:** POST /api/remoteSupports/v1/assignDevice
@@ -120,7 +119,6 @@ Delete an existing device assignment.
 Retrieve all technician assignments for the remote support type.
 
 **Parameters:**
-
 
 ## Create Technician Assignment
 

@@ -113,7 +113,6 @@ Retrieve all assignments between `idString` values and employees.
 
 **Parameters:**
 
-
 ## Create Employee Assignment
 
 **API Endpoint:** POST /api/v1/calls/employee-assignments

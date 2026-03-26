@@ -327,10 +327,8 @@ export const pcFields: INodeProperties[] = [
 
 export async function handlePc(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
-	const pcsBasePath = isGeneratedTokenMode.call(this, i)
-		? '/backend/api/deviceManagement/v1/pcs'
-		: '/backend/api/v1/pcs';
+	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
+	const pcsBasePath = isGeneratedTokenMode.call(this, i) ? '/backend/api/deviceManagement/v1/pcs' : '/backend/api/v1/pcs';
 
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const pcId = this.getNodeParameter('pcId', i, 0) as number;

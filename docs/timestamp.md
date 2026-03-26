@@ -84,7 +84,6 @@ Retrieve information about the latest day closings for employees.
 
 **Parameters:**
 
-
 ## Create Day Closings Till Date
 
 Create missing day closings for specific employees until a given date.
@@ -108,7 +107,6 @@ Set the initial time balance for an employee.
 Retrieve all pause configuration rules.
 
 **Parameters:**
-
 
 ## Create Pause Config
 

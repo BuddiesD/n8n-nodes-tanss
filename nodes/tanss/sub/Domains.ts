@@ -49,7 +49,6 @@ export const domainOperations: INodeProperties[] = [
 ];
 
 export const domainFields: INodeProperties[] = [
-
 	{
 		displayName: 'Create Domain Fields',
 		name: 'createDomainFields',
@@ -171,7 +170,7 @@ export const domainFields: INodeProperties[] = [
 
 export async function handleDomains(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const baseURL = credentials.baseURL as string;

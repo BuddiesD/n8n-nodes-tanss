@@ -135,7 +135,7 @@ export const employeesFields: INodeProperties[] = [
 
 export async function handleEmployees(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const base = credentials.baseURL as string;
 	if (!base) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');

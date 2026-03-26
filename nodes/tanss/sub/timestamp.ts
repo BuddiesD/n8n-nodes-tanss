@@ -109,7 +109,6 @@ export const timestampOperations: INodeProperties[] = [
 ];
 
 export const timestampFields: INodeProperties[] = [
-
 	// getTimestamps / info / statistics params
 	{
 		displayName: 'From (Timestamp)',
@@ -370,7 +369,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		);
 	}
 
-	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const typedCredentials = credentials as { baseURL?: string };
 	const baseURL = typedCredentials.baseURL;
@@ -474,9 +473,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 
 		const body: IDataObject = { employeeId, date, state, type };
 
-		const createTimestampsPath = generatedTokenMode
-			? '/backend/api/timestamps/v1'
-			: '/backend/api/v1/timestamps';
+		const createTimestampsPath = generatedTokenMode ? '/backend/api/timestamps/v1' : '/backend/api/v1/timestamps';
 		const url = `${baseURL}${createTimestampsPath}${autoPause ? '?autoPause=true' : ''}`;
 		const requestOptions: IDataObject = {
 			method: 'POST',

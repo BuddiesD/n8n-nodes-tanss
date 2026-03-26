@@ -134,7 +134,7 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 		throw new NodeOperationError(this.getNode(), `Operation "${operation}" not supported by TicketStates.`);
 	}
 
-	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const typedCredentials = credentials as { baseURL?: string };
 	const baseURL = typedCredentials.baseURL;

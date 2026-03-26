@@ -72,7 +72,7 @@ export const mailsFields: INodeProperties[] = [
 
 export async function handleMails(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const receiver = this.getNodeParameter('receiver', i, '') as string;
 	if (!receiver || String(receiver).trim() === '') throw new NodeOperationError(this.getNode(), 'receiver is required');

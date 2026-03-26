@@ -64,7 +64,6 @@ Gets chat close requests and chats with unread messages.
 
 **Parameters:**
 
-
 ## Create Chat Message
 
 **API Endpoint:** POST /api/v1/chats/messages

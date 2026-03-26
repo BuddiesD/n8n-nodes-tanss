@@ -6,7 +6,6 @@ Retrieve a list of all project tickets.
 
 **Parameters:**
 
-
 ## Get Company Tickets
 
 Retrieve tickets for a specific company.
@@ -48,13 +47,11 @@ Retrieve tickets that are not assigned to any employee.
 
 **Parameters:**
 
-
 ## Get Local Admin Tickets
 
 Retrieve tickets assigned to local ticket administrators.
 
 **Parameters:**
-
 
 ## Get Not Identified Tickets
 
@@ -62,13 +59,11 @@ Retrieve tickets that are not assigned to any company.
 
 **Parameters:**
 
-
 ## Get Own Tickets
 
 Retrieve tickets assigned to the current employee.
 
 **Parameters:**
-
 
 ## Get Repair Tickets
 
@@ -76,17 +71,14 @@ Retrieve a list of repair tickets.
 
 **Parameters:**
 
-
 ## Get Technician Tickets
 
 Retrieve tickets assigned to other technicians.
 
 **Parameters:**
 
-
 ## Get Tickets With Role
 
 Retrieve tickets where the technician has a role assigned.
 
 **Parameters:**
-

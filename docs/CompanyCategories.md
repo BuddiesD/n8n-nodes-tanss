@@ -8,7 +8,6 @@ Retrieve a list of company categories.
 
 **Parameters:**
 
-
 ## Create Category
 
 **API Endpoint:** POST /api/v1/companyCategories
@@ -59,7 +58,6 @@ Delete a company category.
 Retrieve a list of company types.
 
 **Parameters:**
-
 
 ## Create Company Type
 

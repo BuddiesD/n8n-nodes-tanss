@@ -29,7 +29,6 @@ Retrieve a list of all CPUs.
 
 **Parameters:**
 
-
 ## Get CPU
 
 **API Endpoint:** GET /api/v1/cpus/{id}

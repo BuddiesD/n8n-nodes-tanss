@@ -125,7 +125,7 @@ export async function handleTicketContent(this: IExecuteFunctions, i: number) {
 		throw new NodeOperationError(this.getNode(), `Operation "${operation}" not supported by TicketContent.`);
 	}
 
-	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const ticketId = this.getNodeParameter('ticketId', i, 0) as number;
 	const typedCredentials = credentials as { baseURL?: string };

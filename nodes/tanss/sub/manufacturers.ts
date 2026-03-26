@@ -87,7 +87,7 @@ export const manufacturersFields: INodeProperties[] = [
 
 export async function handleManufacturers(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const manufacturerId = this.getNodeParameter('manufacturerId', i, 0) as number;
 	const manufacturersBasePath = isGeneratedTokenMode.call(this, i)

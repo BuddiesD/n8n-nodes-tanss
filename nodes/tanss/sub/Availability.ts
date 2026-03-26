@@ -33,7 +33,7 @@ export const availabilityFields: INodeProperties[] = [
 ];
 
 export async function handleAvailability(this: IExecuteFunctions, i: number) {
-	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const employeeIds = this.getNodeParameter('employeeIds', i) as string;
 

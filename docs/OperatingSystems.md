@@ -32,7 +32,6 @@ Retrieve a list of all operating systems.
 
 **Parameters:**
 
-
 ## Get OS
 
 **API Endpoint:** GET /api/v1/os/{id}

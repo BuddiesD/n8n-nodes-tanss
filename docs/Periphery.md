@@ -31,7 +31,6 @@ Retrieve available periphery types.
 
 **Parameters:**
 
-
 ## Create Periphery Type
 
 **API Endpoint:** POST /api/v1/peripheries/types

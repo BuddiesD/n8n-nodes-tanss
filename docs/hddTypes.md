@@ -29,7 +29,6 @@ Retrieve a list of all HDD types.
 
 **Parameters:**
 
-
 ## Get HDD Type
 
 **API Endpoint:** GET /api/v1/hddTypes/{id}

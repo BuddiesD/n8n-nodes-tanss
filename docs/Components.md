@@ -111,7 +111,6 @@ Gets a list of component types
 
 **Parameters:**
 
-
 ## Create Component Type
 
 **API Endpoint:** POST /api/v1/components/types

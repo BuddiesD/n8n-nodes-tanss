@@ -23,7 +23,6 @@ export const searchOperations: INodeProperties[] = [
 ];
 
 export const searchFields: INodeProperties[] = [
-
 	{
 		displayName: 'Use Raw Filter JSON (Optional)',
 		name: 'filterJson',
@@ -115,7 +114,7 @@ export const searchFields: INodeProperties[] = [
 ];
 
 export async function handleSearch(this: IExecuteFunctions, i: number) {
-	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const base = credentials.baseURL as string;
 	if (!base) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');

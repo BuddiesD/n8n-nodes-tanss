@@ -118,7 +118,7 @@ export const checklistsFields: INodeProperties[] = [
 
 export async function handleChecklists(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const linkTypeId = this.getNodeParameter('linkTypeId', i, 11) as number;

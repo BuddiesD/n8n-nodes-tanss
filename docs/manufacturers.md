@@ -29,7 +29,6 @@ Retrieve a list of all manufacturers.
 
 **Parameters:**
 
-
 ## Get Manufacturer
 
 **API Endpoint:** GET /api/v1/manufacturers/{id}

@@ -6,7 +6,6 @@ Retrieve a list of all ticket states.
 
 **Parameters:**
 
-
 ## Create Ticket State
 
 Create a new ticket state.
