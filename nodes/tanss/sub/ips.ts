@@ -1,5 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
-import { getTanssBaseUrl, tanssHttpRequest } from './request';
+import { getTanssBaseUrl, isGeneratedTokenMode, tanssHttpRequest } from './request';
 
 export const ipsOperations: INodeProperties[] = [
 	{
@@ -87,6 +87,9 @@ export const ipsFields: INodeProperties[] = [
 export async function handleIps(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const ipsBasePath = isGeneratedTokenMode.call(this, i)
+		? '/backend/api/deviceManagement/v1/ips'
+		: '/backend/api/v1/ips';
 
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 
@@ -108,7 +111,7 @@ export async function handleIps(this: IExecuteFunctions, i: number) {
 		case 'getIps': {
 			const assignmentType = this.getNodeParameter('assignmentType', i) as string;
 			const assignmentId = this.getNodeParameter('assignmentId', i, 0) as number;
-			url = `${credentials.baseURL}/backend/api/v1/ips/${assignmentType}/${assignmentId}`;
+			url = `${credentials.baseURL}${ipsBasePath}/${assignmentType}/${assignmentId}`;
 			requestOptions.method = 'GET';
 			break;
 		}
@@ -117,7 +120,7 @@ export async function handleIps(this: IExecuteFunctions, i: number) {
 			const assignmentId = this.getNodeParameter('assignmentId', i, 0) as number;
 			const createIpFields = this.getNodeParameter('createIpFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(createIpFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for creating IP.');
-			url = `${credentials.baseURL}/backend/api/v1/ips/${assignmentType}/${assignmentId}`;
+			url = `${credentials.baseURL}${ipsBasePath}/${assignmentType}/${assignmentId}`;
 			requestOptions.method = 'POST';
 			requestOptions.body = createIpFields;
 			break;
@@ -126,14 +129,14 @@ export async function handleIps(this: IExecuteFunctions, i: number) {
 			const ipId = this.getNodeParameter('ipId', i, 0) as number;
 			const updateIpFields = this.getNodeParameter('updateIpFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(updateIpFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for updating IP.');
-			url = `${credentials.baseURL}/backend/api/v1/ips/${ipId}`;
+			url = `${credentials.baseURL}${ipsBasePath}/${ipId}`;
 			requestOptions.method = 'PUT';
 			requestOptions.body = updateIpFields;
 			break;
 		}
 		case 'deleteIp': {
 			const ipId = this.getNodeParameter('ipId', i, 0) as number;
-			url = `${credentials.baseURL}/backend/api/v1/ips/${ipId}`;
+			url = `${credentials.baseURL}${ipsBasePath}/${ipId}`;
 			requestOptions.method = 'DELETE';
 			break;
 		}
