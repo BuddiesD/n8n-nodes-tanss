@@ -23,6 +23,13 @@ jobs:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
+      - name: test npm auth
+        run: |
+          node -v
+          npm -v
+          npm config get registry
+          npm whoami --registry=https://registry.npmjs.org
+
       - name: Install dependencies
         run: npm ci
 
