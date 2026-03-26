@@ -8,6 +8,19 @@ You can install both versions, but **2FA functionality will only be visible afte
 Old: [n8n-nodes-tanss-api](https://www.npmjs.com/package/n8n-nodes-tanss-api)<br>
 New: [n8n-nodes-tanss](https://www.npmjs.com/package/n8n-nodes-tanss)
 
+### Breaking Changes (Credentials & Auth)
+
+**Important:** Updating from older versions to versions **greater than 1.1.0** can break existing workflows until credentials and auth setup are migrated.
+
+- The legacy credential `TanssApi` is removed.
+- Authentication is now handled via `Auth Mode` and two credential types:
+  - `TANSS User API` (username/password, optional 2FA, auto refresh)
+  - `TANSS Generated Token API` (static generated token)
+- Existing workflows using old credentials must be reconfigured with one of the new credential types.
+- The old dedicated Authentication resource/node operations were removed.
+- If your workflow previously used Authentication operations to obtain tokens manually, switch to normal resource operations with the configured credentials.
+- TANSS credentials are now also usable in the normal n8n `HTTP Request` node.
+
 
 # n8n-nodes-tanss
 
