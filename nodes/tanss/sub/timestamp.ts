@@ -341,6 +341,7 @@ export const timestampFields: INodeProperties[] = [
 
 export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
+	const generatedTokenMode = isGeneratedTokenMode.call(this, i);
 	const allowed = [
 		'getTimestamps',
 		'getTimestampInfo',
@@ -360,6 +361,13 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 	] as const;
 	if (!allowed.includes(operation as (typeof allowed)[number])) {
 		throw new NodeOperationError(this.getNode(), `Operation "${operation}" not supported by Timestamps.`);
+	}
+
+	if (generatedTokenMode && operation !== 'createTimestamp') {
+		throw new NodeOperationError(
+			this.getNode(),
+			'In generated token mode only "Create Timestamp" is available. Use user auth mode for all other timestamp operations.',
+		);
 	}
 
 	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
@@ -466,7 +474,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 
 		const body: IDataObject = { employeeId, date, state, type };
 
-		const createTimestampsPath = isGeneratedTokenMode.call(this, i)
+		const createTimestampsPath = generatedTokenMode
 			? '/backend/api/timestamps/v1'
 			: '/backend/api/v1/timestamps';
 		const url = `${baseURL}${createTimestampsPath}${autoPause ? '?autoPause=true' : ''}`;
