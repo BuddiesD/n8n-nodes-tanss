@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject } from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export const searchOperations: INodeProperties[] = [
 	{
@@ -141,8 +141,7 @@ export async function handleSearch(this: IExecuteFunctions, i: number) {
 			if (typeof parsed !== 'object' || parsed === null) throw new Error('filterJson must be a JSON object.');
 			body = parsed as IDataObject;
 		} catch (err) {
-			const msg = err instanceof Error ? err.message : String(err);
-			throw new NodeOperationError(this.getNode(), `filterJson must be valid JSON: ${msg}`);
+			throw new NodeApiError(this.getNode(), err as JsonObject);
 		}
 	} else {
 		const cfg = this.getNodeParameter('searchConfig', i, {}) as IDataObject;
@@ -210,7 +209,6 @@ export async function handleSearch(this: IExecuteFunctions, i: number) {
 		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
-		const errorMessage = error instanceof Error ? error.message : String(error);
-		throw new NodeOperationError(this.getNode(), `Failed to execute globalSearch: ${errorMessage}`);
+		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
 }

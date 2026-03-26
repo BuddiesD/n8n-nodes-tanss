@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject } from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export const ticketContentOperations: INodeProperties[] = [
 	{
@@ -239,23 +239,6 @@ export async function handleTicketContent(this: IExecuteFunctions, i: number) {
 		const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return response;
 	} catch (error: unknown) {
-		const err = error as unknown as { response?: unknown; statusCode?: number; message?: string };
-		const resp = err.response as unknown as Record<string, unknown> | undefined;
-		const respBody = resp?.body ?? resp?.data ?? resp;
-		const status = resp?.status ?? err.statusCode ?? undefined;
-		const message = err?.message ?? (error instanceof Error ? error.message : String(error));
-		let extra = '';
-		try {
-			if (respBody !== undefined) {
-				const serialized = typeof respBody === 'string' ? respBody : JSON.stringify(respBody);
-				extra = ` ResponseBody: ${serialized}`;
-			}
-		} catch {
-			if (respBody !== undefined) {
-				extra = ` ResponseBody: ${String(respBody)}`;
-			}
-		}
-		const statusTxt = status ? ` Status: ${status}.` : '';
-		throw new NodeOperationError(this.getNode(), `Failed to fetch ticket content: ${message}.${statusTxt}${extra}`);
+		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
 }

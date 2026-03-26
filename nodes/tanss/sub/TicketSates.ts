@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions } from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export const ticketStatesOperations: INodeProperties[] = [
 	{
@@ -168,8 +168,7 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to fetch ticket states: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -203,8 +202,7 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to create ticket state: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -239,8 +237,7 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to update ticket state: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 

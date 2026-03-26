@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions } from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export const mailsOperations: INodeProperties[] = [
 	{
@@ -167,7 +167,6 @@ export async function handleMails(this: IExecuteFunctions, i: number) {
 				message: 'Server error while sending test email',
 			} as unknown as IDataObject;
 		}
-		const msg = err instanceof Error ? err.message : String(err);
-		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${msg}`);
+		throw new NodeApiError(this.getNode(), err as JsonObject);
 	}
 }

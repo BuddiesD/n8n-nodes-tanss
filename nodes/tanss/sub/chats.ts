@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeProperties, NodeOperationError } from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
 
 type ChatsCollection = Record<string, unknown>;
 
@@ -473,33 +473,6 @@ export async function handleChats(this: IExecuteFunctions, i: number) {
 				error: parsedBody,
 			};
 		}
-
-		type TanssError = {
-			module?: string;
-			text?: string;
-			localizedText?: string;
-			type?: string;
-			traceId?: string;
-		};
-
-		let details = '';
-		if (parsedBody && typeof parsedBody === 'object' && 'error' in parsedBody) {
-			const tanssError = (parsedBody as { error?: unknown }).error as TanssError | undefined;
-			if (tanssError) {
-				details = [
-					tanssError.localizedText,
-					tanssError.text,
-					tanssError.module ? `module=${tanssError.module}` : undefined,
-					tanssError.type ? `type=${tanssError.type}` : undefined,
-					tanssError.traceId ? `traceId=${tanssError.traceId}` : undefined,
-				]
-					.filter((x) => Boolean(x))
-					.join(' | ');
-			}
-		}
-
-		const fallbackMessage = error instanceof Error ? error.message : String(error);
-		const message = details || fallbackMessage;
-		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${message}${statusCode ? ` (status ${statusCode})` : ''}`);
+		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
 }

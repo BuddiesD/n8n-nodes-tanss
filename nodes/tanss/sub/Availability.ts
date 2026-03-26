@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeProperties, NodeOperationError } from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export const availabilityOperations: INodeProperties[] = [
 	{
@@ -80,7 +80,6 @@ export async function handleAvailability(this: IExecuteFunctions, i: number) {
 		const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return response;
 	} catch (err: unknown) {
-		const message = err instanceof Error ? err.message : String(err);
-		throw new NodeOperationError(this.getNode(), `Failed to fetch availability: ${message}`);
+		throw new NodeApiError(this.getNode(), err as JsonObject);
 	}
 }

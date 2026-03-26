@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions } from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export const employeesOperations: INodeProperties[] = [
 	{
@@ -272,7 +272,6 @@ export async function handleEmployees(this: IExecuteFunctions, i: number) {
 		const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 		return response;
 	} catch (err: unknown) {
-		const message = err instanceof Error ? err.message : String(err);
-		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${message}`);
+		throw new NodeApiError(this.getNode(), err as JsonObject);
 	}
 }

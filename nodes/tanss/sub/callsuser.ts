@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject } from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export const callsUserOperations: INodeProperties[] = [
 	{
@@ -181,8 +181,7 @@ export async function handleCallsUser(this: IExecuteFunctions, i: number) {
 					}
 					body = parsed as IDataObject;
 				} catch (err) {
-					const msg = err instanceof Error ? err.message : String(err);
-					throw new NodeOperationError(this.getNode(), `filterJson must be valid JSON: ${msg}`);
+					throw new NodeApiError(this.getNode(), err as JsonObject);
 				}
 			} else {
 				const filters = this.getNodeParameter('getCallsFilters', i, {}) as IDataObject;
@@ -259,7 +258,6 @@ export async function handleCallsUser(this: IExecuteFunctions, i: number) {
 		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
-		const message = error instanceof Error ? error.message : String(error);
-		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${message}`);
+		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
 }

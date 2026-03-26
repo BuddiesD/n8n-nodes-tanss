@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions } from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export const timestampOperations: INodeProperties[] = [
 	{
@@ -402,8 +402,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to fetch timestamps: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -430,8 +429,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to fetch timestamp info: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -460,8 +458,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to fetch timestamp statistics: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -493,8 +490,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to create timestamp: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -527,8 +523,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to update timestamp: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -562,8 +557,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to save day timestamps: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -600,8 +594,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to create day closing(s): ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -692,8 +685,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to fetch day closing till date: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -724,8 +716,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to create day closings till date: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -750,8 +741,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to set initial balance: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -769,8 +759,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to fetch pause configs: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -795,8 +784,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to create pause config: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -823,8 +811,7 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to update pause config: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 

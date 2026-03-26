@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeProperties, NodeOperationError } from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export const domainOperations: INodeProperties[] = [
 	{
@@ -288,8 +288,6 @@ export async function handleDomains(this: IExecuteFunctions, i: number) {
 				error: parsedBody,
 			};
 		}
-
-		const errorMessage = error instanceof Error ? error.message : String(error);
-		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${errorMessage}`);
+		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
 }

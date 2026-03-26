@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject } from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export const callsOperations: INodeProperties[] = [
 	{
@@ -583,8 +583,8 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 					throw new Error('callJson must be an object');
 				}
 				body = parsed as IDataObject;
-			} catch {
-				throw new NodeOperationError(this.getNode(), 'callJson must be valid JSON object.');
+			} catch (error: unknown) {
+				throw new NodeApiError(this.getNode(), error as JsonObject);
 			}
 		} else {
 			const createCallFields = this.getNodeParameter('createCallFields', i, {}) as IDataObject;
@@ -617,8 +617,8 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 					try {
 						const parsed = JSON.parse(createCallFields.phoneParticipantsJson as string);
 						if (Array.isArray(parsed)) body.phoneParticipants = parsed;
-					} catch {
-						throw new NodeOperationError(this.getNode(), 'createCallFields.phoneParticipantsJson must be valid JSON array.');
+					} catch (error: unknown) {
+						throw new NodeApiError(this.getNode(), error as JsonObject);
 					}
 				}
 			} else {
@@ -709,8 +709,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to create/import call: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -725,8 +724,8 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 					throw new Error('filterJson must be an object');
 				}
 				body = parsed as IDataObject;
-			} catch {
-				throw new NodeOperationError(this.getNode(), 'filterJson must be valid JSON object.');
+			} catch (error: unknown) {
+				throw new NodeApiError(this.getNode(), error as JsonObject);
 			}
 		} else {
 			const filters = this.getNodeParameter('getCallsFilters', i, {}) as IDataObject;
@@ -774,8 +773,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to fetch calls list: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -797,8 +795,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to fetch phone call: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -819,8 +816,8 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 					throw new Error('callJson must be an object');
 				}
 				body = parsed as IDataObject;
-			} catch {
-				throw new NodeOperationError(this.getNode(), 'callJson must be valid JSON object.');
+			} catch (error: unknown) {
+				throw new NodeApiError(this.getNode(), error as JsonObject);
 			}
 		} else {
 			const createCallFields = this.getNodeParameter('createCallFields', i, {}) as IDataObject;
@@ -945,8 +942,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to update phone call: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -959,8 +955,8 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 				const parsed = JSON.parse(identifyJson);
 				if (typeof parsed !== 'object' || parsed === null) throw new Error('identifyJson must be an object');
 				body = parsed as IDataObject;
-			} catch {
-				throw new NodeOperationError(this.getNode(), 'identifyJson must be valid JSON object.');
+			} catch (error: unknown) {
+				throw new NodeApiError(this.getNode(), error as JsonObject);
 			}
 		} else {
 			const identifyFields = this.getNodeParameter('identifyFields', i, {}) as IDataObject;
@@ -986,8 +982,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to identify phone call: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -1007,8 +1002,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to fetch employee assignments: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
@@ -1021,8 +1015,8 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 				const parsed = JSON.parse(raw);
 				if (typeof parsed !== 'object' || parsed === null) throw new Error('employeeAssignmentJson must be an object');
 				body = parsed as IDataObject;
-			} catch {
-				throw new NodeOperationError(this.getNode(), 'employeeAssignmentJson must be valid JSON object.');
+			} catch (error: unknown) {
+				throw new NodeApiError(this.getNode(), error as JsonObject);
 			}
 		} else {
 			const fields = this.getNodeParameter('employeeAssignmentFields', i, {}) as IDataObject;
@@ -1047,8 +1041,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
-			const message = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Failed to create employee assignment: ${message}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 

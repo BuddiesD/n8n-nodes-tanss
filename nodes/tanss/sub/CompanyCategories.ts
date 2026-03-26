@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeProperties, NodeOperationError } from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export const companyCategoriesOperations: INodeProperties[] = [
 	{
@@ -264,29 +264,6 @@ export async function handleCompanyCategories(this: IExecuteFunctions, i: number
 			};
 		}
 
-		const anyErr = error as {
-			response?: {
-				status?: number;
-				data?: unknown;
-			};
-		};
-		let message = error instanceof Error ? error.message : String(error);
-		if (anyErr && anyErr.response) {
-			try {
-				const status = anyErr.response.status;
-				const respData = anyErr.response.data as { error?: unknown } | undefined;
-				message += `; Status: ${status}`;
-				if (respData) {
-					if (respData.error) {
-						message += `; Error: ${JSON.stringify(respData.error)}`;
-					} else {
-						message += `; Response: ${JSON.stringify(respData)}`;
-					}
-				}
-			} catch {
-				message += '; Response parse failed';
-			}
-		}
-		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${message}`);
+		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
 }

@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeProperties, NodeOperationError } from 'n8n-workflow';
+import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export const peripheryOperations: INodeProperties[] = [
 	{
@@ -778,6 +778,6 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 				error: null,
 			};
 		}
-		throw new NodeOperationError(this.getNode(), `Failed to execute ${operation}: ${message}`);
+		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
 }

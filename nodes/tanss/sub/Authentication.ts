@@ -1,4 +1,4 @@
-import { IExecuteFunctions, IHttpRequestMethods, INodeProperties, NodeOperationError } from 'n8n-workflow';
+import { IExecuteFunctions, IHttpRequestMethods, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
 import { generateTOTP } from './2fa';
 
 export const authOperations: INodeProperties[] = [
@@ -84,10 +84,10 @@ export async function handleAuth(this: IExecuteFunctions, i: number) {
 					const msg = JSON.stringify(responseData);
 
 					if (msg.includes('LOGIN_ERROR_TOO_MANY_FAILED_LOGINS')) {
-						throw new NodeOperationError(this.getNode(), `Login blocked: too many failed logins. Server response: ${msg}`);
+						throw new NodeApiError(this.getNode(), err as JsonObject);
 					}
 					if (!msg.includes('LOGIN_ERROR_WRONG_LOGIN_TOKEN_CODE')) {
-						throw new NodeOperationError(this.getNode(), `Login failed: ${msg}`);
+						throw new NodeApiError(this.getNode(), err as JsonObject);
 					}
 				}
 			}
@@ -108,8 +108,7 @@ export async function handleAuth(this: IExecuteFunctions, i: number) {
 			const responseData = await this.helpers.httpRequest(requestOptions);
 			return responseData;
 		} catch (error: unknown) {
-			const errorMessage = error instanceof Error ? error.message : String(error);
-			throw new NodeOperationError(this.getNode(), `Login failed: ${errorMessage}`);
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 
