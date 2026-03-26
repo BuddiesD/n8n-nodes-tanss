@@ -1,5 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
-import { getTanssBaseUrl, tanssHttpRequest } from './request';
+import { getTanssBaseUrl, isGeneratedTokenMode, tanssHttpRequest } from './request';
 
 export const hddTypesOperations: INodeProperties[] = [
 	{
@@ -88,6 +88,9 @@ export const hddTypesFields: INodeProperties[] = [
 export async function handleHddTypes(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const hddTypesBasePath = isGeneratedTokenMode.call(this, i)
+		? '/backend/api/deviceManagement/v1/hddTypes'
+		: '/backend/api/v1/hddTypes';
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const hddTypeId = this.getNodeParameter('hddTypeId', i, 0) as number;
 
@@ -108,7 +111,7 @@ export async function handleHddTypes(this: IExecuteFunctions, i: number) {
 
 	switch (operation) {
 		case 'createHddType': {
-			url = `${credentials.baseURL}/backend/api/v1/hddTypes`;
+			url = `${credentials.baseURL}${hddTypesBasePath}`;
 			requestOptions.method = 'POST';
 			const createHddTypeFields = this.getNodeParameter('createHddTypeFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(createHddTypeFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for HDD type creation.');
@@ -116,22 +119,22 @@ export async function handleHddTypes(this: IExecuteFunctions, i: number) {
 			break;
 		}
 		case 'deleteHddType': {
-			url = `${credentials.baseURL}/backend/api/v1/hddTypes/${hddTypeId}`;
+			url = `${credentials.baseURL}${hddTypesBasePath}/${hddTypeId}`;
 			requestOptions.method = 'DELETE';
 			break;
 		}
 		case 'getAllHddTypes': {
-			url = `${credentials.baseURL}/backend/api/v1/hddTypes`;
+			url = `${credentials.baseURL}${hddTypesBasePath}`;
 			requestOptions.method = 'GET';
 			break;
 		}
 		case 'getHddTypeById': {
-			url = `${credentials.baseURL}/backend/api/v1/hddTypes/${hddTypeId}`;
+			url = `${credentials.baseURL}${hddTypesBasePath}/${hddTypeId}`;
 			requestOptions.method = 'GET';
 			break;
 		}
 		case 'updateHddType': {
-			url = `${credentials.baseURL}/backend/api/v1/hddTypes/${hddTypeId}`;
+			url = `${credentials.baseURL}${hddTypesBasePath}/${hddTypeId}`;
 			requestOptions.method = 'PUT';
 			const updateHddTypeFields = this.getNodeParameter('updateHddTypeFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(updateHddTypeFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for HDD type update.');
