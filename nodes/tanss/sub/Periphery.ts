@@ -1,5 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
-import { getTanssBaseUrl, tanssHttpRequest } from './request';
+import { getTanssBaseUrl, isGeneratedTokenMode, tanssHttpRequest } from './request';
 
 export const peripheryOperations: INodeProperties[] = [
 	{
@@ -538,6 +538,9 @@ export const peripheryFields: INodeProperties[] = [
 export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const peripheryBasePath = isGeneratedTokenMode.call(this, i)
+		? '/backend/api/deviceManagement/v1/peripheries'
+		: '/backend/api/v1/peripheries';
 
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const peripheryId = this.getNodeParameter('peripheryId', i, 0) as number;
@@ -605,14 +608,14 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 
 	switch (operation) {
 		case 'getPeriphery': {
-			url = `${credentials.baseURL}/backend/api/v1/peripheries/${peripheryId}`;
+			url = `${credentials.baseURL}${peripheryBasePath}/${peripheryId}`;
 			requestOptions.method = 'GET';
 			break;
 		}
 		case 'updatePeriphery': {
 			const updatePeripheryFields = this.getNodeParameter('updatePeripheryFields', i, {}) as PeripheryBodyInput;
 			if (Object.keys(updatePeripheryFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for updating periphery.');
-			url = `${credentials.baseURL}/backend/api/v1/peripheries/${peripheryId}`;
+			url = `${credentials.baseURL}${peripheryBasePath}/${peripheryId}`;
 			requestOptions.method = 'PUT';
 			requestOptions.body = buildPeripheryBody(updatePeripheryFields);
 			break;
@@ -620,27 +623,27 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 		case 'createPeriphery': {
 			const createPeripheryFields = this.getNodeParameter('createPeripheryFields', i, {}) as PeripheryBodyInput;
 			if (Object.keys(createPeripheryFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for creating periphery.');
-			url = `${credentials.baseURL}/backend/api/v1/peripheries`;
+			url = `${credentials.baseURL}${peripheryBasePath}`;
 			requestOptions.method = 'POST';
 			requestOptions.body = buildPeripheryBody(createPeripheryFields);
 			break;
 		}
 		case 'listPeripheries': {
 			const filters = this.getNodeParameter('listPeripheryFilters', i, {}) as Record<string, unknown>;
-			url = `${credentials.baseURL}/backend/api/v1/peripheries`;
+			url = `${credentials.baseURL}${peripheryBasePath}`;
 			requestOptions.method = 'PUT';
 			requestOptions.body = filters;
 			break;
 		}
 		case 'getPeripheryTypes': {
-			url = `${credentials.baseURL}/backend/api/v1/peripheries/types`;
+			url = `${credentials.baseURL}${peripheryBasePath}/types`;
 			requestOptions.method = 'GET';
 			break;
 		}
 		case 'createPeripheryType': {
 			const createFields = this.getNodeParameter('createPeripheryTypeFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(createFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for creating periphery type.');
-			url = `${credentials.baseURL}/backend/api/v1/peripheries/types`;
+			url = `${credentials.baseURL}${peripheryBasePath}/types`;
 			requestOptions.method = 'POST';
 			requestOptions.body = createFields;
 			break;
@@ -650,7 +653,7 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 			if (!typeId) throw new NodeOperationError(this.getNode(), 'periphery type id is required for update.');
 			const updateFields = this.getNodeParameter('updatePeripheryTypeFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(updateFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for updating periphery type.');
-			url = `${credentials.baseURL}/backend/api/v1/peripheries/types/${typeId}`;
+			url = `${credentials.baseURL}${peripheryBasePath}/types/${typeId}`;
 			requestOptions.method = 'PUT';
 			requestOptions.body = updateFields;
 			break;
@@ -658,7 +661,7 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 		case 'deletePeripheryType': {
 			const typeId = this.getNodeParameter('peripheryTypeIdParam', i, 0) as number;
 			if (!typeId) throw new NodeOperationError(this.getNode(), 'periphery type id is required for delete.');
-			url = `${credentials.baseURL}/backend/api/v1/peripheries/types/${typeId}`;
+			url = `${credentials.baseURL}${peripheryBasePath}/types/${typeId}`;
 			requestOptions.method = 'DELETE';
 			break;
 		}
@@ -670,7 +673,7 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 			if (!pid) throw new NodeOperationError(this.getNode(), 'peripheryId is required for assignment.');
 			if (!linkTypeId) throw new NodeOperationError(this.getNode(), 'linkTypeId is required for assignment.');
 			if (!linkId) throw new NodeOperationError(this.getNode(), 'linkId is required for assignment.');
-			url = `${credentials.baseURL}/backend/api/v1/peripheries/${pid}/buildIn/${linkTypeId}/${linkId}`;
+			url = `${credentials.baseURL}${peripheryBasePath}/${pid}/buildIn/${linkTypeId}/${linkId}`;
 			requestOptions.method = 'POST';
 			break;
 		}
@@ -682,12 +685,12 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 			if (!pid) throw new NodeOperationError(this.getNode(), 'peripheryId is required for deleting assignment.');
 			if (!linkTypeId) throw new NodeOperationError(this.getNode(), 'linkTypeId is required for deleting assignment.');
 			if (!linkId) throw new NodeOperationError(this.getNode(), 'linkId is required for deleting assignment.');
-			url = `${credentials.baseURL}/backend/api/v1/peripheries/${pid}/buildIn/${linkTypeId}/${linkId}`;
+			url = `${credentials.baseURL}${peripheryBasePath}/${pid}/buildIn/${linkTypeId}/${linkId}`;
 			requestOptions.method = 'DELETE';
 			break;
 		}
 		case 'deletePeriphery': {
-			url = `${credentials.baseURL}/backend/api/v1/peripheries/${peripheryId}`;
+			url = `${credentials.baseURL}${peripheryBasePath}/${peripheryId}`;
 			requestOptions.method = 'DELETE';
 			break;
 		}
