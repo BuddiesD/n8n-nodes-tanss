@@ -1,5 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
-import { getTanssBaseUrl, tanssHttpRequest } from './request';
+import { getTanssBaseUrl, isGeneratedTokenMode, tanssHttpRequest } from './request';
 
 export const pcOperations: INodeProperties[] = [
 	{
@@ -328,6 +328,9 @@ export const pcFields: INodeProperties[] = [
 export async function handlePc(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const pcsBasePath = isGeneratedTokenMode.call(this, i)
+		? '/backend/api/deviceManagement/v1/pcs'
+		: '/backend/api/v1/pcs';
 
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const pcId = this.getNodeParameter('pcId', i, 0) as number;
@@ -355,14 +358,14 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 		case 'getPcById':
 			if (!pcId || typeof pcId !== 'number' || pcId <= 0)
 				throw new NodeOperationError(this.getNode(), 'Field "PC ID" is required and must be a valid ID.');
-			url = `${credentials.baseURL}/backend/api/v1/pcs/${pcId}`;
+			url = `${credentials.baseURL}${pcsBasePath}/${pcId}`;
 			requestOptions.method = 'GET';
 			break;
 
 		case 'updatePc': {
 			if (!pcId || typeof pcId !== 'number' || pcId <= 0)
 				throw new NodeOperationError(this.getNode(), 'Field "PC ID" is required and must be a valid ID.');
-			url = `${credentials.baseURL}/backend/api/v1/pcs/${pcId}`;
+			url = `${credentials.baseURL}${pcsBasePath}/${pcId}`;
 			const body: Record<string, unknown> = { ...pcData };
 			if (companyId && typeof companyId === 'number' && companyId > 0) body.companyId = companyId;
 			if (model && typeof model === 'string' && model.trim() !== '') body.model = model;
@@ -373,7 +376,7 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 		}
 
 		case 'createPc': {
-			url = `${credentials.baseURL}/backend/api/v1/pcs`;
+			url = `${credentials.baseURL}${pcsBasePath}`;
 			const body = { ...pcData, companyId: createCompanyId, model: createModel };
 			if (Object.keys(body).length === 0) throw new NodeOperationError(this.getNode(), 'No data provided for creating the PC.');
 			if (!body.model) throw new NodeOperationError(this.getNode(), 'Field "Model" is required for creating a PC.');
@@ -387,12 +390,12 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 		case 'deletePc':
 			if (!pcId || typeof pcId !== 'number' || pcId <= 0)
 				throw new NodeOperationError(this.getNode(), 'Field "PC ID" is required and must be a valid ID.');
-			url = `${credentials.baseURL}/backend/api/v1/pcs/${pcId}`;
+			url = `${credentials.baseURL}${pcsBasePath}/${pcId}`;
 			requestOptions.method = 'DELETE';
 			break;
 
 		case 'listPcs': {
-			url = `${credentials.baseURL}/backend/api/v1/pcs`;
+			url = `${credentials.baseURL}${pcsBasePath}`;
 			const listQuery = this.getNodeParameter('listQuery', i, {}) as Record<string, unknown>;
 			requestOptions.method = 'PUT';
 			requestOptions.body = listQuery;
