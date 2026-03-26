@@ -1,5 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
-import { getTanssBaseUrl, tanssHttpRequest } from './request';
+import { getTanssBaseUrl, isGeneratedTokenMode, tanssHttpRequest } from './request';
 
 export const cpuOperations: INodeProperties[] = [
 	{
@@ -85,6 +85,9 @@ export const cpuFields: INodeProperties[] = [
 export async function handleCpu(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const cpusBasePath = isGeneratedTokenMode.call(this, i)
+		? '/backend/api/deviceManagement/v1/cpus'
+		: '/backend/api/v1/cpus';
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const cpuId = this.getNodeParameter('cpuId', i, 0) as number;
 
@@ -105,7 +108,7 @@ export async function handleCpu(this: IExecuteFunctions, i: number) {
 
 	switch (operation) {
 		case 'createCpu': {
-			url = `${credentials.baseURL}/backend/api/v1/cpus`;
+			url = `${credentials.baseURL}${cpusBasePath}`;
 			requestOptions.method = 'POST';
 			const createCpuFields = this.getNodeParameter('createCpuFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(createCpuFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for CPU creation.');
@@ -113,22 +116,22 @@ export async function handleCpu(this: IExecuteFunctions, i: number) {
 			break;
 		}
 		case 'deleteCpu': {
-			url = `${credentials.baseURL}/backend/api/v1/cpus/${cpuId}`;
+			url = `${credentials.baseURL}${cpusBasePath}/${cpuId}`;
 			requestOptions.method = 'DELETE';
 			break;
 		}
 		case 'getAllCpus': {
-			url = `${credentials.baseURL}/backend/api/v1/cpus`;
+			url = `${credentials.baseURL}${cpusBasePath}`;
 			requestOptions.method = 'GET';
 			break;
 		}
 		case 'getCpuById': {
-			url = `${credentials.baseURL}/backend/api/v1/cpus/${cpuId}`;
+			url = `${credentials.baseURL}${cpusBasePath}/${cpuId}`;
 			requestOptions.method = 'GET';
 			break;
 		}
 		case 'updateCpu': {
-			url = `${credentials.baseURL}/backend/api/v1/cpus/${cpuId}`;
+			url = `${credentials.baseURL}${cpusBasePath}/${cpuId}`;
 			requestOptions.method = 'PUT';
 			const updateCpuFields = this.getNodeParameter('updateCpuFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(updateCpuFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for CPU update.');
