@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, tanssHttpRequest } from './request';
 
 export const remoteSupportsOperations: INodeProperties[] = [
 	{
@@ -82,16 +83,6 @@ export const remoteSupportsOperations: INodeProperties[] = [
 ];
 
 export const remoteSupportsFields: INodeProperties[] = [
-	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'API token obtained from the TANSS web interface (must be generated in TANSS)',
-		displayOptions: { show: { resource: ['remoteSupports'] } },
-	},
 	{
 		displayName: 'Assign Device Object',
 		name: 'assignDeviceObject',
@@ -212,10 +203,8 @@ export const remoteSupportsFields: INodeProperties[] = [
 
 export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const base = credentials.baseURL as string;
 	if (!base) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');
 
@@ -232,10 +221,6 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 		json: true,
 		url,
 	};
-
-	if (apiToken && apiToken.toString().trim() !== '') {
-		requestOptions.headers.apiToken = apiToken;
-	}
 
 	switch (operation) {
 		case 'createRemoteSupport': {
@@ -351,7 +336,7 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 			requestOptions.body = body;
 
 			try {
-				const fullResponse = await this.helpers.httpRequest({
+				const fullResponse = await tanssHttpRequest.call(this, i, {
 					...(requestOptions as unknown as IDataObject),
 					simple: false,
 					resolveWithFullResponse: true,
@@ -382,12 +367,7 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 				}
 
 				const tanssError = (parsedBody as { error?: { localizedText?: string; text?: string; type?: string } } | null)?.error;
-				const fallbackMessage =
-					statusCode === 403
-						? 'Forbidden: Assignment not found or not allowed for this remote support type.'
-						: err instanceof Error
-							? err.message
-							: `Delete request failed (status ${statusCode})`;
+				const fallbackMessage = err instanceof Error ? err.message : `Delete request failed (status ${statusCode})`;
 
 				return {
 					success: false,
@@ -464,7 +444,7 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 			requestOptions.url = url;
 
 			try {
-				const fullResponse = await this.helpers.httpRequest({
+				const fullResponse = await tanssHttpRequest.call(this, i, {
 					...(requestOptions as unknown as IDataObject),
 					simple: false,
 					resolveWithFullResponse: true,
@@ -495,12 +475,7 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 				}
 
 				const tanssError = (parsedBody as { error?: { localizedText?: string; text?: string; type?: string } } | null)?.error;
-				const fallbackMessage =
-					statusCode === 403
-						? 'Forbidden: external ID is missing or does not belong to an external remote support system.'
-						: err instanceof Error
-							? err.message
-							: `Delete request failed (status ${statusCode})`;
+				const fallbackMessage = err instanceof Error ? err.message : `Delete request failed (status ${statusCode})`;
 
 				return {
 					success: false,
@@ -516,7 +491,7 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 	}
 
 	try {
-		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+		const responseData = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
 		throw new NodeApiError(this.getNode(), error as JsonObject);

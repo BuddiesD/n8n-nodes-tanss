@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, tanssHttpRequest } from './request';
 
 export const callsOperations: INodeProperties[] = [
 	{
@@ -72,20 +73,6 @@ export const callsOperations: INodeProperties[] = [
 ];
 
 export const callsFields: INodeProperties[] = [
-	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'API token obtained from the TANSS web interface (must be generated in TANSS)',
-		displayOptions: {
-			show: {
-				resource: ['calls'],
-			},
-		},
-	},
 	{
 		displayName: 'Use Raw Call JSON (Optional)',
 		name: 'callJson',
@@ -563,9 +550,8 @@ export const callsFields: INodeProperties[] = [
 export async function handleCalls(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const typedCredentials = credentials as { baseURL?: string };
 	const baseURL = typedCredentials.baseURL;
 	if (!baseURL) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');
@@ -700,13 +686,13 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'POST',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body,
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -764,13 +750,13 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'PUT',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body,
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -787,12 +773,12 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'GET',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -933,13 +919,13 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'PUT',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body,
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -973,13 +959,13 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'POST',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body,
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -992,14 +978,13 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 			method: 'GET',
 			url,
 			headers: {
-				apiToken,
 				Accept: 'application/json',
 			},
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -1032,13 +1017,13 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'POST',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body,
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -1071,13 +1056,13 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'DELETE',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body,
 			json: true,
 		};
 
 		try {
-			const fullResponse = (await this.helpers.httpRequest({
+			const fullResponse = (await tanssHttpRequest.call(this, i, {
 				...(requestOptions as unknown as Record<string, unknown>),
 				simple: false,
 				resolveWithFullResponse: true,

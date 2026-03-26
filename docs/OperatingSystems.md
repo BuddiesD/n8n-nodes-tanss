@@ -8,7 +8,6 @@ Create a new operating system entry.
 
 **Parameters:**
 
-- **API Token** (required)
 - **ID**
 - **Name**
 - **Server Operating System**
@@ -23,7 +22,6 @@ Delete a specific operating system.
 
 **Parameters:**
 
-- **API Token** (required)
 - **OS ID** (required)
 
 ## Get Operating Systems
@@ -34,7 +32,6 @@ Retrieve a list of all operating systems.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Get OS
 
@@ -44,7 +41,6 @@ Retrieve a specific operating system by its ID.
 
 **Parameters:**
 
-- **API Token** (required)
 - **OS ID** (required)
 
 ## Update OS
@@ -55,7 +51,6 @@ Update an existing operating system.
 
 **Parameters:**
 
-- **API Token** (required)
 - **OS ID** (required)
 - **ID**
 - **Name**

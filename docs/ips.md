@@ -8,7 +8,6 @@ Retrieve all IP addresses assigned to a device.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Assignment Type** (required)
 - **Assignment ID** (required)
 
@@ -20,7 +19,6 @@ Create a new IP address assignment.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Assignment Type** (required)
 - **Assignment ID** (required)
 - **IP**
@@ -36,7 +34,6 @@ Update an existing IP address.
 
 **Parameters:**
 
-- **API Token** (required)
 - **IP ID** (required)
 - **IP**
 - **MAC**
@@ -51,5 +48,4 @@ Delete an IP address.
 
 **Parameters:**
 
-- **API Token** (required)
 - **IP ID** (required)

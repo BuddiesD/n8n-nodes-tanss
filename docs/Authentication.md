@@ -1,22 +1,29 @@
-# Authentication Operations
+# Authentication
 
-## Login
+The TANSS node no longer exposes an `Authentication` resource operation.
 
-Login to the TANSS API
+Authentication is handled exclusively via credentials and `Auth Mode`:
 
-A successful login returns two tokens:
+- `User Login (Auto Refresh)`
+  - Uses credential type `TANSS User API`
+  - Required fields: `Base URL`, `Username`, `Password`
+  - Optional: `2FA Secret`
+  - Internally handles token lifecycle and refresh
 
-- **apiToken (apiKey)** – Used for authenticating API requests.
-  - Valid for **4 hours**
-  - Required to access protected API resources
-- **refreshToken (refresh)** – Used to obtain a new token pair.
-  - Valid for **5 days**
+- `Generated Token`
+  - Uses credential type `TANSS Generated Token API`
+  - Required fields: `Base URL`, `Generated API Token`
+  - Uses static generated token scopes
 
-**Parameters:**
+## TANSS token model
 
-- No additional parameters
+A TANSS login response provides:
 
-**Responses:**
+- `apiToken` (apiKey): token used for API requests
+- `refreshToken` (refresh): token used to request a new token pair
 
-- **200 OK**: Successful login attempt, returns apiToken and refreshToken
-- **403 Forbidden**: Unsuccessful login attempt due to invalid credentials or authentication failure
+According to TANSS API docs:
+
+- `apiToken` expires after about 4 hours
+- `refreshToken` is valid for about 5 days
+- Requests authenticate via `apiToken` HTTP header

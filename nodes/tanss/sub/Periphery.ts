@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, tanssHttpRequest } from './request';
 
 export const peripheryOperations: INodeProperties[] = [
 	{
@@ -130,16 +131,6 @@ type AssignmentParams = {
 };
 
 export const peripheryFields: INodeProperties[] = [
-	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'API token obtained from the TANSS API login',
-		displayOptions: { show: { resource: ['peripheries'] } },
-	},
 	{
 		displayName: 'Periphery ID',
 		name: 'peripheryId',
@@ -546,23 +537,21 @@ export const peripheryFields: INodeProperties[] = [
 
 export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const peripheryId = this.getNodeParameter('peripheryId', i, 0) as number;
 
 	let url = '';
 	const requestOptions: {
 		method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-		headers: { apiToken: string; 'Content-Type': string };
+		headers: { 'Content-Type': string };
 		json: boolean;
 		body?: Record<string, unknown>;
 		url: string;
 	} = {
 		method: 'GET',
-		headers: { apiToken, 'Content-Type': 'application/json' },
+		headers: { 'Content-Type': 'application/json' },
 		json: true,
 		url,
 	};
@@ -709,7 +698,7 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 	requestOptions.url = url;
 
 	try {
-		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+		const responseData = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		if (operation === 'deletePeriphery' || operation === 'deletePeripheryType' || operation === 'deletePeripheryAssignment') {
 			if (responseData === '' || responseData == null) {
 				return {
@@ -722,11 +711,6 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 								? 'periphery type deleted'
 								: 'periphery assignment deleted',
 				};
-			}
-		}
-		if (operation === 'assignPeriphery') {
-			if (responseData === '' || responseData == null) {
-				return { statusCode: 201, message: 'periphery was assigned succesfully' };
 			}
 		}
 		return responseData;
@@ -758,8 +742,7 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 					return {
 						success: false,
 						statusCode: status,
-						message:
-							tanssError?.localizedText ?? tanssError?.text ?? (status === 403 ? 'error response' : `Delete request failed (status ${status})`),
+						message: tanssError?.localizedText ?? tanssError?.text ?? `Delete request failed (status ${status})`,
 						error: tanssError ?? respData,
 					};
 				}
@@ -773,7 +756,6 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 		if (operation === 'deletePeriphery' || operation === 'deletePeripheryType' || operation === 'deletePeripheryAssignment') {
 			return {
 				success: false,
-				statusCode: 0,
 				message: message || 'Delete request failed.',
 				error: null,
 			};

@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, isGeneratedTokenMode, tanssHttpRequest } from './request';
 
 export const timestampOperations: INodeProperties[] = [
 	{
@@ -108,16 +109,6 @@ export const timestampOperations: INodeProperties[] = [
 ];
 
 export const timestampFields: INodeProperties[] = [
-	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'API token obtained from the TANSS API login',
-		displayOptions: { show: { resource: ['timestamps'] } },
-	},
 
 	// getTimestamps / info / statistics params
 	{
@@ -371,10 +362,8 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		throw new NodeOperationError(this.getNode(), `Operation "${operation}" not supported by Timestamps.`);
 	}
 
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const typedCredentials = credentials as { baseURL?: string };
 	const baseURL = typedCredentials.baseURL;
 	if (!baseURL) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');
@@ -394,12 +383,12 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'GET',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -421,12 +410,12 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'GET',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -450,12 +439,12 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'GET',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -477,17 +466,20 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 
 		const body: IDataObject = { employeeId, date, state, type };
 
-		const url = `${baseURL}/backend/api/v1/timestamps${autoPause ? '?autoPause=true' : ''}`;
+		const createTimestampsPath = isGeneratedTokenMode.call(this, i)
+			? '/backend/api/timestamps/v1'
+			: '/backend/api/v1/timestamps';
+		const url = `${baseURL}${createTimestampsPath}${autoPause ? '?autoPause=true' : ''}`;
 		const requestOptions: IDataObject = {
 			method: 'POST',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body,
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -514,13 +506,13 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'PUT',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body,
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -548,13 +540,13 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'PUT',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body: timestampsArray as IDataObject[],
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -585,13 +577,13 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'POST',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body: payload as IDataObject[],
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -622,13 +614,13 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'DELETE',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body: payload as IDataObject[],
 			json: true,
 		};
 
 		try {
-			const fullResponse = (await this.helpers.httpRequest({
+			const fullResponse = (await tanssHttpRequest.call(this, i, {
 				...(requestOptions as Record<string, unknown>),
 				simple: false,
 				resolveWithFullResponse: true,
@@ -677,12 +669,12 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'GET',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -707,13 +699,13 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'POST',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body: { tillDate, employeeIds: employeeIds as number[] },
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -732,13 +724,13 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'POST',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body: { balance: initialBalance },
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -751,12 +743,12 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'GET',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -775,13 +767,13 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'POST',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body: { fromMinutes, minimumPause },
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -802,13 +794,13 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'PUT',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body: { fromMinutes, minimumPause },
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -824,12 +816,12 @@ export async function handleTimestamps(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'DELETE',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			json: true,
 		};
 
 		try {
-			const fullResponse = (await this.helpers.httpRequest({
+			const fullResponse = (await tanssHttpRequest.call(this, i, {
 				...(requestOptions as Record<string, unknown>),
 				simple: false,
 				resolveWithFullResponse: true,

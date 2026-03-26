@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, tanssHttpRequest } from './request';
 
 export const employeesOperations: INodeProperties[] = [
 	{
@@ -26,16 +27,6 @@ export const employeesOperations: INodeProperties[] = [
 ];
 
 export const employeesFields: INodeProperties[] = [
-	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'Optional API token (Bearer). If not provided the credentials are used.',
-		displayOptions: { show: { resource: ['employees'] } },
-	},
 	{
 		displayName: 'Freelancer Company ID',
 		name: 'freelancerCompanyId',
@@ -144,10 +135,8 @@ export const employeesFields: INodeProperties[] = [
 
 export async function handleEmployees(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const base = credentials.baseURL as string;
 	if (!base) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');
 
@@ -163,10 +152,6 @@ export async function handleEmployees(this: IExecuteFunctions, i: number) {
 		json: true,
 		url: '',
 	};
-
-	if (apiToken && apiToken.toString().trim() !== '') {
-		requestOptions.headers.apiToken = apiToken;
-	}
 
 	switch (operation) {
 		case 'getTechnicians': {
@@ -269,7 +254,7 @@ export async function handleEmployees(this: IExecuteFunctions, i: number) {
 	}
 
 	try {
-		const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
+		const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as IHttpRequestOptions);
 		return response;
 	} catch (err: unknown) {
 		throw new NodeApiError(this.getNode(), err as JsonObject);

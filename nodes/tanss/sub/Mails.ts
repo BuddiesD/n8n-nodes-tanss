@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, tanssHttpRequest } from './request';
 
 export const mailsOperations: INodeProperties[] = [
 	{
@@ -20,16 +21,6 @@ export const mailsOperations: INodeProperties[] = [
 ];
 
 export const mailsFields: INodeProperties[] = [
-	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'API token obtained from the TANSS web interface (must be generated in TANSS)',
-		displayOptions: { show: { resource: ['mails'] } },
-	},
 	{
 		displayName: 'Receiver',
 		name: 'receiver',
@@ -81,10 +72,8 @@ export const mailsFields: INodeProperties[] = [
 
 export async function handleMails(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const receiver = this.getNodeParameter('receiver', i, '') as string;
 	if (!receiver || String(receiver).trim() === '') throw new NodeOperationError(this.getNode(), 'receiver is required');
 
@@ -103,10 +92,6 @@ export async function handleMails(this: IExecuteFunctions, i: number) {
 		json: true,
 		url: '',
 	};
-
-	if (apiToken && apiToken.toString().trim() !== '') {
-		requestOptions.headers.apiToken = apiToken;
-	}
 
 	switch (operation) {
 		case 'testSmtp': {
@@ -135,38 +120,13 @@ export async function handleMails(this: IExecuteFunctions, i: number) {
 	}
 
 	try {
-		const fullResponse = await this.helpers.httpRequest({
+		const fullResponse = await tanssHttpRequest.call(this, i, {
 			...(requestOptions as unknown as IDataObject),
 			simple: false,
 			resolveWithFullResponse: true,
 		} as unknown as IHttpRequestOptions);
-		if (fullResponse && fullResponse.statusCode === 201) {
-			return {
-				success: true,
-				statusCode: 201,
-				message: 'Test email sent',
-				body: fullResponse.body,
-			} as unknown as IDataObject;
-		}
-		if (fullResponse && fullResponse.statusCode === 500) {
-			return {
-				success: false,
-				statusCode: 500,
-				message: 'Server error while sending test email',
-				body: fullResponse.body,
-			} as unknown as IDataObject;
-		}
 		return fullResponse && fullResponse.body ? fullResponse.body : fullResponse;
 	} catch (err: unknown) {
-		const e = err as unknown as { statusCode?: number; response?: { statusCode?: number } };
-		const status = e?.statusCode ?? e?.response?.statusCode;
-		if (status === 500) {
-			return {
-				success: false,
-				statusCode: 500,
-				message: 'Server error while sending test email',
-			} as unknown as IDataObject;
-		}
 		throw new NodeApiError(this.getNode(), err as JsonObject);
 	}
 }

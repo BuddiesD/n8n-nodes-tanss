@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, tanssHttpRequest } from './request';
 
 export const domainOperations: INodeProperties[] = [
 	{
@@ -48,20 +49,6 @@ export const domainOperations: INodeProperties[] = [
 ];
 
 export const domainFields: INodeProperties[] = [
-	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'API token obtained from the TANSS API login',
-		displayOptions: {
-			show: {
-				resource: ['domain'],
-			},
-		},
-	},
 
 	{
 		displayName: 'Create Domain Fields',
@@ -184,23 +171,21 @@ export const domainFields: INodeProperties[] = [
 
 export async function handleDomains(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const baseURL = credentials.baseURL as string;
 
 	let url = '';
 	const requestOptions: {
 		method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-		headers: { apiToken: string; 'Content-Type': string };
+		headers: { 'Content-Type': string };
 		json: boolean;
 		body?: Record<string, unknown>;
 		url: string;
 	} = {
 		method: 'GET',
-		headers: { apiToken, 'Content-Type': 'application/json' },
+		headers: { 'Content-Type': 'application/json' },
 		json: true,
 		url,
 	};
@@ -256,7 +241,7 @@ export async function handleDomains(this: IExecuteFunctions, i: number) {
 	requestOptions.url = url;
 
 	try {
-		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+		const responseData = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		if (operation === 'deleteDomain') {
 			if (responseData === null || responseData === '' || (Array.isArray(responseData) && responseData.length === 0)) {
 				return { success: true, message: 'Domain deleted' };

@@ -34,7 +34,8 @@
     "n8n": {
         "n8nNodesApiVersion": 1,
         "credentials": [
-            "dist/credentials/TanssApi.credentials.js"
+            "dist/credentials/TanssUserApi.credentials.js",
+            "dist/credentials/TanssGeneratedTokenApi.credentials.js"
         ],
         "nodes": [
             "dist/nodes/tanss/Tanss.node.js"

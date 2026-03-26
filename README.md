@@ -87,12 +87,19 @@ A complete overview of all available operations can be found in the TANSS API do
 
 ## Credentials
 
-You only need to provide:
+Authentication is now fully credential-based and also works with n8n `HTTP Request` using TANSS credentials.
 
-- `backend url (api url)`
-- `username`
-- `password`
-- optionally: `TOTP Secret Key` (for two-factor authentication)
+Use the node parameter `Auth Mode` and select one credential type:
+
+- `User Login (Auto Refresh)`
+  - Credential: `TANSS User API`
+  - Fields: `Base URL`, `Username`, `Password`, optional `2FA Secret`
+  - Automatically refreshes tokens using `refreshToken` when possible
+
+- `Generated Token`
+  - Credential: `TANSS Generated Token API`
+  - Fields: `Base URL`, `Generated API Token`
+  - Uses static generated token scopes (no refresh)
 
 ## Compatibility
 

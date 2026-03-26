@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, tanssHttpRequest } from './request';
 
 export const operatingSystemsOperations: INodeProperties[] = [
 	{
@@ -44,16 +45,6 @@ export const operatingSystemsOperations: INodeProperties[] = [
 ];
 
 export const operatingSystemsFields: INodeProperties[] = [
-	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'API token obtained from the TANSS API login',
-		displayOptions: { show: { resource: ['operatingSystems'] } },
-	},
 	{
 		displayName: 'OS ID',
 		name: 'osId',
@@ -119,23 +110,21 @@ export const operatingSystemsFields: INodeProperties[] = [
 
 export async function handleOperatingSystems(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const osId = this.getNodeParameter('osId', i, 0) as number;
 
 	let url = '';
 	const requestOptions: {
 		method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-		headers: { apiToken: string; 'Content-Type': string };
+		headers: { 'Content-Type': string };
 		json: boolean;
 		body?: Record<string, unknown>;
 		url: string;
 		returnFullResponse?: boolean;
 	} = {
 		method: 'GET',
-		headers: { apiToken, 'Content-Type': 'application/json' },
+		headers: { 'Content-Type': 'application/json' },
 		json: true,
 		url,
 	};
@@ -184,7 +173,7 @@ export async function handleOperatingSystems(this: IExecuteFunctions, i: number)
 			...requestOptions,
 			returnFullResponse: true,
 		} as unknown as import('n8n-workflow').IHttpRequestOptions;
-		const fullResponse = (await this.helpers.httpRequest(options)) as unknown as FullResponse;
+		const fullResponse = (await tanssHttpRequest.call(this, i, options)) as unknown as FullResponse;
 		if (requestOptions.method === 'DELETE') {
 			if (fullResponse.statusCode === 204) {
 				return { success: true, statusCode: 204, message: 'Operating system deleted successfully.' };

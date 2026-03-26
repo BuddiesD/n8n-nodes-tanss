@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, tanssHttpRequest } from './request';
 
 export const pcOperations: INodeProperties[] = [
 	{
@@ -48,20 +49,6 @@ export const pcOperations: INodeProperties[] = [
 ];
 
 export const pcFields: INodeProperties[] = [
-	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string',
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'Enter the API token for the TANSS API',
-		displayOptions: {
-			show: {
-				resource: ['pc'],
-			},
-		},
-	},
 	{
 		displayName: 'PC ID',
 		name: 'pcId',
@@ -340,11 +327,9 @@ export const pcFields: INodeProperties[] = [
 
 export async function handlePc(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const pcId = this.getNodeParameter('pcId', i, 0) as number;
 	const pcData = this.getNodeParameter('pcData', i, {}) as Record<string, unknown>;
 	const companyId = this.getNodeParameter('companyId', i, 0) as number;
@@ -355,13 +340,13 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 	let url = '';
 	const requestOptions: {
 		method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-		headers: { apiToken: string; 'Content-Type': string };
+		headers: { 'Content-Type': string };
 		json: boolean;
 		body?: Record<string, unknown>;
 		url: string;
 	} = {
 		method: 'GET',
-		headers: { apiToken, 'Content-Type': 'application/json' },
+		headers: { 'Content-Type': 'application/json' },
 		json: true,
 		url,
 	};
@@ -422,7 +407,7 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 
 	try {
 		if (operation === 'deletePc') {
-			const fullResponse = (await this.helpers.httpRequest({
+			const fullResponse = (await tanssHttpRequest.call(this, i, {
 				...(requestOptions as unknown as Record<string, unknown>),
 				simple: false,
 				resolveWithFullResponse: true,
@@ -447,7 +432,7 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 			};
 		}
 
-		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+		const responseData = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
 		if (operation === 'deletePc') {

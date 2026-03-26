@@ -10,7 +10,6 @@ Create or import a remote support entry into the database.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Remote Maintenance ID**
 - **User ID**
 - **User Name**
@@ -32,7 +31,6 @@ Retrieve a list of remote supports using filter settings.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Timeframe From (Timestamp)**
 - **Timeframe To (Timestamp)**
 - **Employee ID**
@@ -48,7 +46,6 @@ Retrieve a specific remote support by its ID.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Remote Support ID** (required)
 
 ## Update Remote Support
@@ -59,7 +56,6 @@ Update an existing remote support by its ID.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Remote Support ID** (required)
 - **Remote Maintenance ID**
 - **User ID**
@@ -82,7 +78,6 @@ Delete a remote support by its ID.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Remote Support ID** (required)
 
 ## Get Device Assignments
@@ -93,7 +88,6 @@ Retrieve all device assignments for remote supports.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Create Device Assignment
 
@@ -103,7 +97,6 @@ Create a new device assignment.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Device ID**
 - **Company ID**
 - **Link Type ID**
@@ -117,7 +110,6 @@ Delete an existing device assignment.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Device ID**
 - **Company ID**
 - **Link Type ID**
@@ -129,7 +121,6 @@ Retrieve all technician assignments for the remote support type.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Create Technician Assignment
 
@@ -137,7 +128,6 @@ Create an assignment mapping a `userId` to an `employeeId`.
 
 **Parameters:**
 
-- **API Token** (required)
 - **User ID**
 - **Employee ID**
 
@@ -147,6 +137,5 @@ Delete a technician assignment by `userId`.
 
 **Parameters:**
 
-- **API Token** (required)
 - **User ID**
 - **Employee ID**

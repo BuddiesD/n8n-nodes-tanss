@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, IHttpRequestOptions, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, tanssHttpRequest } from './request';
 
 export const ticketStatesOperations: INodeProperties[] = [
 	{
@@ -42,20 +43,6 @@ export const ticketStatesOperations: INodeProperties[] = [
 ];
 
 export const ticketStatesFields: INodeProperties[] = [
-	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'API token obtained from the TANSS API login',
-		displayOptions: {
-			show: {
-				resource: ['ticketStates'],
-			},
-		},
-	},
 	// ID field used by update/delete (single fetch removed)
 	{
 		displayName: 'Ticket State ID',
@@ -147,10 +134,8 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 		throw new NodeOperationError(this.getNode(), `Operation "${operation}" not supported by TicketStates.`);
 	}
 
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const typedCredentials = credentials as { baseURL?: string };
 	const baseURL = typedCredentials.baseURL;
 	if (!baseURL) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');
@@ -161,11 +146,11 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'GET',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			json: true,
 		};
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -193,13 +178,13 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'POST',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body,
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -228,13 +213,13 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'PUT',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			body,
 			json: true,
 		};
 
 		try {
-			const response = await this.helpers.httpRequest(requestOptions as unknown as IHttpRequestOptions);
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as IHttpRequestOptions);
 			return response;
 		} catch (error: unknown) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
@@ -249,11 +234,11 @@ export async function handleTicketStates(this: IExecuteFunctions, i: number) {
 		const requestOptions: IDataObject = {
 			method: 'DELETE',
 			url,
-			headers: { apiToken, 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json' },
 			json: true,
 		};
 		try {
-			const fullResponse = (await this.helpers.httpRequest({
+			const fullResponse = (await tanssHttpRequest.call(this, i, {
 				...(requestOptions as Record<string, unknown>),
 				simple: false,
 				resolveWithFullResponse: true,

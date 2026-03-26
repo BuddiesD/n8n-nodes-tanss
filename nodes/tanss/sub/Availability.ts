@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, tanssHttpRequest } from './request';
 
 export const availabilityOperations: INodeProperties[] = [
 	{
@@ -21,16 +22,6 @@ export const availabilityOperations: INodeProperties[] = [
 
 export const availabilityFields: INodeProperties[] = [
 	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'API token obtained from the TANSS API login',
-		displayOptions: { show: { resource: ['availability'] } },
-	},
-	{
 		displayName: 'Employee IDs (Comma Separated)',
 		name: 'employeeIds',
 		type: 'string' as const,
@@ -42,10 +33,8 @@ export const availabilityFields: INodeProperties[] = [
 ];
 
 export async function handleAvailability(this: IExecuteFunctions, i: number) {
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const employeeIds = this.getNodeParameter('employeeIds', i) as string;
 
 	if (!employeeIds || String(employeeIds).trim() === '') {
@@ -69,15 +58,11 @@ export async function handleAvailability(this: IExecuteFunctions, i: number) {
 		url,
 	};
 
-	if (apiToken && String(apiToken).trim() !== '') {
-		requestOptions.headers.apiToken = apiToken;
-	}
-
 	const encoded = encodeURIComponent(String(employeeIds).trim());
 	requestOptions.url = `${url}?employeeIds=${encoded}`;
 
 	try {
-		const response = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+		const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return response;
 	} catch (err: unknown) {
 		throw new NodeApiError(this.getNode(), err as JsonObject);

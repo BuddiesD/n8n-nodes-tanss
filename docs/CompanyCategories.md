@@ -8,7 +8,6 @@ Retrieve a list of company categories.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Create Category
 
@@ -18,7 +17,6 @@ Create a new company category.
 
 **Parameters:**
 
-- **API Token** (required)
 - **ID**
 - **Name**
 
@@ -30,7 +28,6 @@ Retrieve a specific company category by its ID.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Category ID** (required)
 
 ## Update Category
@@ -41,7 +38,6 @@ Update an existing company category.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Category ID** (required)
 - **ID**
 - **Name**
@@ -54,7 +50,6 @@ Delete a company category.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Category ID** (required)
 
 ## List Company Types
@@ -65,7 +60,6 @@ Retrieve a list of company types.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Create Company Type
 
@@ -75,7 +69,6 @@ Create a new company type.
 
 **Parameters:**
 
-- **API Token** (required)
 - **ID**
 - **Name**
 - **Category ID**
@@ -91,7 +84,6 @@ Retrieve a specific company type by its ID.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Company Type ID** (required)
 
 ## Update Company Type
@@ -102,7 +94,6 @@ Update an existing company type.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Company Type ID** (required)
 - **ID**
 - **Name**
@@ -119,5 +110,4 @@ Delete a company type.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Company Type ID** (required)

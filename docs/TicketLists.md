@@ -6,7 +6,6 @@ Retrieve a list of all project tickets.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Get Company Tickets
 
@@ -14,7 +13,6 @@ Retrieve tickets for a specific company.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Company ID** (required)
 
 ## Get Custom Ticket List
@@ -25,7 +23,6 @@ Retrieve a custom ticket list using filter settings.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Companies**
 - **Departments**
 - **IDs**
@@ -51,7 +48,6 @@ Retrieve tickets that are not assigned to any employee.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Get Local Admin Tickets
 
@@ -59,7 +55,6 @@ Retrieve tickets assigned to local ticket administrators.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Get Not Identified Tickets
 
@@ -67,7 +62,6 @@ Retrieve tickets that are not assigned to any company.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Get Own Tickets
 
@@ -75,7 +69,6 @@ Retrieve tickets assigned to the current employee.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Get Repair Tickets
 
@@ -83,7 +76,6 @@ Retrieve a list of repair tickets.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Get Technician Tickets
 
@@ -91,7 +83,6 @@ Retrieve tickets assigned to other technicians.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Get Tickets With Role
 
@@ -99,4 +90,3 @@ Retrieve tickets where the technician has a role assigned.
 
 **Parameters:**
 
-- **API Token** (required)

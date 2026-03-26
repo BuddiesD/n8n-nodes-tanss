@@ -8,7 +8,6 @@ Retrieve a list of software licenses based on filter settings.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Company ID**
 - **Branches**
 - **Active**
@@ -27,7 +26,6 @@ Create a new software license.
 
 **Parameters:**
 
-- **API Token** (required)
 - **ID**
 - **Company ID**
 - **Remark**
@@ -54,7 +52,6 @@ Retrieve a single software license by its ID.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Software License ID** (required)
 
 ## Update Software License
@@ -65,7 +62,6 @@ Update an existing software license.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Software License ID** (required)
 - **ID**
 - **Company ID**
@@ -93,7 +89,6 @@ Delete a software license.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Software License ID** (required)
 
 ## Get Software License Types
@@ -104,7 +99,6 @@ Retrieve all software license types.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Create Software License Type
 
@@ -114,7 +108,6 @@ Create a new software license type.
 
 **Parameters:**
 
-- **API Token** (required)
 - **ID**
 - **Manufacturer Number**
 - **Name**
@@ -135,7 +128,6 @@ Retrieve a single software license type by ID.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Software License Type ID** (required)
 
 ## Update Software License Type
@@ -146,7 +138,6 @@ Update an existing software license type.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Software License Type ID** (required)
 - **ID**
 - **Manufacturer Number**
@@ -168,5 +159,4 @@ Delete a software license type.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Software License Type ID** (required)

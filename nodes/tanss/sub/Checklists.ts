@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, tanssHttpRequest } from './request';
 
 export const checklistsOperations: INodeProperties[] = [
 	{
@@ -48,20 +49,6 @@ export const checklistsOperations: INodeProperties[] = [
 ];
 
 export const checklistsFields: INodeProperties[] = [
-	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'API token obtained from the TANSS API login',
-		displayOptions: {
-			show: {
-				resource: ['checklists'],
-			},
-		},
-	},
 	{
 		displayName: 'Link Type ID',
 		name: 'linkTypeId',
@@ -131,11 +118,9 @@ export const checklistsFields: INodeProperties[] = [
 
 export async function handleChecklists(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const linkTypeId = this.getNodeParameter('linkTypeId', i, 11) as number;
 	const linkId = this.getNodeParameter('linkId', i, 0) as number;
 	const checklistId = this.getNodeParameter('checklistId', i, 0) as number;
@@ -143,13 +128,13 @@ export async function handleChecklists(this: IExecuteFunctions, i: number) {
 	let url = '';
 	const requestOptions: {
 		method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-		headers: { apiToken: string; 'Content-Type': string };
+		headers: { 'Content-Type': string };
 		json: boolean;
 		body?: Record<string, unknown>;
 		url: string;
 	} = {
 		method: 'GET',
-		headers: { apiToken, 'Content-Type': 'application/json' },
+		headers: { 'Content-Type': 'application/json' },
 		json: true,
 		url,
 	};
@@ -191,7 +176,7 @@ export async function handleChecklists(this: IExecuteFunctions, i: number) {
 
 	try {
 		if (operation === 'removeChecklist') {
-			const fullResponse = (await this.helpers.httpRequest({
+			const fullResponse = (await tanssHttpRequest.call(this, i, {
 				...(requestOptions as unknown as Record<string, unknown>),
 				simple: false,
 				resolveWithFullResponse: true,
@@ -216,7 +201,7 @@ export async function handleChecklists(this: IExecuteFunctions, i: number) {
 			};
 		}
 
-		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+		const responseData = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
 		if (operation === 'removeChecklist') {

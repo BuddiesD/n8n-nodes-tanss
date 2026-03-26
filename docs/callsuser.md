@@ -10,7 +10,6 @@ Retrieve a list of phone calls using filter settings.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Use Raw Filter JSON (Optional)**
 - **Timeframe From (Timestamp)**
 - **Timeframe To (Timestamp)**
@@ -29,7 +28,6 @@ Retrieve a specific phone call from the database by its ID.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Phone Call ID** (required)
 
 ## Identify Phone Call
@@ -40,6 +38,5 @@ Identify a phone call and attempt to resolve the related company and employee ID
 
 **Parameters:**
 
-- **API Token** (required)
 - **From Phone Number** (required)
 - **To Phone Number** (required)

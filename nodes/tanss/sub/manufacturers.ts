@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, isGeneratedTokenMode, tanssHttpRequest } from './request';
 
 export const manufacturersOperations: INodeProperties[] = [
 	{
@@ -45,16 +46,6 @@ export const manufacturersOperations: INodeProperties[] = [
 
 export const manufacturersFields: INodeProperties[] = [
 	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'API token obtained from the TANSS API login',
-		displayOptions: { show: { resource: ['manufacturers'] } },
-	},
-	{
 		displayName: 'Manufacturer ID',
 		name: 'manufacturerId',
 		type: 'number' as const,
@@ -96,30 +87,31 @@ export const manufacturersFields: INodeProperties[] = [
 
 export async function handleManufacturers(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const manufacturerId = this.getNodeParameter('manufacturerId', i, 0) as number;
+	const manufacturersBasePath = isGeneratedTokenMode.call(this, i)
+		? '/backend/api/deviceManagement/v1/manufacturers'
+		: '/backend/api/v1/manufacturers';
 
 	let url = '';
 	const requestOptions: {
 		method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-		headers: { apiToken: string; 'Content-Type': string };
+		headers: { 'Content-Type': string };
 		json: boolean;
 		body?: Record<string, unknown>;
 		url: string;
 		returnFullResponse?: boolean;
 	} = {
 		method: 'GET',
-		headers: { apiToken, 'Content-Type': 'application/json' },
+		headers: { 'Content-Type': 'application/json' },
 		json: true,
 		url,
 	};
 
 	switch (operation) {
 		case 'createManufacturer': {
-			url = `${credentials.baseURL}/backend/api/v1/manufacturers`;
+			url = `${credentials.baseURL}${manufacturersBasePath}`;
 			requestOptions.method = 'POST';
 			const createManufacturerFields = this.getNodeParameter('createManufacturerFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(createManufacturerFields).length === 0)
@@ -128,22 +120,22 @@ export async function handleManufacturers(this: IExecuteFunctions, i: number) {
 			break;
 		}
 		case 'deleteManufacturer': {
-			url = `${credentials.baseURL}/backend/api/v1/manufacturers/${manufacturerId}`;
+			url = `${credentials.baseURL}${manufacturersBasePath}/${manufacturerId}`;
 			requestOptions.method = 'DELETE';
 			break;
 		}
 		case 'getAllManufacturers': {
-			url = `${credentials.baseURL}/backend/api/v1/manufacturers`;
+			url = `${credentials.baseURL}${manufacturersBasePath}`;
 			requestOptions.method = 'GET';
 			break;
 		}
 		case 'getManufacturerById': {
-			url = `${credentials.baseURL}/backend/api/v1/manufacturers/${manufacturerId}`;
+			url = `${credentials.baseURL}${manufacturersBasePath}/${manufacturerId}`;
 			requestOptions.method = 'GET';
 			break;
 		}
 		case 'updateManufacturer': {
-			url = `${credentials.baseURL}/backend/api/v1/manufacturers/${manufacturerId}`;
+			url = `${credentials.baseURL}${manufacturersBasePath}/${manufacturerId}`;
 			requestOptions.method = 'PUT';
 			const updateManufacturerFields = this.getNodeParameter('updateManufacturerFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(updateManufacturerFields).length === 0)
@@ -163,7 +155,7 @@ export async function handleManufacturers(this: IExecuteFunctions, i: number) {
 			...requestOptions,
 			returnFullResponse: true,
 		} as unknown as import('n8n-workflow').IHttpRequestOptions;
-		const fullResponse = (await this.helpers.httpRequest(options)) as unknown as FullResponse;
+		const fullResponse = (await tanssHttpRequest.call(this, i, options)) as unknown as FullResponse;
 		if (requestOptions.method === 'DELETE') {
 			if (fullResponse.statusCode === 204) {
 				return { success: true, statusCode: 204, message: 'Manufacturer deleted successfully.' };

@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, tanssHttpRequest } from './request';
 
 export const searchOperations: INodeProperties[] = [
 	{
@@ -22,16 +23,6 @@ export const searchOperations: INodeProperties[] = [
 ];
 
 export const searchFields: INodeProperties[] = [
-	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'API token obtained from the TANSS API login',
-		displayOptions: { show: { resource: ['search'] } },
-	},
 
 	{
 		displayName: 'Use Raw Filter JSON (Optional)',
@@ -124,10 +115,8 @@ export const searchFields: INodeProperties[] = [
 ];
 
 export async function handleSearch(this: IExecuteFunctions, i: number) {
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const base = credentials.baseURL as string;
 	if (!base) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');
 
@@ -196,17 +185,13 @@ export async function handleSearch(this: IExecuteFunctions, i: number) {
 		url: '',
 	};
 
-	if (apiToken && apiToken.toString().trim() !== '') {
-		requestOptions.headers.apiToken = apiToken;
-	}
-
 	const url = `${base}/backend/api/v1/search`;
 	requestOptions.url = url;
 	requestOptions.headers['Content-Type'] = 'application/json';
 	requestOptions.body = body;
 
 	try {
-		const responseData = await this.helpers.httpRequest(requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+		const responseData = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
 		throw new NodeApiError(this.getNode(), error as JsonObject);

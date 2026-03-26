@@ -1,5 +1,4 @@
 import { INodeType, INodeTypeDescription, IExecuteFunctions, NodeOperationError, NodeConnectionTypes } from 'n8n-workflow';
-import { handleAuth, authOperations, authFields } from './sub/Authentication';
 import { handlePc, pcOperations, pcFields } from './sub/PCs';
 import { handleTicket, ticketOperations, ticketFields } from './sub/Tickets';
 import { handleDomains, domainOperations, domainFields } from './sub/Domains';
@@ -44,19 +43,44 @@ export class Tanss implements INodeType {
 
 		credentials: [
 			{
-				name: 'tanssApi',
+				name: 'tanssUserApi',
 				required: true,
+				displayOptions: {
+					show: {
+						authMode: ['user'],
+					},
+				},
+			},
+			{
+				name: 'tanssGeneratedTokenApi',
+				required: true,
+				displayOptions: {
+					show: {
+						authMode: ['generated'],
+					},
+				},
 			},
 		],
 
 		properties: [
+			{
+				displayName: 'Auth Mode',
+				name: 'authMode',
+				type: 'options',
+				noDataExpression: true,
+				options: [
+					{ name: 'User Login (Auto Refresh)', value: 'user' },
+					{ name: 'Generated Token', value: 'generated' },
+				],
+				default: 'user',
+				description: 'Choose which TANSS credential type should be used for authenticated requests',
+			},
 			{
 				displayName: 'Resource',
 				name: 'resource',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Authentication', value: 'authentication' },
 					{ name: 'Availability', value: 'availability' },
 					{ name: 'Call', value: 'calls' },
 					{ name: 'Call User', value: 'callsuser' },
@@ -84,12 +108,10 @@ export class Tanss implements INodeType {
 					{ name: 'Ticket State', value: 'ticketStates' },
 					{ name: 'Timestamp', value: 'timestamps' },
 				],
-				default: 'authentication',
+				default: 'availability',
 				description: 'Select which TANSS API resource to interact with',
 			},
 
-			...authOperations,
-			...authFields,
 			...pcOperations,
 			...pcFields,
 			...ticketOperations,
@@ -153,8 +175,7 @@ export class Tanss implements INodeType {
 		for (let i = 0; i < items.length; i++) {
 			try {
 				let responseData;
-				if (resource === 'authentication') responseData = await handleAuth.call(this, i);
-				else if (resource === 'pc') responseData = await handlePc.call(this, i);
+				if (resource === 'pc') responseData = await handlePc.call(this, i);
 				else if (resource === 'cpus') responseData = await handleCpu.call(this, i);
 				else if (resource === 'ticket') responseData = await handleTicket.call(this, i);
 				else if (resource === 'domain') responseData = await handleDomains.call(this, i);

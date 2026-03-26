@@ -6,7 +6,6 @@ Retrieve a list of timestamps within a given time period.
 
 **Parameters:**
 
-- **API Token** (required)
 - **From (Timestamp)**
 - **Till (Timestamp)**
 
@@ -16,7 +15,6 @@ Retrieve timestamp information for a given time period.
 
 **Parameters:**
 
-- **API Token** (required)
 - **From (Timestamp)**
 - **Till (Timestamp)**
 
@@ -26,7 +24,6 @@ Retrieve timestamp information with statistical values.
 
 **Parameters:**
 
-- **API Token** (required)
 - **From (Timestamp)**
 - **Till (Timestamp)**
 - **Employee IDs (Comma Separated)**
@@ -37,7 +34,6 @@ Create a new timestamp entry.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Auto Pause**
 - **Employee ID**
 - **Date (Timestamp)**
@@ -50,7 +46,6 @@ Update an existing timestamp.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Timestamp ID** (required)
 - **Employee ID**
 - **Date (Timestamp)**
@@ -63,7 +58,6 @@ Write all timestamps for a full day at once.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Employee ID (Day)** (required)
 - **Day** (required)
 - **Timestamps JSON**
@@ -74,7 +68,6 @@ Create one or more day closing entries.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Day Closings JSON**
 
 ## Delete Day Closings
@@ -83,7 +76,6 @@ Delete (undo) one or more day closing entries.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Day Closings JSON**
 
 ## Get Day Closing Till Date
@@ -92,7 +84,6 @@ Retrieve information about the latest day closings for employees.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Create Day Closings Till Date
 
@@ -100,7 +91,6 @@ Create missing day closings for specific employees until a given date.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Till Date**
 - **Employee IDs JSON**
 
@@ -110,7 +100,6 @@ Set the initial time balance for an employee.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Employee ID (Initial)** (required)
 - **Initial Balance (Minutes)**
 
@@ -120,7 +109,6 @@ Retrieve all pause configuration rules.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Create Pause Config
 
@@ -128,7 +116,6 @@ Create a new pause configuration.
 
 **Parameters:**
 
-- **API Token** (required)
 - **From Minutes**
 - **Minimum Pause (Minutes)**
 
@@ -138,7 +125,6 @@ Update an existing pause configuration.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Pause Config ID** (required)
 - **From Minutes**
 - **Minimum Pause (Minutes)**
@@ -149,5 +135,4 @@ Delete a pause configuration.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Pause Config ID** (required)

@@ -8,7 +8,6 @@ Creates a new chat in TANSS.
 
 **Parameters:**
 
-- **API Token** (required)
 - **ID**
 - **Description**
 - **Link Type ID**
@@ -30,7 +29,6 @@ Get a list of chats using filter settings.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Employee ID**
 - **Only Expected Time Expired**
 - **Chat IDs (JSON Array)**
@@ -55,7 +53,6 @@ Gets a specific chat.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Chat ID** (required)
 - **With Messages**
 
@@ -67,7 +64,6 @@ Gets chat close requests and chats with unread messages.
 
 **Parameters:**
 
-- **API Token** (required)
 
 ## Create Chat Message
 
@@ -77,7 +73,6 @@ Creates a new chat message.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Chat ID**
 - **Content**
 - **Expected Response (Minutes)**
@@ -90,7 +85,6 @@ Adds a participant (employee or department) to a chat.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Chat ID**
 - **Employee ID**
 - **Department ID**
@@ -103,7 +97,6 @@ Deletes a participant from a chat.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Chat ID**
 - **Employee ID**
 - **Department ID**
@@ -116,7 +109,6 @@ Closes a chat.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Chat ID** (required)
 
 ## Accept/Decline Close Request
@@ -127,7 +119,6 @@ Accepts or declines a close request.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Chat ID** (required)
 - **Accept** (required)
 
@@ -139,5 +130,4 @@ Re-opens a closed chat.
 
 **Parameters:**
 
-- **API Token** (required)
 - **Chat ID** (required)

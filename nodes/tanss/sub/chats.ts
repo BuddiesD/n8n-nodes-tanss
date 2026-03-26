@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
+import { getTanssBaseUrl, tanssHttpRequest } from './request';
 
 type ChatsCollection = Record<string, unknown>;
 
@@ -50,16 +51,6 @@ export const chatsOperations: INodeProperties[] = [
 ];
 
 export const chatsFields: INodeProperties[] = [
-	{
-		displayName: 'API Token',
-		name: 'apiToken',
-		type: 'string' as const,
-		required: true,
-		typeOptions: { password: true },
-		default: '',
-		description: 'API token obtained from the TANSS API login',
-		displayOptions: { show: { resource: ['chats'] } },
-	},
 	{
 		displayName: 'Chat ID',
 		name: 'chatId',
@@ -320,24 +311,22 @@ function parseResponseBody(rawBody: unknown): unknown {
 
 export async function handleChats(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
-	const credentials = await this.getCredentials('tanssApi');
+	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
-	const apiToken = this.getNodeParameter('apiToken', i, '') as string;
 	const chatId = this.getNodeParameter('chatId', i, 0) as number;
 	const baseURL = credentials.baseURL as string;
 
 	let url = '';
 	const requestOptions: {
 		method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-		headers: { apiToken: string; 'Content-Type': string };
+		headers: { 'Content-Type': string };
 		json: boolean;
 		body?: Record<string, unknown>;
 		url: string;
 		returnFullResponse?: boolean;
 	} = {
 		method: 'GET',
-		headers: { apiToken, 'Content-Type': 'application/json' },
+		headers: { 'Content-Type': 'application/json' },
 		json: true,
 		url,
 	};
@@ -440,7 +429,7 @@ export async function handleChats(this: IExecuteFunctions, i: number) {
 			...requestOptions,
 			returnFullResponse: true,
 		} as unknown as import('n8n-workflow').IHttpRequestOptions;
-		const fullResponse = (await this.helpers.httpRequest(options)) as unknown as FullResponse;
+		const fullResponse = (await tanssHttpRequest.call(this, i, options)) as unknown as FullResponse;
 
 		if (requestOptions.method === 'DELETE') {
 			if (fullResponse.statusCode === 204) {
