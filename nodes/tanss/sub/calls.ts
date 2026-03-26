@@ -1,5 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, NodeApiError, JsonObject } from 'n8n-workflow';
-import { getTanssBaseUrl, tanssHttpRequest } from './request';
+import { getTanssBaseUrl, isGeneratedTokenMode, tanssHttpRequest } from './request';
 
 export const callsOperations: INodeProperties[] = [
 	{
@@ -549,6 +549,13 @@ export const callsFields: INodeProperties[] = [
 
 export async function handleCalls(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
+
+	if (!isGeneratedTokenMode.call(this, i)) {
+		throw new NodeOperationError(
+			this.getNode(),
+			'Calls API requires an external generated token with PHONE role. Switch Auth Mode to Generated Token API.',
+		);
+	}
 
 	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');

@@ -1,5 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, IDataObject, NodeApiError, JsonObject } from 'n8n-workflow';
-import { getTanssBaseUrl, tanssHttpRequest } from './request';
+import { getTanssBaseUrl, isGeneratedTokenMode, tanssHttpRequest } from './request';
 
 export const callsUserOperations: INodeProperties[] = [
 	{
@@ -138,6 +138,14 @@ export const callsUserFields: INodeProperties[] = [
 
 export async function handleCallsUser(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
+
+	if (isGeneratedTokenMode.call(this, i)) {
+		throw new NodeOperationError(
+			this.getNode(),
+			'Calls (User Context) can only be used with user auth (default employee context). Switch Auth Mode to User API.',
+		);
+	}
+
 	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const base = credentials.baseURL as string;
