@@ -1,5 +1,5 @@
 import { IExecuteFunctions, INodeProperties, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
-import { getTanssBaseUrl, tanssHttpRequest } from './request';
+import { getTanssBaseUrl, isGeneratedTokenMode, tanssHttpRequest } from './request';
 
 export const componentsOperations: INodeProperties[] = [
 	{
@@ -202,6 +202,9 @@ export const componentsFields: INodeProperties[] = [
 export async function handleComponents(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = ({ baseURL: await getTanssBaseUrl.call(this, i) });
+	const componentsBasePath = isGeneratedTokenMode.call(this, i)
+		? '/backend/api/deviceManagement/v1/components'
+		: '/backend/api/v1/components';
 
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const componentId = this.getNodeParameter('componentId', i, 0) as number;
@@ -222,7 +225,7 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 
 	switch (operation) {
 		case 'getComponent': {
-			url = `${credentials.baseURL}/backend/api/v1/components/${componentId}`;
+			url = `${credentials.baseURL}${componentsBasePath}/${componentId}`;
 			requestOptions.method = 'GET';
 			break;
 		}
@@ -230,41 +233,41 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 			const updateFields = this.getNodeParameter('updateComponentFields', i, {}) as Record<string, unknown>;
 			if (!componentId) throw new NodeOperationError(this.getNode(), 'componentId is required for update.');
 			if (Object.keys(updateFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for updating component.');
-			url = `${credentials.baseURL}/backend/api/v1/components/${componentId}`;
+			url = `${credentials.baseURL}${componentsBasePath}/${componentId}`;
 			requestOptions.method = 'PUT';
 			requestOptions.body = updateFields;
 			break;
 		}
 		case 'deleteComponent': {
 			if (!componentId) throw new NodeOperationError(this.getNode(), 'componentId is required for delete.');
-			url = `${credentials.baseURL}/backend/api/v1/components/${componentId}`;
+			url = `${credentials.baseURL}${componentsBasePath}/${componentId}`;
 			requestOptions.method = 'DELETE';
 			break;
 		}
 		case 'createComponent': {
 			const createFields = this.getNodeParameter('createComponentFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(createFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for creating component.');
-			url = `${credentials.baseURL}/backend/api/v1/components`;
+			url = `${credentials.baseURL}${componentsBasePath}`;
 			requestOptions.method = 'POST';
 			requestOptions.body = createFields;
 			break;
 		}
 		case 'listComponents': {
 			const filters = this.getNodeParameter('listComponentFilters', i, {}) as Record<string, unknown>;
-			url = `${credentials.baseURL}/backend/api/v1/components`;
+			url = `${credentials.baseURL}${componentsBasePath}`;
 			requestOptions.method = 'PUT';
 			requestOptions.body = filters;
 			break;
 		}
 		case 'getComponentTypes': {
-			url = `${credentials.baseURL}/backend/api/v1/components/types`;
+			url = `${credentials.baseURL}${componentsBasePath}/types`;
 			requestOptions.method = 'GET';
 			break;
 		}
 		case 'createComponentType': {
 			const createType = this.getNodeParameter('createComponentTypeFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(createType).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for creating component type.');
-			url = `${credentials.baseURL}/backend/api/v1/components/types`;
+			url = `${credentials.baseURL}${componentsBasePath}/types`;
 			requestOptions.method = 'POST';
 			requestOptions.body = createType;
 			break;
@@ -274,7 +277,7 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 			if (!typeId) throw new NodeOperationError(this.getNode(), 'component type id is required for update.');
 			const updateType = this.getNodeParameter('updateComponentTypeFields', i, {}) as Record<string, unknown>;
 			if (Object.keys(updateType).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for updating component type.');
-			url = `${credentials.baseURL}/backend/api/v1/components/types/${typeId}`;
+			url = `${credentials.baseURL}${componentsBasePath}/types/${typeId}`;
 			requestOptions.method = 'PUT';
 			requestOptions.body = updateType;
 			break;
@@ -282,7 +285,7 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 		case 'deleteComponentType': {
 			const typeId = this.getNodeParameter('componentTypeIdParam', i, 0) as number;
 			if (!typeId) throw new NodeOperationError(this.getNode(), 'component type id is required for delete.');
-			url = `${credentials.baseURL}/backend/api/v1/components/types/${typeId}`;
+			url = `${credentials.baseURL}${componentsBasePath}/types/${typeId}`;
 			requestOptions.method = 'DELETE';
 			break;
 		}
