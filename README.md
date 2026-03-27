@@ -127,18 +127,12 @@ Tested with TANSS API. Version: 10.12.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **163 / 271 (1 not in API Docs)** (60%)
+Progress: **162 / 270 (1 not in API Docs)** (60%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
 
 <br>
-<details>
-<summary><strong>security [1/1] - Done</strong></summary>
-
-  - [x] Login with Username & Password
-  - [x] 2FA Auth Support  
-</details>
 <details>
 <summary><strong>tickets [6/6] - Done</strong></summary>
 
