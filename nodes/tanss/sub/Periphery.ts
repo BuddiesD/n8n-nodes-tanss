@@ -85,7 +85,7 @@ export const peripheryOperations: INodeProperties[] = [
 				description: 'ID of the periphery to (de)assign',
 			},
 			{
-				displayName: 'linkTypeId',
+				displayName: 'Link Type ID',
 				name: 'linkTypeId',
 				type: 'number' as const,
 				required: true,
@@ -93,7 +93,7 @@ export const peripheryOperations: INodeProperties[] = [
 				description: 'Link type of the target (e.g. 1 = pc)',
 			},
 			{
-				displayName: 'linkId',
+				displayName: 'Link ID',
 				name: 'linkId',
 				type: 'number' as const,
 				required: true,
@@ -196,7 +196,7 @@ export const peripheryFields: INodeProperties[] = [
 						displayName: 'Field',
 						name: 'field',
 						values: [
-							{ displayName: 'additionalFieldId', name: 'additionalFieldId', type: 'number' as const, default: 0 },
+							{ displayName: 'Additional Field ID', name: 'additionalFieldId', type: 'number' as const, default: 0 },
 							{ displayName: 'Title', name: 'title', type: 'string' as const, default: '' },
 							{ displayName: 'Value', name: 'value', type: 'string' as const, default: '' },
 						],
@@ -217,13 +217,13 @@ export const peripheryFields: INodeProperties[] = [
 						name: 'ipFields',
 						values: [
 							{
-								displayName: 'assignmentId',
+								displayName: 'Assignment ID',
 								name: 'assignmentId',
 								default: '',
 								type: 'string',
 							},
 							{
-								displayName: 'assignmentType',
+								displayName: 'Assignment Type',
 								name: 'assignmentType',
 								options: [
 									{
@@ -243,7 +243,7 @@ export const peripheryFields: INodeProperties[] = [
 								type: 'string',
 							},
 							{
-								displayName: 'Dhcp',
+								displayName: 'DHCP',
 								name: 'dhcp',
 								default: '',
 								type: 'string',
@@ -255,13 +255,13 @@ export const peripheryFields: INodeProperties[] = [
 								type: 'string',
 							},
 							{
-								displayName: 'Ip',
+								displayName: 'IP',
 								name: 'ip',
 								default: '',
 								type: 'string',
 							},
 							{
-								displayName: 'Mac',
+								displayName: 'MAC',
 								name: 'mac',
 								default: '',
 								type: 'string',
@@ -273,7 +273,7 @@ export const peripheryFields: INodeProperties[] = [
 								type: 'string',
 							},
 							{
-								displayName: 'serviceAssignments',
+								displayName: 'Service Assignments',
 								name: 'serviceAssignments',
 								options: [
 									{
@@ -281,7 +281,7 @@ export const peripheryFields: INodeProperties[] = [
 										name: 'service',
 										values: [
 											{
-												displayName: 'serviceId',
+												displayName: 'Service ID',
 												name: 'serviceId',
 												default: '',
 												type: 'string',
@@ -303,13 +303,13 @@ export const peripheryFields: INodeProperties[] = [
 				placeholder: 'Add Guarantee',
 				default: {},
 				options: [
-					{ displayName: 'linkTypeId', name: 'linkTypeId', type: 'number' as const, default: 0 },
-					{ displayName: 'linkId', name: 'linkId', type: 'number' as const, default: 0 },
-					{ displayName: 'purchaseDate (Timestamp)', name: 'purchaseDate', type: 'number' as const, default: 0 },
-					{ displayName: 'guaranteeMonth', name: 'guaranteeMonth', type: 'number' as const, default: 0 },
-					{ displayName: 'guaranteeExpire', name: 'guaranteeExpire', type: 'number' as const, default: 0 },
-					{ displayName: 'warrantyMonth', name: 'warrantyMonth', type: 'number' as const, default: 0 },
-					{ displayName: 'warrantyExpire', name: 'warrantyExpire', type: 'number' as const, default: 0 },
+					{ displayName: 'Link Type ID', name: 'linkTypeId', type: 'number' as const, default: 0 },
+					{ displayName: 'Link ID', name: 'linkId', type: 'number' as const, default: 0 },
+					{ displayName: 'Purchase Date (Timestamp)', name: 'purchaseDate', type: 'number' as const, default: 0 },
+					{ displayName: 'Guarantee Month', name: 'guaranteeMonth', type: 'number' as const, default: 0 },
+					{ displayName: 'Guarantee Expire', name: 'guaranteeExpire', type: 'number' as const, default: 0 },
+					{ displayName: 'Warranty Month', name: 'warrantyMonth', type: 'number' as const, default: 0 },
+					{ displayName: 'Warranty Expire', name: 'warrantyExpire', type: 'number' as const, default: 0 },
 					{ displayName: 'Remark', name: 'remark', type: 'string' as const, default: '' },
 				],
 			},
@@ -324,27 +324,27 @@ export const peripheryFields: INodeProperties[] = [
 		displayOptions: { show: { resource: ['peripheries'], operation: ['updatePeriphery'] } },
 		options: [
 			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
-			{ displayName: 'companyId', name: 'companyId', type: 'number' as const, default: 0 },
+			{ displayName: 'Company ID', name: 'companyId', type: 'number' as const, default: 0 },
 			{ displayName: 'Date (Timestamp)', name: 'date', type: 'number' as const, default: 0 },
-			{ displayName: 'peripheryTypeId', name: 'peripheryTypeId', type: 'number' as const, default: 0 },
-			{ displayName: 'manufacturerId', name: 'manufacturerId', type: 'number' as const, default: 0 },
+			{ displayName: 'Periphery Type ID', name: 'peripheryTypeId', type: 'number' as const, default: 0 },
+			{ displayName: 'Manufacturer ID', name: 'manufacturerId', type: 'number' as const, default: 0 },
 			{ displayName: 'Type', name: 'type', type: 'string' as const, default: '' },
 			{ displayName: 'Location', name: 'location', type: 'string' as const, default: '' },
 			{ displayName: 'Remark', name: 'remark', type: 'string' as const, default: '' },
-			{ displayName: 'internalRemark', name: 'internalRemark', type: 'string' as const, default: '' },
-			{ displayName: 'serialNumber', name: 'serialNumber', type: 'string' as const, default: '' },
-			{ displayName: 'inventoryNumber', name: 'inventoryNumber', type: 'string' as const, default: '' },
+			{ displayName: 'Internal Remark', name: 'internalRemark', type: 'string' as const, default: '' },
+			{ displayName: 'Serial Number', name: 'serialNumber', type: 'string' as const, default: '' },
+			{ displayName: 'Inventory Number', name: 'inventoryNumber', type: 'string' as const, default: '' },
 			{ displayName: 'Version', name: 'version', type: 'string' as const, default: '' },
 			{ displayName: 'Active', name: 'active', type: 'boolean' as const, default: true },
-			{ displayName: 'employeeId', name: 'employeeId', type: 'number' as const, default: 0 },
-			{ displayName: 'pcId', name: 'pcId', type: 'number' as const, default: 0 },
-			{ displayName: 'billingNumber', name: 'billingNumber', type: 'string' as const, default: '' },
-			{ displayName: 'articleNumber', name: 'articleNumber', type: 'string' as const, default: '' },
-			{ displayName: 'storageId', name: 'storageId', type: 'number' as const, default: 0 },
-			{ displayName: 'purchasePrice', name: 'purchasePrice', type: 'number' as const, default: 0 },
-			{ displayName: 'sellingPrice', name: 'sellingPrice', type: 'number' as const, default: 0 },
+			{ displayName: 'Employee ID', name: 'employeeId', type: 'number' as const, default: 0 },
+			{ displayName: 'PC ID', name: 'pcId', type: 'number' as const, default: 0 },
+			{ displayName: 'Billing Number', name: 'billingNumber', type: 'string' as const, default: '' },
+			{ displayName: 'Article Number', name: 'articleNumber', type: 'string' as const, default: '' },
+			{ displayName: 'Storage ID', name: 'storageId', type: 'number' as const, default: 0 },
+			{ displayName: 'Purchase Price', name: 'purchasePrice', type: 'number' as const, default: 0 },
+			{ displayName: 'Selling Price', name: 'sellingPrice', type: 'number' as const, default: 0 },
 			{
-				displayName: 'ownageType',
+				displayName: 'Ownage Type',
 				name: 'ownageType',
 				type: 'options' as const,
 				options: [
@@ -357,7 +357,7 @@ export const peripheryFields: INodeProperties[] = [
 			},
 			{ displayName: 'Name', name: 'name', type: 'string' as const, default: '' },
 			{ displayName: 'Description', name: 'description', type: 'string' as const, default: '' },
-			{ displayName: 'manufacturerNumber', name: 'manufacturerNumber', type: 'string' as const, default: '' },
+			{ displayName: 'Manufacturer Number', name: 'manufacturerNumber', type: 'string' as const, default: '' },
 			{
 				displayName: 'Fields',
 				name: 'fields',
@@ -371,7 +371,7 @@ export const peripheryFields: INodeProperties[] = [
 						displayName: 'Field',
 						name: 'field',
 						values: [
-							{ displayName: 'additionalFieldId', name: 'additionalFieldId', type: 'number' as const, default: 0 },
+							{ displayName: 'Additional Field ID', name: 'additionalFieldId', type: 'number' as const, default: 0 },
 							{ displayName: 'Title', name: 'title', type: 'string' as const, default: '' },
 							{ displayName: 'Value', name: 'value', type: 'string' as const, default: '' },
 						],
@@ -392,13 +392,13 @@ export const peripheryFields: INodeProperties[] = [
 						name: 'ipFields',
 						values: [
 							{
-								displayName: 'assignmentId',
+								displayName: 'Assignment ID',
 								name: 'assignmentId',
 								default: '',
 								type: 'string',
 							},
 							{
-								displayName: 'assignmentType',
+								displayName: 'Assignment Type',
 								name: 'assignmentType',
 								options: [
 									{
@@ -418,7 +418,7 @@ export const peripheryFields: INodeProperties[] = [
 								type: 'string',
 							},
 							{
-								displayName: 'Dhcp',
+								displayName: 'DHCP',
 								name: 'dhcp',
 								default: '',
 								type: 'string',
@@ -430,13 +430,13 @@ export const peripheryFields: INodeProperties[] = [
 								type: 'string',
 							},
 							{
-								displayName: 'Ip',
+								displayName: 'IP',
 								name: 'ip',
 								default: '',
 								type: 'string',
 							},
 							{
-								displayName: 'Mac',
+								displayName: 'MAC',
 								name: 'mac',
 								default: '',
 								type: 'string',
@@ -448,7 +448,7 @@ export const peripheryFields: INodeProperties[] = [
 								type: 'string',
 							},
 							{
-								displayName: 'serviceAssignments',
+								displayName: 'Service Assignments',
 								name: 'serviceAssignments',
 								options: [
 									{
@@ -456,7 +456,7 @@ export const peripheryFields: INodeProperties[] = [
 										name: 'service',
 										values: [
 											{
-												displayName: 'serviceId',
+												displayName: 'Service ID',
 												name: 'serviceId',
 												default: '',
 												type: 'string',
@@ -478,13 +478,13 @@ export const peripheryFields: INodeProperties[] = [
 				placeholder: 'Add Guarantee',
 				default: {},
 				options: [
-					{ displayName: 'linkTypeId', name: 'linkTypeId', type: 'number' as const, default: 0 },
-					{ displayName: 'linkId', name: 'linkId', type: 'number' as const, default: 0 },
-					{ displayName: 'purchaseDate (Timestamp)', name: 'purchaseDate', type: 'number' as const, default: 0 },
-					{ displayName: 'guaranteeMonth', name: 'guaranteeMonth', type: 'number' as const, default: 0 },
-					{ displayName: 'guaranteeExpire', name: 'guaranteeExpire', type: 'number' as const, default: 0 },
-					{ displayName: 'warrantyMonth', name: 'warrantyMonth', type: 'number' as const, default: 0 },
-					{ displayName: 'warrantyExpire', name: 'warrantyExpire', type: 'number' as const, default: 0 },
+					{ displayName: 'Link Type ID', name: 'linkTypeId', type: 'number' as const, default: 0 },
+					{ displayName: 'Link ID', name: 'linkId', type: 'number' as const, default: 0 },
+					{ displayName: 'Purchase Date (Timestamp)', name: 'purchaseDate', type: 'number' as const, default: 0 },
+					{ displayName: 'Guarantee Month', name: 'guaranteeMonth', type: 'number' as const, default: 0 },
+					{ displayName: 'Guarantee Expire', name: 'guaranteeExpire', type: 'number' as const, default: 0 },
+					{ displayName: 'Warranty Month', name: 'warrantyMonth', type: 'number' as const, default: 0 },
+					{ displayName: 'Warranty Expire', name: 'warrantyExpire', type: 'number' as const, default: 0 },
 					{ displayName: 'Remark', name: 'remark', type: 'string' as const, default: '' },
 				],
 			},
@@ -498,7 +498,7 @@ export const peripheryFields: INodeProperties[] = [
 		default: {},
 		displayOptions: { show: { resource: ['peripheries'], operation: ['listPeripheries'] } },
 		options: [
-			{ displayName: 'companyId', name: 'companyId', type: 'number' as const, default: 0, description: 'Show only entries of this company' },
+			{ displayName: 'Company ID', name: 'companyId', type: 'number' as const, default: 0, description: 'Show only entries of this company' },
 			{
 				displayName: 'Branches',
 				name: 'branches',
@@ -525,7 +525,7 @@ export const peripheryFields: INodeProperties[] = [
 				description: 'Filter settings for active state',
 			},
 			{
-				displayName: 'peripheryTypeId',
+				displayName: 'Periphery Type ID',
 				name: 'peripheryTypeId',
 				type: 'number' as const,
 				default: 0,
