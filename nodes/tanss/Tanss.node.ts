@@ -35,6 +35,7 @@ export class Tanss implements INodeType {
 		version: 1,
 		description: 'Interact with the TANSS API',
 		subtitle: '={{ $parameter["operation"] + ": " + $parameter["resource"] }}',
+		usableAsTool: true,
 		defaults: {
 			name: 'TANSS',
 		},
@@ -69,8 +70,8 @@ export class Tanss implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'User Login (Auto Refresh)', value: 'user' },
 					{ name: 'Generated Token', value: 'generated' },
+					{ name: 'User Login (Auto Refresh)', value: 'user' },
 				],
 				default: 'user',
 				description: 'Choose which TANSS credential type should be used for authenticated requests',

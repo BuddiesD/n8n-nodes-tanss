@@ -90,7 +90,7 @@ export class TanssUserApi implements ICredentialType {
 
 	displayName = 'TANSS User API';
 
-	icon: Icon = { light: 'file:../icons/tanss.svg', dark: 'file:../icons/tanss.svg' };
+	icon: Icon = { light: 'file:../icons/tanss.svg', dark: 'file:../icons/tanss.dark.svg' };
 
 	documentationUrl = 'https://api-doc.tanss.de/';
 
@@ -139,6 +139,7 @@ export class TanssUserApi implements ICredentialType {
 			name: 'apiToken',
 			type: 'hidden',
 			typeOptions: {
+				password: true,
 				expirable: true,
 			},
 			default: '',
@@ -147,6 +148,9 @@ export class TanssUserApi implements ICredentialType {
 			displayName: 'Refresh Token',
 			name: 'refreshToken',
 			type: 'hidden',
+			typeOptions: {
+				password: true,
+			},
 			default: '',
 		},
 	];

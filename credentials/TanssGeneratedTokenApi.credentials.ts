@@ -5,7 +5,7 @@ export class TanssGeneratedTokenApi implements ICredentialType {
 
 	displayName = 'TANSS Generated Token API';
 
-	icon: Icon = { light: 'file:../icons/tanss.svg', dark: 'file:../icons/tanss.svg' };
+	icon: Icon = { light: 'file:../icons/tanss.svg', dark: 'file:../icons/tanss.dark.svg' };
 
 	documentationUrl = 'https://api-doc.tanss.de/';
 
