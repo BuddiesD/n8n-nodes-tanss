@@ -239,6 +239,34 @@ function buildRemoteSupportBody(fields: IDataObject): IDataObject {
 	return body;
 }
 
+function buildRemoteSupportDeleteErrorResponse(err: unknown): IDataObject {
+	const e = err as {
+		statusCode?: number;
+		response?: { status?: number; statusCode?: number; body?: unknown; data?: unknown };
+	};
+	const statusCode = e?.response?.statusCode ?? e?.response?.status ?? e?.statusCode ?? 0;
+	const rawBody = e?.response?.body ?? e?.response?.data;
+
+	let parsedBody: unknown = rawBody;
+	if (typeof rawBody === 'string') {
+		try {
+			parsedBody = JSON.parse(rawBody);
+		} catch {
+			parsedBody = rawBody;
+		}
+	}
+
+	const tanssError = (parsedBody as { error?: { localizedText?: string; text?: string; type?: string } } | null)?.error;
+	const fallbackMessage = err instanceof Error ? err.message : `Delete request failed (status ${statusCode})`;
+
+	return {
+		success: false,
+		statusCode,
+		message: tanssError?.localizedText ?? tanssError?.text ?? fallbackMessage,
+		error: tanssError ?? parsedBody,
+	} as unknown as IDataObject;
+}
+
 export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 
@@ -365,31 +393,7 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 				}
 				return fullResponse && fullResponse.body ? fullResponse.body : fullResponse;
 			} catch (err: unknown) {
-				const e = err as unknown as {
-					statusCode?: number;
-					response?: { status?: number; statusCode?: number; body?: unknown; data?: unknown };
-				};
-				const statusCode = e?.response?.statusCode ?? e?.response?.status ?? e?.statusCode ?? 0;
-				const rawBody = e?.response?.body ?? e?.response?.data;
-
-				let parsedBody: unknown = rawBody;
-				if (typeof rawBody === 'string') {
-					try {
-						parsedBody = JSON.parse(rawBody);
-					} catch {
-						parsedBody = rawBody;
-					}
-				}
-
-				const tanssError = (parsedBody as { error?: { localizedText?: string; text?: string; type?: string } } | null)?.error;
-				const fallbackMessage = err instanceof Error ? err.message : `Delete request failed (status ${statusCode})`;
-
-				return {
-					success: false,
-					statusCode,
-					message: tanssError?.localizedText ?? tanssError?.text ?? fallbackMessage,
-					error: tanssError ?? parsedBody,
-				} as unknown as IDataObject;
+				return buildRemoteSupportDeleteErrorResponse(err);
 			}
 		}
 
@@ -442,31 +446,7 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 				}
 				return fullResponse && fullResponse.body ? fullResponse.body : fullResponse;
 			} catch (err: unknown) {
-				const e = err as unknown as {
-					statusCode?: number;
-					response?: { status?: number; statusCode?: number; body?: unknown; data?: unknown };
-				};
-				const statusCode = e?.response?.statusCode ?? e?.response?.status ?? e?.statusCode ?? 0;
-				const rawBody = e?.response?.body ?? e?.response?.data;
-
-				let parsedBody: unknown = rawBody;
-				if (typeof rawBody === 'string') {
-					try {
-						parsedBody = JSON.parse(rawBody);
-					} catch {
-						parsedBody = rawBody;
-					}
-				}
-
-				const tanssError = (parsedBody as { error?: { localizedText?: string; text?: string; type?: string } } | null)?.error;
-				const fallbackMessage = err instanceof Error ? err.message : `Delete request failed (status ${statusCode})`;
-
-				return {
-					success: false,
-					statusCode,
-					message: tanssError?.localizedText ?? tanssError?.text ?? fallbackMessage,
-					error: tanssError ?? parsedBody,
-				} as unknown as IDataObject;
+				return buildRemoteSupportDeleteErrorResponse(err);
 			}
 		}
 
