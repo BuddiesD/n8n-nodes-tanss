@@ -201,6 +201,44 @@ export const remoteSupportsFields: INodeProperties[] = [
 	},
 ];
 
+function buildRemoteSupportBody(fields: IDataObject): IDataObject {
+	const body: IDataObject = {};
+
+	if (fields.remoteMaintenanceId && String(fields.remoteMaintenanceId).trim() !== '') {
+		body.remoteMaintenanceId = String(fields.remoteMaintenanceId).trim();
+	}
+
+	if (fields.userId && String(fields.userId).trim() !== '') body.userId = String(fields.userId).trim();
+
+	if (fields.userName && String(fields.userName).trim() !== '') body.userName = String(fields.userName).trim();
+
+	const employeeId = Number(fields.employeeId) || 0;
+	if (employeeId > 0) body.employeeId = employeeId;
+
+	if (fields.deviceId && String(fields.deviceId).trim() !== '') body.deviceId = String(fields.deviceId).trim();
+
+	if (fields.deviceName && String(fields.deviceName).trim() !== '') body.deviceName = String(fields.deviceName).trim();
+
+	const companyId = Number(fields.companyId) || 0;
+	if (companyId > 0) body.companyId = companyId;
+
+	const linkTypeId = Number(fields.linkTypeId) || 0;
+	if (linkTypeId > 0) body.linkTypeId = linkTypeId;
+
+	const linkId = Number(fields.linkId) || 0;
+	if (linkId > 0) body.linkId = linkId;
+
+	const startTime = Number(fields.startTime) || 0;
+	if (startTime > 0) body.startTime = startTime;
+
+	const endTime = Number(fields.endTime) || 0;
+	if (endTime > 0) body.endTime = endTime;
+
+	if (fields.comment && String(fields.comment).trim() !== '') body.comment = String(fields.comment).trim();
+
+	return body;
+}
+
 export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 
@@ -232,39 +270,8 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 
 	switch (operation) {
 		case 'createRemoteSupport': {
-			const body: IDataObject = {};
 			const fields = this.getNodeParameter('remoteObject', i, {}) as IDataObject;
-
-			if (fields.remoteMaintenanceId && String(fields.remoteMaintenanceId).trim() !== '')
-				body.remoteMaintenanceId = String(fields.remoteMaintenanceId).trim();
-
-			if (fields.userId && String(fields.userId).trim() !== '') body.userId = String(fields.userId).trim();
-
-			if (fields.userName && String(fields.userName).trim() !== '') body.userName = String(fields.userName).trim();
-
-			const employeeId = Number(fields.employeeId) || 0;
-			if (employeeId > 0) body.employeeId = employeeId;
-
-			if (fields.deviceId && String(fields.deviceId).trim() !== '') body.deviceId = String(fields.deviceId).trim();
-
-			if (fields.deviceName && String(fields.deviceName).trim() !== '') body.deviceName = String(fields.deviceName).trim();
-
-			const companyId = Number(fields.companyId) || 0;
-			if (companyId > 0) body.companyId = companyId;
-
-			const linkTypeId = Number(fields.linkTypeId) || 0;
-			if (linkTypeId > 0) body.linkTypeId = linkTypeId;
-
-			const linkId = Number(fields.linkId) || 0;
-			if (linkId > 0) body.linkId = linkId;
-
-			const startTime = Number(fields.startTime) || 0;
-			if (startTime > 0) body.startTime = startTime;
-
-			const endTime = Number(fields.endTime) || 0;
-			if (endTime > 0) body.endTime = endTime;
-
-			if (fields.comment && String(fields.comment).trim() !== '') body.comment = String(fields.comment).trim();
+			const body = buildRemoteSupportBody(fields);
 
 			url = `${credentials.baseURL}/backend/api/remoteSupports/v1`;
 			requestOptions.method = 'POST';
@@ -401,39 +408,8 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 			const remoteSupportId = Number(this.getNodeParameter('remoteSupportId', i, 0)) || 0;
 			if (remoteSupportId <= 0) throw new NodeOperationError(this.getNode(), 'remoteSupportId must be set and > 0');
 
-			const body: IDataObject = {};
 			const fields = this.getNodeParameter('remoteObject', i, {}) as IDataObject;
-
-			if (fields.remoteMaintenanceId && String(fields.remoteMaintenanceId).trim() !== '')
-				body.remoteMaintenanceId = String(fields.remoteMaintenanceId).trim();
-
-			if (fields.userId && String(fields.userId).trim() !== '') body.userId = String(fields.userId).trim();
-
-			if (fields.userName && String(fields.userName).trim() !== '') body.userName = String(fields.userName).trim();
-
-			const employeeId = Number(fields.employeeId) || 0;
-			if (employeeId > 0) body.employeeId = employeeId;
-
-			if (fields.deviceId && String(fields.deviceId).trim() !== '') body.deviceId = String(fields.deviceId).trim();
-
-			if (fields.deviceName && String(fields.deviceName).trim() !== '') body.deviceName = String(fields.deviceName).trim();
-
-			const companyId = Number(fields.companyId) || 0;
-			if (companyId > 0) body.companyId = companyId;
-
-			const linkTypeId = Number(fields.linkTypeId) || 0;
-			if (linkTypeId > 0) body.linkTypeId = linkTypeId;
-
-			const linkId = Number(fields.linkId) || 0;
-			if (linkId > 0) body.linkId = linkId;
-
-			const startTime = Number(fields.startTime) || 0;
-			if (startTime > 0) body.startTime = startTime;
-
-			const endTime = Number(fields.endTime) || 0;
-			if (endTime > 0) body.endTime = endTime;
-
-			if (fields.comment && String(fields.comment).trim() !== '') body.comment = String(fields.comment).trim();
+			const body = buildRemoteSupportBody(fields);
 
 			url = `${credentials.baseURL}/backend/api/remoteSupports/v1/${remoteSupportId}`;
 			requestOptions.method = 'PUT';
