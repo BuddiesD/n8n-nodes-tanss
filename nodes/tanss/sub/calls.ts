@@ -625,11 +625,7 @@ function buildCallBodyFromIndividualFields(this: IExecuteFunctions, i: number): 
 	return body;
 }
 
-function buildCallBodyFromInput(
-	this: IExecuteFunctions,
-	i: number,
-	createCallFieldsParticipantsJsonErrorMessage?: string,
-): IDataObject {
+function buildCallBodyFromInput(this: IExecuteFunctions, i: number, createCallFieldsParticipantsJsonErrorMessage?: string): IDataObject {
 	const callJson = this.getNodeParameter('callJson', i, '') as string;
 	let body: IDataObject = {};
 
