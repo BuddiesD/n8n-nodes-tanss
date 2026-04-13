@@ -625,6 +625,71 @@ function buildCallBodyFromIndividualFields(this: IExecuteFunctions, i: number): 
 	return body;
 }
 
+function buildCallBodyFromInput(
+	this: IExecuteFunctions,
+	i: number,
+	createCallFieldsParticipantsJsonErrorMessage?: string,
+): IDataObject {
+	const callJson = this.getNodeParameter('callJson', i, '') as string;
+	let body: IDataObject = {};
+
+	// Priority: callJson (raw) > createCallFields collection > individual fields
+	if (callJson && callJson.trim() !== '') {
+		try {
+			const parsed = JSON.parse(callJson);
+			if (typeof parsed !== 'object' || parsed === null) {
+				throw new Error('callJson must be an object');
+			}
+			body = parsed as IDataObject;
+		} catch (error: unknown) {
+			throw new NodeApiError(this.getNode(), error as JsonObject);
+		}
+	} else {
+		const createCallFields = this.getNodeParameter('createCallFields', i, {}) as IDataObject;
+		if (createCallFields && Object.keys(createCallFields).length > 0) {
+			Object.assign(body, createCallFields);
+
+			if (
+				createCallFields.phoneParticipants &&
+				typeof createCallFields.phoneParticipants === 'object' &&
+				'participant' in (createCallFields.phoneParticipants as Record<string, unknown>)
+			) {
+				const parts = (createCallFields.phoneParticipants as Record<string, unknown>).participant as unknown as Array<{
+					idString?: string;
+					employeeId?: number;
+				}>;
+				const list = parts.map((p) => {
+					const obj: IDataObject = {};
+					if (p.idString) obj.idString = p.idString;
+					if (p.employeeId && p.employeeId > 0) obj.employeeId = p.employeeId;
+					return obj;
+				});
+				body.phoneParticipants = list;
+			}
+
+			if (
+				createCallFields.phoneParticipantsJson &&
+				typeof createCallFields.phoneParticipantsJson === 'string' &&
+				createCallFields.phoneParticipantsJson.trim() !== ''
+			) {
+				try {
+					const parsed = JSON.parse(createCallFields.phoneParticipantsJson as string);
+					if (Array.isArray(parsed)) body.phoneParticipants = parsed;
+				} catch (error: unknown) {
+					if (createCallFieldsParticipantsJsonErrorMessage) {
+						throw new NodeOperationError(this.getNode(), createCallFieldsParticipantsJsonErrorMessage);
+					}
+					throw new NodeApiError(this.getNode(), error as JsonObject);
+				}
+			}
+		} else {
+			body = buildCallBodyFromIndividualFields.call(this, i);
+		}
+	}
+
+	return body;
+}
+
 export async function handleCalls(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 
@@ -642,60 +707,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 	if (!baseURL) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');
 
 	if (operation === 'createCall') {
-		const callJson = this.getNodeParameter('callJson', i, '') as string;
-
-		let body: IDataObject = {};
-
-		// Priority: callJson (raw) > createCallFields collection > individual fields
-		if (callJson && callJson.trim() !== '') {
-			try {
-				const parsed = JSON.parse(callJson);
-				if (typeof parsed !== 'object' || parsed === null) {
-					throw new Error('callJson must be an object');
-				}
-				body = parsed as IDataObject;
-			} catch (error: unknown) {
-				throw new NodeApiError(this.getNode(), error as JsonObject);
-			}
-		} else {
-			const createCallFields = this.getNodeParameter('createCallFields', i, {}) as IDataObject;
-			if (createCallFields && Object.keys(createCallFields).length > 0) {
-				Object.assign(body, createCallFields);
-
-				if (
-					createCallFields.phoneParticipants &&
-					typeof createCallFields.phoneParticipants === 'object' &&
-					'participant' in (createCallFields.phoneParticipants as Record<string, unknown>)
-				) {
-					const parts = (createCallFields.phoneParticipants as Record<string, unknown>).participant as unknown as Array<{
-						idString?: string;
-						employeeId?: number;
-					}>;
-					const list = parts.map((p) => {
-						const obj: IDataObject = {};
-						if (p.idString) obj.idString = p.idString;
-						if (p.employeeId && p.employeeId > 0) obj.employeeId = p.employeeId;
-						return obj;
-					});
-					body.phoneParticipants = list;
-				}
-
-				if (
-					createCallFields.phoneParticipantsJson &&
-					typeof createCallFields.phoneParticipantsJson === 'string' &&
-					createCallFields.phoneParticipantsJson.trim() !== ''
-				) {
-					try {
-						const parsed = JSON.parse(createCallFields.phoneParticipantsJson as string);
-						if (Array.isArray(parsed)) body.phoneParticipants = parsed;
-					} catch (error: unknown) {
-						throw new NodeApiError(this.getNode(), error as JsonObject);
-					}
-				}
-			} else {
-				body = buildCallBodyFromIndividualFields.call(this, i);
-			}
-		}
+		const body = buildCallBodyFromInput.call(this, i);
 
 		const url = `${baseURL}/backend/api/calls/v1`;
 		const requestOptions: IDataObject = {
@@ -806,59 +818,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 			throw new NodeOperationError(this.getNode(), 'A valid Phone Call ID is required for update.');
 		}
 
-		const callJson = this.getNodeParameter('callJson', i, '') as string;
-
-		let body: IDataObject = {};
-
-		if (callJson && callJson.trim() !== '') {
-			try {
-				const parsed = JSON.parse(callJson);
-				if (typeof parsed !== 'object' || parsed === null) {
-					throw new Error('callJson must be an object');
-				}
-				body = parsed as IDataObject;
-			} catch (error: unknown) {
-				throw new NodeApiError(this.getNode(), error as JsonObject);
-			}
-		} else {
-			const createCallFields = this.getNodeParameter('createCallFields', i, {}) as IDataObject;
-			if (createCallFields && Object.keys(createCallFields).length > 0) {
-				Object.assign(body, createCallFields);
-
-				if (
-					createCallFields.phoneParticipants &&
-					typeof createCallFields.phoneParticipants === 'object' &&
-					'participant' in (createCallFields.phoneParticipants as Record<string, unknown>)
-				) {
-					const parts = (createCallFields.phoneParticipants as Record<string, unknown>).participant as unknown as Array<{
-						idString?: string;
-						employeeId?: number;
-					}>;
-					const list = parts.map((p) => {
-						const obj: IDataObject = {};
-						if (p.idString) obj.idString = p.idString;
-						if (p.employeeId && p.employeeId > 0) obj.employeeId = p.employeeId;
-						return obj;
-					});
-					body.phoneParticipants = list;
-				}
-
-				if (
-					createCallFields.phoneParticipantsJson &&
-					typeof createCallFields.phoneParticipantsJson === 'string' &&
-					createCallFields.phoneParticipantsJson.trim() !== ''
-				) {
-					try {
-						const parsed = JSON.parse(createCallFields.phoneParticipantsJson as string);
-						if (Array.isArray(parsed)) body.phoneParticipants = parsed;
-					} catch {
-						throw new NodeOperationError(this.getNode(), 'createCallFields.phoneParticipantsJson must be valid JSON array.');
-					}
-				}
-			} else {
-				body = buildCallBodyFromIndividualFields.call(this, i);
-			}
-		}
+		const body = buildCallBodyFromInput.call(this, i, 'createCallFields.phoneParticipantsJson must be valid JSON array.');
 
 		const url = `${baseURL}/backend/api/calls/v1/${encodeURIComponent(String(phoneCallId))}`;
 		const requestOptions: IDataObject = {
