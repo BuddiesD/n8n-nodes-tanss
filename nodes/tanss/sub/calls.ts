@@ -114,9 +114,9 @@ export const callsFields: INodeProperties[] = [
 		default: {},
 		options: [
 			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
-			{ displayName: 'callId', name: 'callId', type: 'string' as const, default: '' },
+			{ displayName: 'Call ID', name: 'callId', type: 'string' as const, default: '' },
 			{
-				displayName: 'telephoneSystemId',
+				displayName: 'Telephone System ID',
 				name: 'telephoneSystemId',
 				type: 'number' as const,
 				default: 0,
@@ -129,7 +129,7 @@ export const callsFields: INodeProperties[] = [
 				default: '',
 			},
 			{
-				displayName: 'fromPhoneNrInfos (JSON)',
+				displayName: 'From Phone Nr Infos (JSON)',
 				name: 'fromPhoneNrInfos',
 				type: 'string' as const,
 				default: '',
@@ -142,7 +142,7 @@ export const callsFields: INodeProperties[] = [
 				default: '',
 			},
 			{
-				displayName: 'toPhoneNrInfos (JSON)',
+				displayName: 'To Phone Nr Infos (JSON)',
 				name: 'toPhoneNrInfos',
 				type: 'string' as const,
 				default: '',
@@ -160,19 +160,19 @@ export const callsFields: INodeProperties[] = [
 				default: 'INTERNAL',
 			},
 			{
-				displayName: 'connectionEstablished',
+				displayName: 'Connection Established',
 				name: 'connectionEstablished',
 				type: 'boolean' as const,
 				default: false,
 			},
 			{
-				displayName: 'durationTotal (Seconds)',
+				displayName: 'Duration Total (Seconds)',
 				name: 'durationTotal',
 				type: 'number' as const,
 				default: 0,
 			},
 			{
-				displayName: 'durationCall (Seconds)',
+				displayName: 'Duration Call (Seconds)',
 				name: 'durationCall',
 				type: 'number' as const,
 				default: 0,
@@ -198,14 +198,14 @@ export const callsFields: INodeProperties[] = [
 						name: 'participant',
 						values: [
 							{
-								displayName: 'phoneCallId',
+								displayName: 'Phone Call ID',
 								name: 'phoneCallId',
 								type: 'number' as const,
 								default: 0,
 							},
-							{ displayName: 'idString', name: 'idString', type: 'string' as const, default: '' },
+							{ displayName: 'ID String', name: 'idString', type: 'string' as const, default: '' },
 							{
-								displayName: 'employeeId',
+								displayName: 'Employee ID',
 								name: 'employeeId',
 								type: 'number' as const,
 								default: 0,
@@ -399,7 +399,7 @@ export const callsFields: INodeProperties[] = [
 				description: 'ID of the TANSS employee',
 			},
 			{
-				displayName: 'Username / idString',
+				displayName: 'Username / ID String',
 				name: 'username',
 				type: 'string' as const,
 				default: '',
@@ -428,14 +428,14 @@ export const callsFields: INodeProperties[] = [
 				description: 'Unix timestamp representing the begin of the phone call',
 			},
 			{
-				displayName: 'fromPhoneNumber',
+				displayName: 'From Phone Number',
 				name: 'fromPhoneNumber',
 				type: 'string' as const,
 				default: '',
 				description: 'Phone number (or identifier) of the caller',
 			},
 			{
-				displayName: 'toPhoneNumber',
+				displayName: 'To Phone Number',
 				name: 'toPhoneNumber',
 				type: 'string' as const,
 				default: '',
@@ -454,60 +454,60 @@ export const callsFields: INodeProperties[] = [
 				description: 'Defines the direction of the call',
 			},
 			{
-				displayName: 'callId',
+				displayName: 'Call ID',
 				name: 'callId',
 				type: 'string' as const,
 				default: '',
 				description: 'External ID of the phone call',
 			},
 			{
-				displayName: 'telephoneSystemId',
+				displayName: 'Telephone System ID',
 				name: 'telephoneSystemId',
 				type: 'number' as const,
 				default: 0,
 			},
-			{ displayName: 'fromCompanyId', name: 'fromCompanyId', type: 'number' as const, default: 0 },
+			{ displayName: 'From Company ID', name: 'fromCompanyId', type: 'number' as const, default: 0 },
 			{
-				displayName: 'fromCompanyPercent',
+				displayName: 'From Company Percent',
 				name: 'fromCompanyPercent',
 				type: 'number' as const,
 				default: 0,
 			},
 			{
-				displayName: 'fromEmployeeId',
+				displayName: 'From Employee ID',
 				name: 'fromEmployeeId',
 				type: 'number' as const,
 				default: 0,
 			},
-			{ displayName: 'toCompanyId', name: 'toCompanyId', type: 'number' as const, default: 0 },
+			{ displayName: 'To Company ID', name: 'toCompanyId', type: 'number' as const, default: 0 },
 			{
-				displayName: 'toCompanyPercent',
+				displayName: 'To Company Percent',
 				name: 'toCompanyPercent',
 				type: 'number' as const,
 				default: 0,
 			},
-			{ displayName: 'toEmployeeId', name: 'toEmployeeId', type: 'number' as const, default: 0 },
+			{ displayName: 'To Employee ID', name: 'toEmployeeId', type: 'number' as const, default: 0 },
 			{
-				displayName: 'connectionEstablished',
+				displayName: 'Connection Established',
 				name: 'connectionEstablished',
 				type: 'boolean' as const,
 				default: false,
 			},
 			{
-				displayName: 'durationTotal (Seconds)',
+				displayName: 'Duration Total (Seconds)',
 				name: 'durationTotal',
 				type: 'number' as const,
 				default: 0,
 			},
 			{
-				displayName: 'durationCall (Seconds)',
+				displayName: 'Duration Call (Seconds)',
 				name: 'durationCall',
 				type: 'number' as const,
 				default: 0,
 			},
 			{ displayName: 'Group', name: 'group', type: 'string' as const, default: '' },
 			{
-				displayName: 'numberIdentifyState',
+				displayName: 'Number Identify State',
 				name: 'numberIdentifyState',
 				type: 'string' as const,
 				default: '',
@@ -532,9 +532,9 @@ export const callsFields: INodeProperties[] = [
 						displayName: 'Participant',
 						name: 'participant',
 						values: [
-							{ displayName: 'idString', name: 'idString', type: 'string' as const, default: '' },
+							{ displayName: 'ID String', name: 'idString', type: 'string' as const, default: '' },
 							{
-								displayName: 'employeeId',
+								displayName: 'Employee ID',
 								name: 'employeeId',
 								type: 'number' as const,
 								default: 0,
@@ -546,6 +546,84 @@ export const callsFields: INodeProperties[] = [
 		],
 	},
 ];
+
+function buildCallBodyFromIndividualFields(this: IExecuteFunctions, i: number): IDataObject {
+	const body: IDataObject = {};
+
+	const optionalString = (name: string) => {
+		const v = this.getNodeParameter(name, i, '') as string;
+		return v === '' ? undefined : v;
+	};
+	const optionalNumber = (name: string) => {
+		const v = this.getNodeParameter(name, i, 0) as number;
+		return v === 0 ? undefined : v;
+	};
+	const optionalBoolean = (name: string) => {
+		return this.getNodeParameter(name, i, false) as boolean;
+	};
+
+	const callId = optionalString('callId');
+	const telephoneSystemId = optionalNumber('telephoneSystemId');
+	const date = optionalNumber('date');
+	const fromPhoneNumber = optionalString('fromPhoneNumber');
+	const fromCompanyId = optionalNumber('fromCompanyId');
+	const fromCompanyPercent = optionalNumber('fromCompanyPercent');
+	const fromEmployeeId = optionalNumber('fromEmployeeId');
+	const toPhoneNumber = optionalString('toPhoneNumber');
+	const toCompanyId = optionalNumber('toCompanyId');
+	const toCompanyPercent = optionalNumber('toCompanyPercent');
+	const toEmployeeId = optionalNumber('toEmployeeId');
+	const direction = this.getNodeParameter('direction', i, '') as string;
+	const connectionEstablished = optionalBoolean('connectionEstablished');
+	const durationTotal = optionalNumber('durationTotal');
+	const durationCall = optionalNumber('durationCall');
+	const group = optionalString('group');
+	const numberIdentifyState = optionalString('numberIdentifyState');
+
+	if (callId !== undefined) body.callId = callId;
+	if (telephoneSystemId !== undefined) body.telephoneSystemId = telephoneSystemId;
+	if (date !== undefined) body.date = date;
+	if (fromPhoneNumber !== undefined) body.fromPhoneNumber = fromPhoneNumber;
+	if (fromCompanyId !== undefined) body.fromCompanyId = fromCompanyId;
+	if (fromCompanyPercent !== undefined) body.fromCompanyPercent = fromCompanyPercent;
+	if (fromEmployeeId !== undefined) body.fromEmployeeId = fromEmployeeId;
+	if (toPhoneNumber !== undefined) body.toPhoneNumber = toPhoneNumber;
+	if (toCompanyId !== undefined) body.toCompanyId = toCompanyId;
+	if (toCompanyPercent !== undefined) body.toCompanyPercent = toCompanyPercent;
+	if (toEmployeeId !== undefined) body.toEmployeeId = toEmployeeId;
+	if (direction) body.direction = direction;
+	body.connectionEstablished = connectionEstablished;
+	if (durationTotal !== undefined) body.durationTotal = durationTotal;
+	if (durationCall !== undefined) body.durationCall = durationCall;
+	if (group !== undefined) body.group = group;
+	if (numberIdentifyState !== undefined) body.numberIdentifyState = numberIdentifyState;
+
+	const participantsJson = this.getNodeParameter('phoneParticipantsJson', i, '') as string;
+	if (participantsJson && participantsJson.trim() !== '') {
+		try {
+			const parsed = JSON.parse(participantsJson);
+			if (!Array.isArray(parsed)) throw new Error('phoneParticipantsJson must be an array');
+			body.phoneParticipants = parsed;
+		} catch {
+			throw new NodeOperationError(this.getNode(), 'phoneParticipantsJson must be valid JSON array.');
+		}
+	} else {
+		const parts = this.getNodeParameter('phoneParticipants', i, { participant: [] }) as {
+			participant?: Array<{ idString?: string; employeeId?: number }>;
+		};
+		const list = (parts.participant ?? [])
+			.map((p) => {
+				const obj: IDataObject = {};
+				if (p.idString) obj.idString = p.idString;
+				if (p.employeeId && p.employeeId > 0) obj.employeeId = p.employeeId;
+				return obj;
+			})
+			.filter(Boolean);
+		if (list.length) body.phoneParticipants = list;
+	}
+
+	return body;
+}
 
 export async function handleCalls(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
@@ -615,77 +693,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 					}
 				}
 			} else {
-				const optionalString = (name: string) => {
-					const v = this.getNodeParameter(name, i, '') as string;
-					return v === '' ? undefined : v;
-				};
-				const optionalNumber = (name: string) => {
-					const v = this.getNodeParameter(name, i, 0) as number;
-					return v === 0 ? undefined : v;
-				};
-				const optionalBoolean = (name: string) => {
-					return this.getNodeParameter(name, i, false) as boolean;
-				};
-
-				const callId = optionalString('callId');
-				const telephoneSystemId = optionalNumber('telephoneSystemId');
-				const date = optionalNumber('date');
-				const fromPhoneNumber = optionalString('fromPhoneNumber');
-				const fromCompanyId = optionalNumber('fromCompanyId');
-				const fromCompanyPercent = optionalNumber('fromCompanyPercent');
-				const fromEmployeeId = optionalNumber('fromEmployeeId');
-				const toPhoneNumber = optionalString('toPhoneNumber');
-				const toCompanyId = optionalNumber('toCompanyId');
-				const toCompanyPercent = optionalNumber('toCompanyPercent');
-				const toEmployeeId = optionalNumber('toEmployeeId');
-				const direction = this.getNodeParameter('direction', i, '') as string;
-				const connectionEstablished = optionalBoolean('connectionEstablished');
-				const durationTotal = optionalNumber('durationTotal');
-				const durationCall = optionalNumber('durationCall');
-				const group = optionalString('group');
-				const numberIdentifyState = optionalString('numberIdentifyState');
-
-				if (callId !== undefined) body.callId = callId;
-				if (telephoneSystemId !== undefined) body.telephoneSystemId = telephoneSystemId;
-				if (date !== undefined) body.date = date;
-				if (fromPhoneNumber !== undefined) body.fromPhoneNumber = fromPhoneNumber;
-				if (fromCompanyId !== undefined) body.fromCompanyId = fromCompanyId;
-				if (fromCompanyPercent !== undefined) body.fromCompanyPercent = fromCompanyPercent;
-				if (fromEmployeeId !== undefined) body.fromEmployeeId = fromEmployeeId;
-				if (toPhoneNumber !== undefined) body.toPhoneNumber = toPhoneNumber;
-				if (toCompanyId !== undefined) body.toCompanyId = toCompanyId;
-				if (toCompanyPercent !== undefined) body.toCompanyPercent = toCompanyPercent;
-				if (toEmployeeId !== undefined) body.toEmployeeId = toEmployeeId;
-				if (direction) body.direction = direction;
-				body.connectionEstablished = connectionEstablished;
-				if (durationTotal !== undefined) body.durationTotal = durationTotal;
-				if (durationCall !== undefined) body.durationCall = durationCall;
-				if (group !== undefined) body.group = group;
-				if (numberIdentifyState !== undefined) body.numberIdentifyState = numberIdentifyState;
-
-				const participantsJson = this.getNodeParameter('phoneParticipantsJson', i, '') as string;
-				if (participantsJson && participantsJson.trim() !== '') {
-					try {
-						const parsed = JSON.parse(participantsJson);
-						if (!Array.isArray(parsed)) throw new Error('phoneParticipantsJson must be an array');
-						body.phoneParticipants = parsed;
-					} catch {
-						throw new NodeOperationError(this.getNode(), 'phoneParticipantsJson must be valid JSON array.');
-					}
-				} else {
-					const parts = this.getNodeParameter('phoneParticipants', i, { participant: [] }) as {
-						participant?: Array<{ idString?: string; employeeId?: number }>;
-					};
-					const list = (parts.participant ?? [])
-						.map((p) => {
-							const obj: IDataObject = {};
-							if (p.idString) obj.idString = p.idString;
-							if (p.employeeId && p.employeeId > 0) obj.employeeId = p.employeeId;
-							return obj;
-						})
-						.filter(Boolean);
-					if (list.length) body.phoneParticipants = list;
-				}
+				body = buildCallBodyFromIndividualFields.call(this, i);
 			}
 		}
 
@@ -848,77 +856,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 					}
 				}
 			} else {
-				const optionalString = (name: string) => {
-					const v = this.getNodeParameter(name, i, '') as string;
-					return v === '' ? undefined : v;
-				};
-				const optionalNumber = (name: string) => {
-					const v = this.getNodeParameter(name, i, 0) as number;
-					return v === 0 ? undefined : v;
-				};
-				const optionalBoolean = (name: string) => {
-					return this.getNodeParameter(name, i, false) as boolean;
-				};
-
-				const callId = optionalString('callId');
-				const telephoneSystemId = optionalNumber('telephoneSystemId');
-				const date = optionalNumber('date');
-				const fromPhoneNumber = optionalString('fromPhoneNumber');
-				const fromCompanyId = optionalNumber('fromCompanyId');
-				const fromCompanyPercent = optionalNumber('fromCompanyPercent');
-				const fromEmployeeId = optionalNumber('fromEmployeeId');
-				const toPhoneNumber = optionalString('toPhoneNumber');
-				const toCompanyId = optionalNumber('toCompanyId');
-				const toCompanyPercent = optionalNumber('toCompanyPercent');
-				const toEmployeeId = optionalNumber('toEmployeeId');
-				const direction = this.getNodeParameter('direction', i, '') as string;
-				const connectionEstablished = optionalBoolean('connectionEstablished');
-				const durationTotal = optionalNumber('durationTotal');
-				const durationCall = optionalNumber('durationCall');
-				const group = optionalString('group');
-				const numberIdentifyState = optionalString('numberIdentifyState');
-
-				if (callId !== undefined) body.callId = callId;
-				if (telephoneSystemId !== undefined) body.telephoneSystemId = telephoneSystemId;
-				if (date !== undefined) body.date = date;
-				if (fromPhoneNumber !== undefined) body.fromPhoneNumber = fromPhoneNumber;
-				if (fromCompanyId !== undefined) body.fromCompanyId = fromCompanyId;
-				if (fromCompanyPercent !== undefined) body.fromCompanyPercent = fromCompanyPercent;
-				if (fromEmployeeId !== undefined) body.fromEmployeeId = fromEmployeeId;
-				if (toPhoneNumber !== undefined) body.toPhoneNumber = toPhoneNumber;
-				if (toCompanyId !== undefined) body.toCompanyId = toCompanyId;
-				if (toCompanyPercent !== undefined) body.toCompanyPercent = toCompanyPercent;
-				if (toEmployeeId !== undefined) body.toEmployeeId = toEmployeeId;
-				if (direction) body.direction = direction;
-				body.connectionEstablished = connectionEstablished;
-				if (durationTotal !== undefined) body.durationTotal = durationTotal;
-				if (durationCall !== undefined) body.durationCall = durationCall;
-				if (group !== undefined) body.group = group;
-				if (numberIdentifyState !== undefined) body.numberIdentifyState = numberIdentifyState;
-
-				const participantsJson = this.getNodeParameter('phoneParticipantsJson', i, '') as string;
-				if (participantsJson && participantsJson.trim() !== '') {
-					try {
-						const parsed = JSON.parse(participantsJson);
-						if (!Array.isArray(parsed)) throw new Error('phoneParticipantsJson must be an array');
-						body.phoneParticipants = parsed;
-					} catch {
-						throw new NodeOperationError(this.getNode(), 'phoneParticipantsJson must be valid JSON array.');
-					}
-				} else {
-					const parts = this.getNodeParameter('phoneParticipants', i, { participant: [] }) as {
-						participant?: Array<{ idString?: string; employeeId?: number }>;
-					};
-					const list = (parts.participant ?? [])
-						.map((p) => {
-							const obj: IDataObject = {};
-							if (p.idString) obj.idString = p.idString;
-							if (p.employeeId && p.employeeId > 0) obj.employeeId = p.employeeId;
-							return obj;
-						})
-						.filter(Boolean);
-					if (list.length) body.phoneParticipants = list;
-				}
+				body = buildCallBodyFromIndividualFields.call(this, i);
 			}
 		}
 
