@@ -305,10 +305,25 @@ export const pcFields: INodeProperties[] = [
 			{
 				displayName: 'OS IDs',
 				name: 'osIds',
-				type: 'multiOptions' as const,
+				type: 'fixedCollection' as const,
 				typeOptions: { multipleValues: true },
-				options: [],
-				default: [],
+				default: {},
+				placeholder: 'Add OS ID',
+				options: [
+					{
+						name: 'values',
+						displayName: 'OS IDs',
+						values: [
+							{
+								displayName: 'OS ID',
+								name: 'osId',
+								type: 'number' as const,
+								default: 0,
+								description: 'OS ID to include in the result filter',
+							},
+						],
+					},
+				],
 			},
 			{
 				displayName: 'Type',
@@ -395,6 +410,18 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 		case 'listPcs': {
 			url = `${credentials.baseURL}${pcsBasePath}`;
 			const listQuery = this.getNodeParameter('listQuery', i, {}) as Record<string, unknown>;
+			const osIdsInput = listQuery.osIds as { values?: Array<{ osId?: number }> } | undefined;
+			if (osIdsInput?.values && Array.isArray(osIdsInput.values)) {
+				const parsedOsIds = osIdsInput.values
+					.map((entry) => Number(entry.osId))
+					.filter((id) => Number.isInteger(id) && id > 0);
+
+				if (parsedOsIds.length > 0) {
+					listQuery.osIds = parsedOsIds;
+				} else {
+					delete listQuery.osIds;
+				}
+			}
 			requestOptions.method = 'PUT';
 			requestOptions.body = listQuery;
 			break;
