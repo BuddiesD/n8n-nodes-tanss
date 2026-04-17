@@ -141,6 +141,17 @@ export const ticketFields: INodeProperties[] = [
 		default: {},
 		options: [
 			{
+				displayName: 'Clearance Mode',
+				name: 'clearanceMode',
+				type: 'options' as const,
+				options: [
+					{ name: 'Default', value: 'DEFAULT' },
+					{ name: "Don't Clear Supports", value: 'DONT_CLEAR_SUPPORTS' },
+					{ name: 'May Clear Supports', value: 'MAY_CLEAR_SUPPORTS' },
+				],
+				default: 'DEFAULT',
+			},
+			{
 				displayName: 'Assigned to Department ID',
 				name: 'assignedToDepartmentId',
 				type: 'number' as const,
@@ -191,8 +202,55 @@ export const ticketFields: INodeProperties[] = [
 				],
 				default: 'NO',
 			},
+			{
+				displayName: 'Installation Fee Amount',
+				name: 'installationFeeAmount',
+				type: 'number' as const,
+				default: 0,
+			},
+			{
+				displayName: 'Installation Fee Drive Mode',
+				name: 'installationFeeDriveMode',
+				type: 'options' as const,
+				options: [
+					{ name: 'None (Default Behavior)', value: 'NONE' },
+					{ name: 'Drive Included', value: 'DRIVE_INCLUDED' },
+					{ name: 'Drive Excluded', value: 'DRIVE_EXCLUDED' },
+				],
+				default: 'NONE',
+			},
+			{ displayName: 'Link ID', name: 'linkId', type: 'number' as const, default: 0 },
+			{ displayName: 'Link Type ID', name: 'linkTypeId', type: 'number' as const, default: 0 },
+			{
+				displayName: 'Local Ticket Admin Employee ID',
+				name: 'localTicketAdminEmployeeId',
+				type: 'number' as const,
+				default: 0,
+			},
+			{
+				displayName: 'Local Ticket Admin Flag',
+				name: 'localTicketAdminFlag',
+				type: 'options' as const,
+				options: [
+					{ name: 'None', value: 'NONE' },
+					{ name: 'Local Admin', value: 'LOCAL_ADMIN' },
+					{ name: 'Technician', value: 'TECHNICIAN' },
+				],
+				default: 'NONE',
+			},
+			{ displayName: 'Order By ID', name: 'orderById', type: 'number' as const, default: 0 },
 			{ displayName: 'Order Number', name: 'orderNumber', type: 'string' as const, default: '' },
 			{ displayName: 'Phase ID', name: 'phaseId', type: 'number' as const, default: 0 },
+			{ displayName: 'Project', name: 'project', type: 'boolean' as const, default: false },
+			{ displayName: 'Project ID', name: 'projectId', type: 'number' as const, default: 0 },
+			{
+				displayName: 'Reminder (Timestamp)',
+				name: 'reminder',
+				type: 'number' as const,
+				default: 0,
+			},
+			{ displayName: 'Remitter ID', name: 'remitterId', type: 'number' as const, default: 0 },
+			{ displayName: 'Repair', name: 'repair', type: 'boolean' as const, default: false },
 			{
 				displayName: 'Relationship Link ID',
 				name: 'relationshipLinkId',
@@ -209,6 +267,24 @@ export const ticketFields: INodeProperties[] = [
 			{
 				displayName: 'Resubmission Date',
 				name: 'resubmissionDate',
+				type: 'number' as const,
+				default: 0,
+			},
+			{
+				displayName: 'Resubmission Text',
+				name: 'resubmissionText',
+				type: 'string' as const,
+				default: '',
+			},
+			{
+				displayName: 'Separate Billing',
+				name: 'separateBilling',
+				type: 'boolean' as const,
+				default: false,
+			},
+			{
+				displayName: 'Service Cap Amount',
+				name: 'serviceCapAmount',
 				type: 'number' as const,
 				default: 0,
 			},
