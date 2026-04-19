@@ -23,9 +23,6 @@ jobs:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Upgrade npm
-        run: npm install -g npm@^11.5.1
-
       - name: Verify versions
         run: |
           node -v
