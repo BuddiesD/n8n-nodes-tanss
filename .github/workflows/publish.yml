@@ -27,6 +27,7 @@ jobs:
         run: |
           node -v
           npm -v
+          npx --yes npm@^11.5.1 -v
     
       - name: Install dependencies
         run: npm ci
@@ -41,4 +42,4 @@ jobs:
         run: npm run build
 
       - name: Publish to npm
-        run: npm publish --provenance --ignore-scripts
+        run: npx --yes npm@^11.5.1 publish --provenance --ignore-scripts
