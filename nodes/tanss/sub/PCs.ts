@@ -412,9 +412,7 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 			const listQuery = this.getNodeParameter('listQuery', i, {}) as Record<string, unknown>;
 			const osIdsInput = listQuery.osIds as { values?: Array<{ osId?: number }> } | undefined;
 			if (osIdsInput?.values && Array.isArray(osIdsInput.values)) {
-				const parsedOsIds = osIdsInput.values
-					.map((entry) => Number(entry.osId))
-					.filter((id) => Number.isInteger(id) && id > 0);
+				const parsedOsIds = osIdsInput.values.map((entry) => Number(entry.osId)).filter((id) => Number.isInteger(id) && id > 0);
 
 				if (parsedOsIds.length > 0) {
 					listQuery.osIds = parsedOsIds;
