@@ -686,6 +686,72 @@ function buildCallBodyFromInput(this: IExecuteFunctions, i: number, createCallFi
 	return body;
 }
 
+function buildNotificationBodyFromInput(this: IExecuteFunctions, i: number): IDataObject {
+	const notificationJson = this.getNodeParameter('notificationJson', i, '') as string;
+
+	if (notificationJson && notificationJson.trim() !== '') {
+		try {
+			const parsed = JSON.parse(notificationJson);
+			if (typeof parsed !== 'object' || parsed === null) {
+				throw new Error('notificationJson must be an object');
+			}
+			return parsed as IDataObject;
+		} catch {
+			throw new NodeOperationError(this.getNode(), 'notificationJson must be valid JSON object.');
+		}
+	}
+
+	const notificationFields = this.getNodeParameter('notificationFields', i, {}) as IDataObject;
+	const body: IDataObject = { ...notificationFields };
+
+	if (typeof notificationFields.fromPhoneNrInfos === 'string' && notificationFields.fromPhoneNrInfos.trim() !== '') {
+		try {
+			body.fromPhoneNrInfos = JSON.parse(notificationFields.fromPhoneNrInfos);
+		} catch {
+			throw new NodeOperationError(this.getNode(), 'notificationFields.fromPhoneNrInfos must be valid JSON object.');
+		}
+	}
+
+	if (typeof notificationFields.toPhoneNrInfos === 'string' && notificationFields.toPhoneNrInfos.trim() !== '') {
+		try {
+			body.toPhoneNrInfos = JSON.parse(notificationFields.toPhoneNrInfos);
+		} catch {
+			throw new NodeOperationError(this.getNode(), 'notificationFields.toPhoneNrInfos must be valid JSON object.');
+		}
+	}
+
+	if (typeof notificationFields.phoneParticipantsJson === 'string' && notificationFields.phoneParticipantsJson.trim() !== '') {
+		try {
+			const parsed = JSON.parse(notificationFields.phoneParticipantsJson);
+			if (!Array.isArray(parsed)) throw new Error('phoneParticipantsJson must be array');
+			body.phoneParticipants = parsed;
+		} catch {
+			throw new NodeOperationError(this.getNode(), 'notificationFields.phoneParticipantsJson must be valid JSON array.');
+		}
+	} else if (notificationFields.phoneParticipants && typeof notificationFields.phoneParticipants === 'object') {
+		const participants = (notificationFields.phoneParticipants as { participant?: Array<IDataObject> }).participant ?? [];
+		if (participants.length > 0) {
+			body.phoneParticipants = participants;
+		}
+	}
+
+	if (body.fromPhoneNrInfos === '') delete body.fromPhoneNrInfos;
+	if (body.toPhoneNrInfos === '') delete body.toPhoneNrInfos;
+	if (body.callId === '') delete body.callId;
+	if (body.fromPhoneNumber === '') delete body.fromPhoneNumber;
+	if (body.toPhoneNumber === '') delete body.toPhoneNumber;
+	if (body.group === '') delete body.group;
+	if (body.id === 0) delete body.id;
+	if (body.telephoneSystemId === 0) delete body.telephoneSystemId;
+	if (body.date === 0) delete body.date;
+	if (body.durationTotal === 0) delete body.durationTotal;
+	if (body.durationCall === 0) delete body.durationCall;
+
+	delete body.phoneParticipantsJson;
+
+	return body;
+}
+
 export async function handleCalls(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 
@@ -706,6 +772,26 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 		const body = buildCallBodyFromInput.call(this, i);
 
 		const url = `${baseURL}/backend/api/calls/v1`;
+		const requestOptions: IDataObject = {
+			method: 'POST',
+			url,
+			headers: { 'Content-Type': 'application/json' },
+			body,
+			json: true,
+		};
+
+		try {
+			const response = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
+			return response;
+		} catch (error: unknown) {
+			throw new NodeApiError(this.getNode(), error as JsonObject);
+		}
+	}
+
+	if (operation === 'createNotification') {
+		const body = buildNotificationBodyFromInput.call(this, i);
+
+		const url = `${baseURL}/backend/api/calls/v1/notification`;
 		const requestOptions: IDataObject = {
 			method: 'POST',
 			url,

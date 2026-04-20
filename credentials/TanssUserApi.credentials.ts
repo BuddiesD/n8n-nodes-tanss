@@ -4,7 +4,6 @@ import type {
 	ICredentialDataDecryptedObject,
 	ICredentialTestRequest,
 	ICredentialType,
-	IHttpRequestOptions,
 	IHttpRequestHelper,
 	INodeProperties,
 } from 'n8n-workflow';
@@ -66,21 +65,6 @@ export async function getFreshUserTokens(
 	credentials: ICredentialDataDecryptedObject,
 ): Promise<{ apiToken: string; refreshToken: string }> {
 	return await loginWithCredentials(helper, credentials);
-}
-
-export async function tanssUserHttpRequestWithAutoRefresh(
-	helper: IHttpRequestHelper,
-	credentials: ICredentialDataDecryptedObject,
-	options: IHttpRequestOptions,
-) {
-	const { apiToken } = await getFreshUserTokens(helper, credentials);
-	return await helper.helpers.httpRequest({
-		...options,
-		headers: {
-			...(options.headers ?? {}),
-			apiToken,
-		},
-	});
 }
 
 export class TanssUserApi implements ICredentialType {
