@@ -1,4 +1,5 @@
 import { IExecuteFunctions, IHttpRequestOptions, NodeOperationError } from 'n8n-workflow';
+import { tanssUserHttpRequestWithAutoRefresh } from '../../../credentials/TanssUserApi.credentials';
 
 export type TanssAuthMode = 'user' | 'generated';
 
@@ -26,5 +27,11 @@ export function isGeneratedTokenMode(this: IExecuteFunctions, itemIndex: number)
 export async function tanssHttpRequest(this: IExecuteFunctions, itemIndex: number, options: IHttpRequestOptions) {
 	const authMode = getTanssAuthMode.call(this, itemIndex);
 	const credentialName = authMode === 'generated' ? 'tanssGeneratedTokenApi' : 'tanssUserApi';
-	return await this.helpers.httpRequestWithAuthentication.call(this, credentialName, options);
+
+	if (credentialName === 'tanssGeneratedTokenApi') {
+		return await this.helpers.httpRequestWithAuthentication.call(this, credentialName, options);
+	}
+
+	const credentials = await this.getCredentials(credentialName);
+	return await tanssUserHttpRequestWithAutoRefresh(this, credentials, options);
 }

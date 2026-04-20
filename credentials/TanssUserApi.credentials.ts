@@ -4,6 +4,7 @@ import type {
 	ICredentialDataDecryptedObject,
 	ICredentialTestRequest,
 	ICredentialType,
+	IHttpRequestOptions,
 	IHttpRequestHelper,
 	INodeProperties,
 } from 'n8n-workflow';
@@ -60,29 +61,26 @@ async function loginWithCredentials(
 	return extractTokens(response);
 }
 
-async function refreshWithRefreshToken(
+export async function getFreshUserTokens(
 	helper: IHttpRequestHelper,
 	credentials: ICredentialDataDecryptedObject,
 ): Promise<{ apiToken: string; refreshToken: string }> {
-	const baseURL = String(credentials.baseURL ?? '').replace(/\/+$/, '');
-	const refreshToken = String(credentials.refreshToken ?? '');
-	const url = `${baseURL}/backend/api/v1/ticketStates`;
+	return await loginWithCredentials(helper, credentials);
+}
 
-	if (refreshToken.trim() === '') {
-		throw new Error('No refresh token available');
-	}
-
-	const response = await helper.helpers.httpRequest({
-		method: 'GET',
-		url,
-		json: true,
+export async function tanssUserHttpRequestWithAutoRefresh(
+	helper: IHttpRequestHelper,
+	credentials: ICredentialDataDecryptedObject,
+	options: IHttpRequestOptions,
+) {
+	const { apiToken } = await getFreshUserTokens(helper, credentials);
+	return await helper.helpers.httpRequest({
+		...options,
 		headers: {
-			apiToken: refreshToken,
-			'Content-Type': 'application/json',
+			...(options.headers ?? {}),
+			apiToken,
 		},
 	});
-
-	return extractTokens(response);
 }
 
 export class TanssUserApi implements ICredentialType {
@@ -156,11 +154,7 @@ export class TanssUserApi implements ICredentialType {
 	];
 
 	async preAuthentication(this: IHttpRequestHelper, credentials: ICredentialDataDecryptedObject) {
-		try {
-			return await refreshWithRefreshToken(this, credentials);
-		} catch {
-			return await loginWithCredentials(this, credentials);
-		}
+		return await getFreshUserTokens(this, credentials);
 	}
 
 	authenticate: IAuthenticateGeneric = {
