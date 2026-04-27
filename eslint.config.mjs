@@ -1,3 +1,10 @@
 import { config } from '@n8n/node-cli/eslint';
 
-export default config;
+const baseConfig = Array.isArray(config) ? config : [config];
+
+export default [
+	...baseConfig,
+	{
+		ignores: ['scripts/**'],
+	},
+];
