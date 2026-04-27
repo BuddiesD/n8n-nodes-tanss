@@ -327,7 +327,7 @@ export const pcFields: INodeProperties[] = [
 			},
 			{
 				displayName: 'Type',
-				name: 'type',
+				name: 'servers',
 				type: 'options' as const,
 				options: [
 					{ name: 'PCs Only', value: 'PCS_ONLY' },
