@@ -21,15 +21,16 @@ type TanssLoginResponse = {
 function extractApiToken(response: unknown): { apiToken: string } {
 	const content = (response as TanssLoginResponse)?.content;
 	const apiToken = content?.apiKey;
-
 	if (!apiToken) {
 		throw new Error('TANSS login did not return an apiKey token');
 	}
-
 	return { apiToken };
 }
 
-async function loginWithCredentials(helper: IHttpRequestHelper, credentials: ICredentialDataDecryptedObject): Promise<{ apiToken: string }> {
+async function loginWithCredentials(
+	helper: IHttpRequestHelper,
+	credentials: ICredentialDataDecryptedObject,
+): Promise<{ apiToken: string }> {
 	const baseURL = String(credentials.baseURL ?? '').replace(/\/+$/, '');
 	const username = String(credentials.username ?? '');
 	const password = String(credentials.password ?? '');
@@ -52,6 +53,13 @@ async function loginWithCredentials(helper: IHttpRequestHelper, credentials: ICr
 	});
 
 	return extractApiToken(response);
+}
+
+export async function getFreshUserTokens(
+	helper: IHttpRequestHelper,
+	credentials: ICredentialDataDecryptedObject,
+): Promise<{ apiToken: string }> {
+	return await loginWithCredentials(helper, credentials);
 }
 
 export class TanssUserApi implements ICredentialType {
@@ -115,9 +123,8 @@ export class TanssUserApi implements ICredentialType {
 		},
 	];
 
-	// This runs when expirable apiToken is missing or expired.
 	async preAuthentication(this: IHttpRequestHelper, credentials: ICredentialDataDecryptedObject) {
-		return await loginWithCredentials(this, credentials);
+		return await getFreshUserTokens(this, credentials);
 	}
 
 	authenticate: IAuthenticateGeneric = {

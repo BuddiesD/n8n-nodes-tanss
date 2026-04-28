@@ -1,5 +1,4 @@
-import type { ICredentialDataDecryptedObject, ICredentialsDecrypted } from 'n8n-workflow';
-import { IExecuteFunctions, IHttpRequestOptions, NodeOperationError } from 'n8n-workflow';
+import { IExecuteFunctions, IHttpRequestOptions, NodeOperationError, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export type TanssAuthMode = 'user' | 'generated';
 
@@ -24,16 +23,24 @@ export function isGeneratedTokenMode(this: IExecuteFunctions, itemIndex: number)
 	return getTanssAuthMode.call(this, itemIndex) === 'generated';
 }
 
-function isTanssForbiddenError(error: unknown): boolean {
+function isTanssExpiredTokenError(error: unknown): boolean {
 	const e = error as {
 		response?: {
 			status?: number;
 			statusCode?: number;
+			data?: { error?: { tokenExceptionType?: string; text?: string } };
+			body?: { error?: { tokenExceptionType?: string; text?: string } };
 		};
 	};
 
 	const statusCode = e?.response?.status ?? e?.response?.statusCode;
-	return statusCode === 403;
+	if (statusCode !== 403) return false;
+
+	const errorData = e?.response?.data ?? e?.response?.body;
+	const tokenExceptionType = errorData?.error?.tokenExceptionType;
+	const text = errorData?.error?.text;
+
+	return tokenExceptionType === 'EXPIRED' || text === 'TOKEN_HAS_EXPIRED';
 }
 
 export async function tanssHttpRequest(this: IExecuteFunctions, itemIndex: number, options: IHttpRequestOptions) {
@@ -43,23 +50,24 @@ export async function tanssHttpRequest(this: IExecuteFunctions, itemIndex: numbe
 	try {
 		return await this.helpers.httpRequestWithAuthentication.call(this, credentialName, options);
 	} catch (error: unknown) {
-		if (authMode !== 'user' || !isTanssForbiddenError(error)) {
+		if (authMode !== 'user' || !isTanssExpiredTokenError(error)) {
 			throw error;
 		}
 
-		const currentCredentials = (await this.getCredentials('tanssUserApi')) as ICredentialDataDecryptedObject;
-		const credentialsDecrypted: ICredentialsDecrypted<ICredentialDataDecryptedObject> = {
-			id: '',
-			name: 'tanssUserApi-retry',
-			type: 'tanssUserApi',
-			data: {
-				...currentCredentials,
-				apiToken: '',
-			},
+		const userCredentials = (await this.getCredentials('tanssUserApi')) as {
+			apiToken?: string;
+			refreshToken?: string;
 		};
 
-		return await this.helpers.httpRequestWithAuthentication.call(this, credentialName, options, {
-			credentialsDecrypted,
-		});
+		userCredentials.apiToken = '';
+		if (typeof userCredentials.refreshToken === 'string') {
+			userCredentials.refreshToken = '';
+		}
+
+		try {
+			return await this.helpers.httpRequestWithAuthentication.call(this, credentialName, options);
+		} catch (retryError: unknown) {
+			throw new NodeApiError(this.getNode(), retryError as JsonObject, { itemIndex });
+		}
 	}
 }
