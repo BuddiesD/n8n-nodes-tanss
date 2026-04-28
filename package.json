@@ -1,6 +1,6 @@
 {
     "name": "n8n-nodes-tanss",
-    "version": "1.1.14",
+    "version": "1.1.15",
     "description": "n8n community node to use the TANSS API",
     "license": "MIT",
     "homepage": "https://github.com/BuddiesD/n8n-nodes-tanss",
