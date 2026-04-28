@@ -27,10 +27,7 @@ function extractApiToken(response: unknown): { apiToken: string } {
 	return { apiToken };
 }
 
-async function loginWithCredentials(
-	helper: IHttpRequestHelper,
-	credentials: ICredentialDataDecryptedObject,
-): Promise<{ apiToken: string }> {
+async function loginWithCredentials(helper: IHttpRequestHelper, credentials: ICredentialDataDecryptedObject): Promise<{ apiToken: string }> {
 	const baseURL = String(credentials.baseURL ?? '').replace(/\/+$/, '');
 	const username = String(credentials.username ?? '');
 	const password = String(credentials.password ?? '');
@@ -55,10 +52,7 @@ async function loginWithCredentials(
 	return extractApiToken(response);
 }
 
-export async function getFreshUserTokens(
-	helper: IHttpRequestHelper,
-	credentials: ICredentialDataDecryptedObject,
-): Promise<{ apiToken: string }> {
+export async function getFreshUserTokens(helper: IHttpRequestHelper, credentials: ICredentialDataDecryptedObject): Promise<{ apiToken: string }> {
 	return await loginWithCredentials(helper, credentials);
 }
 
