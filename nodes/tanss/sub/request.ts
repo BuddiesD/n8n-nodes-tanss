@@ -1,3 +1,4 @@
+import type { ICredentialDataDecryptedObject, ICredentialsDecrypted } from 'n8n-workflow';
 import { IExecuteFunctions, IHttpRequestOptions, NodeOperationError } from 'n8n-workflow';
 
 export type TanssAuthMode = 'user' | 'generated';
@@ -23,8 +24,42 @@ export function isGeneratedTokenMode(this: IExecuteFunctions, itemIndex: number)
 	return getTanssAuthMode.call(this, itemIndex) === 'generated';
 }
 
+function isTanssForbiddenError(error: unknown): boolean {
+	const e = error as {
+		response?: {
+			status?: number;
+			statusCode?: number;
+		};
+	};
+
+	const statusCode = e?.response?.status ?? e?.response?.statusCode;
+	return statusCode === 403;
+}
+
 export async function tanssHttpRequest(this: IExecuteFunctions, itemIndex: number, options: IHttpRequestOptions) {
 	const authMode = getTanssAuthMode.call(this, itemIndex);
 	const credentialName = authMode === 'generated' ? 'tanssGeneratedTokenApi' : 'tanssUserApi';
-	return await this.helpers.httpRequestWithAuthentication.call(this, credentialName, options);
+
+	try {
+		return await this.helpers.httpRequestWithAuthentication.call(this, credentialName, options);
+	} catch (error: unknown) {
+		if (authMode !== 'user' || !isTanssForbiddenError(error)) {
+			throw error;
+		}
+
+		const currentCredentials = (await this.getCredentials('tanssUserApi')) as ICredentialDataDecryptedObject;
+		const credentialsDecrypted: ICredentialsDecrypted<ICredentialDataDecryptedObject> = {
+			id: '',
+			name: 'tanssUserApi-retry',
+			type: 'tanssUserApi',
+			data: {
+				...currentCredentials,
+				apiToken: '',
+			},
+		};
+
+		return await this.helpers.httpRequestWithAuthentication.call(this, credentialName, options, {
+			credentialsDecrypted,
+		});
+	}
 }
