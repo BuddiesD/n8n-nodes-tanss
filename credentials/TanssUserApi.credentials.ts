@@ -12,30 +12,24 @@ import { generateTOTP } from '../nodes/tanss/sub/2fa';
 
 type TanssLoginContent = {
 	apiKey?: string;
-	refresh?: string;
 };
 
 type TanssLoginResponse = {
 	content?: TanssLoginContent;
 };
 
-function extractTokens(response: unknown): { apiToken: string; refreshToken: string } {
+function extractApiToken(response: unknown): { apiToken: string } {
 	const content = (response as TanssLoginResponse)?.content;
 	const apiToken = content?.apiKey;
-	const refreshToken = content?.refresh;
+
 	if (!apiToken) {
 		throw new Error('TANSS login did not return an apiKey token');
 	}
-	if (!refreshToken) {
-		throw new Error('TANSS login did not return a refresh token');
-	}
-	return { apiToken, refreshToken };
+
+	return { apiToken };
 }
 
-async function loginWithCredentials(
-	helper: IHttpRequestHelper,
-	credentials: ICredentialDataDecryptedObject,
-): Promise<{ apiToken: string; refreshToken: string }> {
+async function loginWithCredentials(helper: IHttpRequestHelper, credentials: ICredentialDataDecryptedObject): Promise<{ apiToken: string }> {
 	const baseURL = String(credentials.baseURL ?? '').replace(/\/+$/, '');
 	const username = String(credentials.username ?? '');
 	const password = String(credentials.password ?? '');
@@ -57,14 +51,7 @@ async function loginWithCredentials(
 		},
 	});
 
-	return extractTokens(response);
-}
-
-export async function getFreshUserTokens(
-	helper: IHttpRequestHelper,
-	credentials: ICredentialDataDecryptedObject,
-): Promise<{ apiToken: string; refreshToken: string }> {
-	return await loginWithCredentials(helper, credentials);
+	return extractApiToken(response);
 }
 
 export class TanssUserApi implements ICredentialType {
@@ -126,19 +113,11 @@ export class TanssUserApi implements ICredentialType {
 			},
 			default: '',
 		},
-		{
-			displayName: 'Refresh Token',
-			name: 'refreshToken',
-			type: 'hidden',
-			typeOptions: {
-				password: true,
-			},
-			default: '',
-		},
 	];
 
+	// This runs when expirable apiToken is missing or expired.
 	async preAuthentication(this: IHttpRequestHelper, credentials: ICredentialDataDecryptedObject) {
-		return await getFreshUserTokens(this, credentials);
+		return await loginWithCredentials(this, credentials);
 	}
 
 	authenticate: IAuthenticateGeneric = {
