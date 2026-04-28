@@ -12,22 +12,30 @@ import { generateTOTP } from '../nodes/tanss/sub/2fa';
 
 type TanssLoginContent = {
 	apiKey?: string;
+	refresh?: string;
 };
 
 type TanssLoginResponse = {
 	content?: TanssLoginContent;
 };
 
-function extractApiToken(response: unknown): { apiToken: string } {
+function extractTokens(response: unknown): { apiToken: string; refreshToken: string } {
 	const content = (response as TanssLoginResponse)?.content;
 	const apiToken = content?.apiKey;
+	const refreshToken = content?.refresh;
 	if (!apiToken) {
 		throw new Error('TANSS login did not return an apiKey token');
 	}
-	return { apiToken };
+	if (!refreshToken) {
+		throw new Error('TANSS login did not return a refresh token');
+	}
+	return { apiToken, refreshToken };
 }
 
-async function loginWithCredentials(helper: IHttpRequestHelper, credentials: ICredentialDataDecryptedObject): Promise<{ apiToken: string }> {
+async function loginWithCredentials(
+	helper: IHttpRequestHelper,
+	credentials: ICredentialDataDecryptedObject,
+): Promise<{ apiToken: string; refreshToken: string }> {
 	const baseURL = String(credentials.baseURL ?? '').replace(/\/+$/, '');
 	const username = String(credentials.username ?? '');
 	const password = String(credentials.password ?? '');
@@ -49,11 +57,43 @@ async function loginWithCredentials(helper: IHttpRequestHelper, credentials: ICr
 		},
 	});
 
-	return extractApiToken(response);
+	return extractTokens(response);
 }
 
-export async function getFreshUserTokens(helper: IHttpRequestHelper, credentials: ICredentialDataDecryptedObject): Promise<{ apiToken: string }> {
-	return await loginWithCredentials(helper, credentials);
+async function refreshWithRefreshToken(
+	helper: IHttpRequestHelper,
+	credentials: ICredentialDataDecryptedObject,
+): Promise<{ apiToken: string; refreshToken: string }> {
+	const baseURL = String(credentials.baseURL ?? '').replace(/\/+$/, '');
+	const refreshToken = String(credentials.refreshToken ?? '');
+	const url = `${baseURL}/backend/api/v1/employees/technicians`;
+
+	if (refreshToken.trim() === '') {
+		throw new Error('No refresh token available');
+	}
+
+	const response = await helper.helpers.httpRequest({
+		method: 'GET',
+		url,
+		json: true,
+		headers: {
+			refreshToken,
+			Accept: 'application/json',
+		},
+	});
+
+	return extractTokens(response);
+}
+
+async function getFreshUserTokens(
+	helper: IHttpRequestHelper,
+	credentials: ICredentialDataDecryptedObject,
+): Promise<{ apiToken: string; refreshToken: string }> {
+	try {
+		return await refreshWithRefreshToken(helper, credentials);
+	} catch {
+		return await loginWithCredentials(helper, credentials);
+	}
 }
 
 export class TanssUserApi implements ICredentialType {
@@ -112,6 +152,15 @@ export class TanssUserApi implements ICredentialType {
 			typeOptions: {
 				password: true,
 				expirable: true,
+			},
+			default: '',
+		},
+		{
+			displayName: 'Refresh Token',
+			name: 'refreshToken',
+			type: 'hidden',
+			typeOptions: {
+				password: true,
 			},
 			default: '',
 		},
