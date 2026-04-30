@@ -65,31 +65,6 @@ export const pcFields: INodeProperties[] = [
 	},
 	{
 		displayName: 'Company ID',
-		name: 'companyId',
-		type: 'number' as const,
-		displayOptions: {
-			show: {
-				resource: ['pc'],
-				operation: ['updatePc'],
-			},
-		},
-		default: 0,
-	},
-	{
-		displayName: 'Model',
-		name: 'model',
-		type: 'string' as const,
-		displayOptions: {
-			show: {
-				resource: ['pc'],
-				operation: ['updatePc'],
-			},
-		},
-		default: '',
-		description: 'Model of the PC or server',
-	},
-	{
-		displayName: 'Company ID',
 		name: 'createCompanyId',
 		type: 'number' as const,
 		required: true,
@@ -129,6 +104,8 @@ export const pcFields: INodeProperties[] = [
 		placeholder: 'Add Field',
 		options: [
 			{ displayName: 'Active', name: 'active', type: 'boolean' as const, default: false },
+			{ displayName: 'Company ID', name: 'companyId', type: 'number' as const, default: 0 },
+			{ displayName: 'Model', name: 'model', type: 'string' as const, default: '' },
 			{ displayName: 'AnyDesk ID', name: 'anydeskId', type: 'string' as const, default: '' },
 			{
 				displayName: 'AnyDesk Password',
@@ -348,8 +325,6 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const pcId = this.getNodeParameter('pcId', i, 0) as number;
 	const pcData = this.getNodeParameter('pcData', i, {}) as Record<string, unknown>;
-	const companyId = this.getNodeParameter('companyId', i, 0) as number;
-	const model = this.getNodeParameter('model', i, '') as string;
 	const createCompanyId = this.getNodeParameter('createCompanyId', i, 0) as number;
 	const createModel = this.getNodeParameter('createModel', i, '') as string;
 
@@ -380,8 +355,6 @@ export async function handlePc(this: IExecuteFunctions, i: number) {
 				throw new NodeOperationError(this.getNode(), 'Field "PC ID" is required and must be a valid ID.');
 			url = `${credentials.baseURL}${pcsBasePath}/${pcId}`;
 			const body: Record<string, unknown> = { ...pcData };
-			if (companyId && typeof companyId === 'number' && companyId > 0) body.companyId = companyId;
-			if (model && typeof model === 'string' && model.trim() !== '') body.model = model;
 			if (Object.keys(body).length === 0) throw new NodeOperationError(this.getNode(), 'No data provided for updating the PC.');
 			requestOptions.method = 'PUT';
 			requestOptions.body = body;
