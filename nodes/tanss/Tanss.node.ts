@@ -19,6 +19,7 @@ import { handleHddTypes, hddTypesOperations, hddTypesFields } from './sub/hddTyp
 import { handleManufacturers, manufacturersOperations, manufacturersFields } from './sub/manufacturers';
 import { handlePeriphery, peripheryOperations, peripheryFields } from './sub/Periphery';
 import { handleComponents, componentsOperations, componentsFields } from './sub/Components';
+import { handleCompany, companyOperations, companyFields } from './sub/Company';
 import { handleCompanyCategories, companyCategoriesOperations, companyCategoriesFields } from './sub/CompanyCategories';
 import { handleOperatingSystems, operatingSystemsOperations, operatingSystemsFields } from './sub/OperatingSystems';
 import { handleSearch, searchOperations, searchFields } from './sub/Search';
@@ -88,6 +89,7 @@ export class Tanss implements INodeType {
 					{ name: 'Callback', value: 'callbacks' },
 					{ name: 'Chat', value: 'chats' },
 					{ name: 'Checklist', value: 'checklists' },
+					{ name: 'Company', value: 'company' },
 					{ name: 'Company Category', value: 'companyCategories' },
 					{ name: 'Component', value: 'components' },
 					{ name: 'CPU', value: 'cpus' },
@@ -147,6 +149,8 @@ export class Tanss implements INodeType {
 			...ipsFields,
 			...componentsOperations,
 			...componentsFields,
+			...companyOperations,
+			...companyFields,
 			...companyCategoriesOperations,
 			...companyCategoriesFields,
 			...peripheryOperations,
@@ -183,6 +187,7 @@ export class Tanss implements INodeType {
 				else if (resource === 'checklists') responseData = await handleChecklists.call(this, i);
 				else if (resource === 'peripheries') responseData = await handlePeriphery.call(this, i);
 				else if (resource === 'components') responseData = await handleComponents.call(this, i);
+				else if (resource === 'company') responseData = await handleCompany.call(this, i);
 				else if (resource === 'companyCategories') responseData = await handleCompanyCategories.call(this, i);
 				else if (resource === 'ips') responseData = await handleIps.call(this, i);
 				else if (resource === 'ticketContent') responseData = await handleTicketContent.call(this, i);

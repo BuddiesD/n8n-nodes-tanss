@@ -127,7 +127,7 @@ Tested with TANSS API. Version: 10.12.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **162 / 270 (1 not in API Docs)** (60%)
+Progress: **164 / 270 (1 not in API Docs)** (61%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -422,10 +422,10 @@ Progress: **162 / 270 (1 not in API Docs)** (60%)
   - [x] [DEL] Deletes an ip address
 </details>
 <details>
-<summary><strong>company [0/2] - ToDo</strong></summary>
+<summary><strong>company [2/2] - Done</strong></summary>
 
-  - [ ] [POST] Creates a new company
-  - [ ] [GET] Gets all employees of a company
+  - [x] [POST] Creates a new company
+  - [x] [GET] Gets all employees of a company
 </details>
 <details>
 <summary><strong>company category [10/10] - Done</strong></summary>
