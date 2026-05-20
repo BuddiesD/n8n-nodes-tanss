@@ -85,7 +85,7 @@ async function refreshWithRefreshToken(
 	return extractTokens(response);
 }
 
-async function getFreshUserTokens(
+export async function getFreshUserTokens(
 	helper: IHttpRequestHelper,
 	credentials: ICredentialDataDecryptedObject,
 ): Promise<{ apiToken: string; refreshToken: string }> {
