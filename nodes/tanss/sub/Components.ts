@@ -83,7 +83,7 @@ export const componentsFields: INodeProperties[] = [
 		default: {},
 		displayOptions: { show: { resource: ['components'], operation: ['listComponents'] } },
 		options: [
-			{ displayName: 'companyId', name: 'companyId', type: 'number' as const, default: 0, description: 'Show only entries of this company' },
+			{ displayName: 'Company ID', name: 'companyId', type: 'number' as const, default: 0, description: 'Show only entries of this company' },
 			{
 				displayName: 'Branches',
 				name: 'branches',
@@ -108,22 +108,22 @@ export const componentsFields: INodeProperties[] = [
 				default: 'ACTIVE_AND_INACTIVE',
 			},
 			{
-				displayName: 'componentTypeId',
+				displayName: 'Component Type ID',
 				name: 'componentTypeId',
 				type: 'number' as const,
 				default: 0,
 				description: 'ID of the component type to be filtered',
 			},
-			{ displayName: 'pcId', name: 'pcId', type: 'number' as const, default: 0, description: 'If only components of a given pc shall be displayed' },
+			{ displayName: 'PC ID', name: 'pcId', type: 'number' as const, default: 0, description: 'If only components of a given pc shall be displayed' },
 			{
-				displayName: 'peripheryId',
+				displayName: 'Periphery ID',
 				name: 'peripheryId',
 				type: 'number' as const,
 				default: 0,
 				description: 'If only components of a given periphery shall be displayed',
 			},
 			{
-				displayName: 'builtInFilter',
+				displayName: 'Built In Filter',
 				name: 'builtInFilter',
 				type: 'options' as const,
 				options: [
@@ -157,7 +157,7 @@ export const componentsFields: INodeProperties[] = [
 		options: [
 			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
 			{ displayName: 'Type', name: 'type', type: 'string' as const, default: '' },
-			{ displayName: 'shortName', name: 'shortName', type: 'string' as const, default: '' },
+			{ displayName: 'Short Name', name: 'shortName', type: 'string' as const, default: '' },
 			{ displayName: 'Shown', name: 'shown', type: 'boolean' as const, default: true },
 		],
 	},
@@ -172,7 +172,7 @@ export const componentsFields: INodeProperties[] = [
 		options: [
 			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
 			{ displayName: 'Type', name: 'type', type: 'string' as const, default: '' },
-			{ displayName: 'shortName', name: 'shortName', type: 'string' as const, default: '' },
+			{ displayName: 'Short Name', name: 'shortName', type: 'string' as const, default: '' },
 			{ displayName: 'Shown', name: 'shown', type: 'boolean' as const, default: true },
 		],
 	},
