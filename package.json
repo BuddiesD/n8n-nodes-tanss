@@ -20,6 +20,7 @@
     "scripts": {
         "build": "n8n-node build",
         "build:watch": "tsc --watch",
+        "check:display-names": "node ./scripts/check-display-names.mjs",
         "dev": "n8n-node dev",
         "lint": "n8n-node lint",
         "lint:fix": "n8n-node lint --fix",
