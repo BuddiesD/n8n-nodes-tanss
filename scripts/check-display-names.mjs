@@ -5,7 +5,7 @@ import process from 'node:process';
 const rootDir = process.cwd();
 const subDir = path.join(rootDir, 'nodes', 'tanss', 'sub');
 const ignoredCamelCaseTerms = ['AnyDesk', 'TeamViewer'];
-const displayNamePattern = /displayName:\s*'((?:\\.|[^'])*)'/gms;
+const displayNamePattern = /displayName:\s*'([^'\\]*(?:\\.[^'\\]*)*)'/gms;
 const camelCasePattern = /[a-z][A-Z]/;
 
 async function getFiles(dirPath) {
