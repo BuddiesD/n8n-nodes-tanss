@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: 'npm ci'
 
+      - name: Run display name check
+        run: 'npm run check:display-names'
+
       - name: Run lint
         run: 'npm run lint'
 

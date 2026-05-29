@@ -6,4 +6,5 @@ dist
 npm-debug.log*
 yarn.lock
 .vscode/launch.json
-scripts/
+scripts/*
+!scripts/check-display-names.mjs
