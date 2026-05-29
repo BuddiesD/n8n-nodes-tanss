@@ -3,6 +3,8 @@ import {
 	ICredentialDataDecryptedObject,
 	IExecuteFunctions,
 	IHttpRequestOptions,
+	JsonObject,
+	NodeApiError,
 	NodeOperationError,
 } from 'n8n-workflow';
 
@@ -119,7 +121,7 @@ export async function tanssHttpRequest(this: IExecuteFunctions, itemIndex: numbe
 		return await this.helpers.httpRequestWithAuthentication.call(this, credentialName, options);
 	} catch (error) {
 		if (!shouldRetryExpiredUserToken(error)) {
-			throw error;
+			throw new NodeApiError(this.getNode(), error as JsonObject, { itemIndex });
 		}
 
 		const credentials = await this.getCredentials(credentialName, itemIndex);

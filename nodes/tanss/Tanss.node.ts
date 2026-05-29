@@ -1,4 +1,4 @@
-import { INodeType, INodeTypeDescription, IExecuteFunctions, NodeOperationError, NodeConnectionTypes } from 'n8n-workflow';
+import { INodeType, INodeTypeDescription, IExecuteFunctions, JsonObject, NodeApiError, NodeOperationError, NodeConnectionTypes } from 'n8n-workflow';
 import { handlePc, pcOperations, pcFields } from './sub/PCs';
 import { handleTicket, ticketOperations, ticketFields } from './sub/Tickets';
 import { handleDomains, domainOperations, domainFields } from './sub/Domains';
@@ -229,7 +229,7 @@ export class Tanss implements INodeType {
 					continue;
 				}
 
-				throw error;
+				throw new NodeApiError(this.getNode(), error as JsonObject, { itemIndex: i });
 			}
 		}
 
