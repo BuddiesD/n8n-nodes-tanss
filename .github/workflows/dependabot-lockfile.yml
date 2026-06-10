@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   refresh-lockfile:
-    if: github.actor == 'dependabot[bot]'
+    if: startsWith(github.event.pull_request.head.ref, 'dependabot/')
     runs-on: ubuntu-latest
 
     steps:

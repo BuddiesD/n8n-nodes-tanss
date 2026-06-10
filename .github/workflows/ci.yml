@@ -23,15 +23,15 @@ jobs:
           node-version: '22'
 
       - name: Refresh lockfile for Dependabot PRs
-        if: github.actor == 'dependabot[bot]'
+        if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.head.ref, 'dependabot/')
         run: npm install --package-lock-only --ignore-scripts --legacy-peer-deps
 
       - name: Install dependencies for Dependabot PRs
-        if: github.actor == 'dependabot[bot]'
+        if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.head.ref, 'dependabot/')
         run: npm ci --legacy-peer-deps
 
       - name: Install dependencies
-        if: github.actor != 'dependabot[bot]'
+        if: github.event_name != 'pull_request' || !startsWith(github.event.pull_request.head.ref, 'dependabot/')
         run: npm ci
 
       - name: Run display name check
