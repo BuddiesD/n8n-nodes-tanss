@@ -26,6 +26,7 @@ import { handleSearch, searchOperations, searchFields } from './sub/Search';
 import { handleCallback, callbackOperations, callbackFields } from './sub/Callback';
 import { handleSoftwareLicenses, softwareLicensesOperations, softwareLicensesFields } from './sub/SoftwareLicenses';
 import { handleChats, chatsOperations, chatsFields } from './sub/chats';
+import { handleActivityFeed, activityFeedOperations, activityFeedFields } from './sub/activityFeed';
 
 export class Tanss implements INodeType {
 	description: INodeTypeDescription = {
@@ -83,6 +84,7 @@ export class Tanss implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
+					{ name: 'Activity Feed', value: 'activityFeed' },
 					{ name: 'Availability', value: 'availability' },
 					{ name: 'Call', value: 'calls' },
 					{ name: 'Call User', value: 'callsuser' },
@@ -133,6 +135,8 @@ export class Tanss implements INodeType {
 			...timestampFields,
 			...availabilityOperations,
 			...availabilityFields,
+			...activityFeedOperations,
+			...activityFeedFields,
 			...employeesOperations,
 			...employeesFields,
 			...mailsOperations,
@@ -180,7 +184,8 @@ export class Tanss implements INodeType {
 		for (let i = 0; i < items.length; i++) {
 			try {
 				let responseData;
-				if (resource === 'pc') responseData = await handlePc.call(this, i);
+				if (resource === 'activityFeed') responseData = await handleActivityFeed.call(this, i);
+				else if (resource === 'pc') responseData = await handlePc.call(this, i);
 				else if (resource === 'cpus') responseData = await handleCpu.call(this, i);
 				else if (resource === 'ticket') responseData = await handleTicket.call(this, i);
 				else if (resource === 'domain') responseData = await handleDomains.call(this, i);

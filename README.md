@@ -135,7 +135,7 @@ Tested with TANSS API. Version: 10.12.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **164 / 270 (1 not in API Docs)** (61%)
+Progress: **167 / 270 (1 not in API Docs)** (62%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -546,11 +546,11 @@ Progress: **164 / 270 (1 not in API Docs)** (61%)
   - [ ] [POST] sets the available vacation days per year
 </details>
 <details>
-<summary><strong>activityFeed [0/3] - ?</strong></summary>
+<summary><strong>activityFeed [3/3] - Testing</strong></summary>
 
-  - [ ] [PUT] List of user items
-  - [ ] [GET] Number of unseen events
-  - [ ] [POST] Marks all as seen
+  - [x] [PUT] List of user items
+  - [x] [GET] Number of unseen events
+  - [x] [POST] Marks all as seen
 </details>
 <details>
 <summary><strong>domains [5/5] - Done</strong></summary>
