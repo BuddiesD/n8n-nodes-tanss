@@ -208,9 +208,7 @@ function assignIfPresent(body: IDataObject, key: string, value: unknown) {
 
 function extractNumberList(field: IDataObject, key: string): number[] {
 	const entries = (field[key] as { values?: Array<{ id?: number }> })?.values ?? [];
-	return entries
-		.map((entry) => Number(entry.id))
-		.filter((value) => Number.isFinite(value) && value > 0);
+	return entries.map((entry) => Number(entry.id)).filter((value) => Number.isFinite(value) && value > 0);
 }
 
 function buildActivityFeedBody(filter: IDataObject): IDataObject {
