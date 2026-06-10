@@ -24,10 +24,15 @@ jobs:
 
       - name: Refresh lockfile for Dependabot PRs
         if: github.actor == 'dependabot[bot]'
-        run: npm install --package-lock-only --ignore-scripts
+        run: npm install --package-lock-only --ignore-scripts --legacy-peer-deps
+
+      - name: Install dependencies for Dependabot PRs
+        if: github.actor == 'dependabot[bot]'
+        run: npm ci --legacy-peer-deps
 
       - name: Install dependencies
-        run: 'npm ci'
+        if: github.actor != 'dependabot[bot]'
+        run: npm ci
 
       - name: Run display name check
         run: 'npm run check:display-names'

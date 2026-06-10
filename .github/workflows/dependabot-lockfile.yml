@@ -28,7 +28,7 @@ jobs:
           node-version: '22'
 
       - name: Refresh package-lock.json
-        run: npm install --package-lock-only --ignore-scripts
+        run: npm install --package-lock-only --ignore-scripts --legacy-peer-deps
 
       - name: Commit refreshed lockfile
         run: |
