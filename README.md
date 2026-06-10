@@ -1,5 +1,8 @@
 # Important for the old Tanss Node Users
 
+<details>
+<summary>Show migration details</summary>
+
 A new **TANSS Node** was released on **October 27, 2025** [here](https://github.com/BuddiesD/n8n-nodes-tanss).  
 Please note that **existing credentials are not compatible** due to the introduction of **2FA (Two-Factor Authentication)**.
 
@@ -21,8 +24,13 @@ New: [n8n-nodes-tanss](https://www.npmjs.com/package/n8n-nodes-tanss)
 - If your workflow previously used Authentication operations to obtain tokens manually, switch to normal resource operations with the configured credentials.
 - TANSS credentials are now also usable in the normal n8n `HTTP Request` node.
 
+</details>
+
 
 # n8n-nodes-tanss
+
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![CodeFactor](https://www.codefactor.io/repository/github/buddiesd/n8n-nodes-tanss/badge)](https://www.codefactor.io/repository/github/buddiesd/n8n-nodes-tanss)
 
 <div align="center">
 <img src="./docs/images/n8n_tanss.png" width="70%">
