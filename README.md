@@ -135,7 +135,7 @@ Tested with TANSS API. Version: 10.12.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **167 / 270 (1 not in API Docs)** (62%)
+Progress: **172 / 270 (1 not in API Docs)** (64%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -413,13 +413,13 @@ Progress: **167 / 270 (1 not in API Docs)** (62%)
   - [x] [DEL] Delete component type
 </details>
 <details>
-<summary><strong>services [0/5] - ?</strong></summary>
+<summary><strong>services [5/5] - Done</strong></summary>
 
-  - [ ] [POST] Creates a service
-  - [ ] [GET] Gets a list of all services
-  - [ ] [GET] Gets a service by id
-  - [ ] [PUT] Updates a service
-  - [ ] [DEL] Deletes a service
+  - [x] [POST] Creates a service
+  - [x] [GET] Gets a list of all services
+  - [x] [GET] Gets a service by id
+  - [x] [PUT] Updates a service
+  - [x] [DEL] Deletes a service
 </details>
 <details>
 <summary><strong>ips [4/4] - Done</strong></summary>

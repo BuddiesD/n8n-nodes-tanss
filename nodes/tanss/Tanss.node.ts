@@ -27,6 +27,7 @@ import { handleCallback, callbackOperations, callbackFields } from './sub/Callba
 import { handleSoftwareLicenses, softwareLicensesOperations, softwareLicensesFields } from './sub/SoftwareLicenses';
 import { handleChats, chatsOperations, chatsFields } from './sub/chats';
 import { handleActivityFeed, activityFeedOperations, activityFeedFields } from './sub/activityFeed';
+import { handleServices, servicesOperations, servicesFields } from './sub/Services';
 
 export class Tanss implements INodeType {
 	description: INodeTypeDescription = {
@@ -106,6 +107,7 @@ export class Tanss implements INodeType {
 					{ name: 'Periphery', value: 'peripheries' },
 					{ name: 'Remote Support', value: 'remoteSupports' },
 					{ name: 'Search', value: 'search' },
+					{ name: 'Service', value: 'services' },
 					{ name: 'Software License', value: 'softwareLicenses' },
 					{ name: 'Ticket', value: 'ticket' },
 					{ name: 'Ticket Content', value: 'ticketContent' },
@@ -169,6 +171,8 @@ export class Tanss implements INodeType {
 			...chatsFields,
 			...searchOperations,
 			...searchFields,
+			...servicesOperations,
+			...servicesFields,
 			...softwareLicensesOperations,
 			...softwareLicensesFields,
 			...remoteSupportsOperations,
@@ -202,6 +206,7 @@ export class Tanss implements INodeType {
 				else if (resource === 'callbacks') responseData = await handleCallback.call(this, i);
 				else if (resource === 'chats') responseData = await handleChats.call(this, i);
 				else if (resource === 'search') responseData = await handleSearch.call(this, i);
+				else if (resource === 'services') responseData = await handleServices.call(this, i);
 				else if (resource === 'softwareLicenses') responseData = await handleSoftwareLicenses.call(this, i);
 				else if (resource === 'calls') responseData = await handleCalls.call(this, i);
 				else if (resource === 'callsuser') responseData = await handleCallsUser.call(this, i);
