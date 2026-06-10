@@ -562,7 +562,7 @@ Progress: **167 / 270 (1 not in API Docs)** (62%)
   - [x] [GET] List of domains of a company
 </details>
 <details>
-<summary><strong>software licenses [10/10] - Testing</strong></summary>
+<summary><strong>software licenses [10/10] - Done</strong></summary>
 
   - [x] [PUT] Get a list of software licenses
   - [x] [POST] Creates a software license
