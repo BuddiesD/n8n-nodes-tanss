@@ -23,7 +23,7 @@ jobs:
           node-version: '22'
 
       - name: Refresh lockfile for Dependabot PRs
-        if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+        if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.head.ref, 'dependabot/')
         run: npm install --package-lock-only --ignore-scripts
 
       - name: Install dependencies
