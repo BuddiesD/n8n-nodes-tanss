@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"strict": true,
+		"ignoreDeprecations": "6.0",
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"target": "es2019",
