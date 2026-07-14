@@ -135,7 +135,7 @@ Tested with TANSS API. Version: 10.15.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **173 / 271 (1 not in API Docs)** (64%)
+Progress: **174 / 272 (1 not in API Docs)** (64%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -303,9 +303,10 @@ Progress: **173 / 271 (1 not in API Docs)** (64%)
   - [ ] [DEL] Deletes an offer
 </details>
 <details>
-<summary><strong>availability [1/1] - Done</strong></summary>
+<summary><strong>availability [2/2] - Done</strong></summary>
 
   - [x] [GET] Fetches availability infos
+  - [x] [GET] Get availability types
 </details>
 <details>
 <summary><strong>employees [2/2] - Done</strong></summary>
