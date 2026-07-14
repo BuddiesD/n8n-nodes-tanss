@@ -138,10 +138,10 @@ Tested with TANSS API. Version: 10.15.0
 
 | Metric | Value |
 | :--- | :--- |
-| **Implemented** | **175** |
-| **Total API Endpoints** | **276** |
+| **Implemented** | **182** |
+| **Total API Endpoints** | **283** |
 | Not in API Docs | 1 |
-| Ignored `[Not gonna happen]` | 10 |
+| Ignored `[Not gonna happen]` | 11 |
 | **Completion** | **64%** |
 
 
@@ -375,13 +375,21 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [PUT] global search
 </details>
 <details>
-<summary><strong>checklists [5/5] - Done</strong></summary>
+<summary><strong>checklists [13/13] - Done</strong></summary>
 
   - [x] [POST] Assigns a checklist to a ticket
   - [x] [DEL] Removes a checklist from a ticket
   - [x] [GET] Gets checklists for a ticket
   - [x] [GET] Gets checklist for ticket
   - [x] [PUT] Check an item
+  - [x] [GET] Gets a list of selectable checklists
+  - [x] [PUT] Update checklist action
+  - [x] [POST] Copy checklist
+  - [x] [POST] Create new version of checklist
+  - [x] [DEL] Delete checklist
+  - [x] [GET] Get checklist
+  - [x] [PUT] Update checklist
+  - [x] [POST] Convert to adhoc - [Not gonna happen]
 </details>
 <details>
 <summary><strong>supports [0/5] - ToDo</strong></summary>
