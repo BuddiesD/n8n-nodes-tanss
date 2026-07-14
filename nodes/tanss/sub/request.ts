@@ -121,6 +121,28 @@ export async function tanssHttpRequest(this: IExecuteFunctions, itemIndex: numbe
 		return await this.helpers.httpRequestWithAuthentication.call(this, credentialName, options);
 	} catch (error) {
 		if (!shouldRetryExpiredUserToken(error)) {
+			const err = error as {
+				message?: string;
+				response?: {
+					data?: { error?: { text?: string; localizedText?: string; message?: string }; message?: string };
+					body?: { error?: { text?: string; localizedText?: string; message?: string }; message?: string };
+				};
+				context?: {
+					data?: { error?: { text?: string; localizedText?: string; message?: string }; message?: string };
+				};
+			};
+
+			const errorData = err.response?.data ?? err.response?.body ?? err.context?.data;
+			const tanssError = errorData?.error;
+			const apiMessage = tanssError?.localizedText ?? tanssError?.text ?? tanssError?.message ?? errorData?.message;
+
+			if (apiMessage) {
+				throw new NodeApiError(this.getNode(), error as JsonObject, {
+					itemIndex,
+					message: `${err.message ?? 'Bad request'} - ${apiMessage}`,
+				});
+			}
+
 			throw new NodeApiError(this.getNode(), error as JsonObject, { itemIndex });
 		}
 
