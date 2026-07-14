@@ -84,3 +84,18 @@ Update an existing callback.
 - **Callback Until Time (Timestamp)**
 - **Link Type ID**
 - **Link ID**
+
+## Change Callback State
+
+**API Endpoint:** POST /api/v1/callbacks/{callbackId}/state
+
+Records a state change for an existing callback and appends a corresponding entry to the callback's state log.
+
+**Parameters:**
+
+- **Callback ID** (required)
+- **Change State Fields**
+  - **State** (required) — e.g. `UNSEEN`, `NEW`, `COMPLETED`, `EXPECTED_CALLBACK`, etc.
+  - **Info Text** — Free-text note describing the state change
+  - **Date (Timestamp)** — When the state change occurred
+  - **Employee ID** — Who triggered the state change

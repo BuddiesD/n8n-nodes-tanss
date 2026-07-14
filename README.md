@@ -135,7 +135,7 @@ Tested with TANSS API. Version: 10.15.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **174 / 272 (1 not in API Docs)** (64%)
+Progress: **175 / 273 (1 not in API Docs)** (64%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -334,12 +334,13 @@ Progress: **174 / 272 (1 not in API Docs)** (64%)
   - [ ] [GET] List of tags logs to an assignment
 </details>
 <details>
-<summary><strong>callback [4/4] - Done</strong></summary>
+<summary><strong>callback [5/5] - Done</strong></summary>
 
   - [x] [POST] Creates a callback
   - [x] [PUT] Get a list of callbacks
   - [x] [GET] Gets a callback
   - [x] [PUT] Updates a callback
+  - [x] [POST] Change callback state
 </details>
 <details>
 <summary><strong>search [1/1] - Done</strong></summary>

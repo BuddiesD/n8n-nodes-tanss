@@ -37,6 +37,12 @@ export const callbackOperations: INodeProperties[] = [
 				description: 'Updates an existing callback',
 				action: 'Update callback',
 			},
+			{
+				name: 'Change Callback State',
+				value: 'changeCallbackState',
+				description: 'Records a state change for an existing callback and appends a log entry',
+				action: 'Change callback state',
+			},
 		],
 		default: 'createCallback',
 	},
@@ -108,7 +114,7 @@ export const callbackFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['callbacks'],
-				operation: ['getCallbackById', 'updateCallback'],
+				operation: ['getCallbackById', 'updateCallback', 'changeCallbackState'],
 			},
 		},
 	},
@@ -141,6 +147,60 @@ export const callbackFields: INodeProperties[] = [
 		},
 		default: {},
 		options: callbackCreateUpdateFieldOptions,
+	},
+
+	{
+		displayName: 'Change State Fields',
+		name: 'changeStateFields',
+		type: 'collection' as const,
+		placeholder: 'Add Field',
+		displayOptions: {
+			show: {
+				resource: ['callbacks'],
+				operation: ['changeCallbackState'],
+			},
+		},
+		default: {},
+		options: [
+			{
+				displayName: 'State',
+				name: 'state',
+				type: 'options' as const,
+				options: [
+					{ name: 'UNSEEN', value: 'UNSEEN' },
+					{ name: 'NEW', value: 'NEW' },
+					{ name: 'NOBODY_ANSWERED', value: 'NOBODY_ANSWERED' },
+					{ name: 'BUSY', value: 'BUSY' },
+					{ name: 'NOT_PRESENT', value: 'NOT_PRESENT' },
+					{ name: 'NEW_CALLBACK_REENTERED', value: 'NEW_CALLBACK_REENTERED' },
+					{ name: 'COMPLETED', value: 'COMPLETED' },
+					{ name: 'EXPECTED_CALLBACK', value: 'EXPECTED_CALLBACK' },
+					{ name: 'EXPECTED_CALLBACK_COMPLETED', value: 'EXPECTED_CALLBACK_COMPLETED' },
+				],
+				default: 'UNSEEN',
+			},
+			{
+				displayName: 'Info Text',
+				name: 'infoText',
+				type: 'string' as const,
+				default: '',
+				description: 'Free-text note describing the state change',
+			},
+			{
+				displayName: 'Date (Timestamp)',
+				name: 'date',
+				type: 'number' as const,
+				default: 0,
+				description: 'Timestamp when the state change occurred',
+			},
+			{
+				displayName: 'Employee ID',
+				name: 'employeeId',
+				type: 'number' as const,
+				default: 0,
+				description: 'Identifier of the employee who triggered the state change',
+			},
+		],
 	},
 
 	{
@@ -362,6 +422,25 @@ export async function handleCallback(this: IExecuteFunctions, i: number) {
 			url = `${credentials.baseURL}/backend/api/v1/callbacks/${encodeURIComponent(String(callbackId))}`;
 			requestOptions.method = 'PUT';
 			requestOptions.body = updateFields;
+			break;
+		}
+
+		case 'changeCallbackState': {
+			const stateCallbackId = this.getNodeParameter('callbackId', i, 0) as number;
+			if (!stateCallbackId || stateCallbackId <= 0) throw new NodeOperationError(this.getNode(), 'A valid Callback ID is required.');
+
+			const stateFields = this.getNodeParameter('changeStateFields', i, {}) as Record<string, unknown>;
+			if (!stateFields.state) throw new NodeOperationError(this.getNode(), 'State is required for changing callback state.');
+
+			const stateBody: Record<string, unknown> = {};
+			if (stateFields.state) stateBody.state = stateFields.state;
+			if (stateFields.infoText) stateBody.infoText = stateFields.infoText;
+			if (stateFields.date && Number(stateFields.date) > 0) stateBody.date = stateFields.date;
+			if (stateFields.employeeId && Number(stateFields.employeeId) > 0) stateBody.employeeId = stateFields.employeeId;
+
+			url = `${credentials.baseURL}/backend/api/v1/callbacks/${encodeURIComponent(String(stateCallbackId))}/state`;
+			requestOptions.method = 'POST';
+			requestOptions.body = stateBody;
 			break;
 		}
 
