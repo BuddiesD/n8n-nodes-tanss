@@ -22,3 +22,13 @@ Gets the total number of unseen activity feed events.
 **API Endpoint:** POST /api/v1/tanssEvents/mark/all/seen
 
 Marks all unseen activity feed events as seen.
+
+## Get Rule Assignments
+
+**API Endpoint:** GET /api/v1/tanssEvents/rules/{type}/assignments
+
+Gets TANSS event rule assignments by link type.
+
+**Parameters:**
+
+- **Link Type** (required) — The entity type to fetch assignments for (e.g. TICKET, COMPANY, EMPLOYEE, PC, etc.)

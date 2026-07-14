@@ -125,7 +125,7 @@ Use the node parameter `Auth Mode` and select one credential type:
 ## Compatibility
 
 Compatible with n8n@1.60.0 or later<br>
-Tested with TANSS API. Version: 10.12.0
+Tested with TANSS API. Version: 10.15.0
 
 ## Resources
 
@@ -135,7 +135,7 @@ Tested with TANSS API. Version: 10.12.0
 ## To-Do / Progress
 
 **Status / Progress**  
-Progress: **172 / 270 (1 not in API Docs)** (64%)
+Progress: **173 / 271 (1 not in API Docs)** (64%)
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -546,11 +546,12 @@ Progress: **172 / 270 (1 not in API Docs)** (64%)
   - [ ] [POST] sets the available vacation days per year
 </details>
 <details>
-<summary><strong>activityFeed [3/3] - Testing</strong></summary>
+<summary><strong>activityFeed [4/4] - Testing</strong></summary>
 
   - [x] [PUT] List of user items
   - [x] [GET] Number of unseen events
   - [x] [POST] Marks all as seen
+  - [x] [GET] Get TANSS event rule assignments by link type
 </details>
 <details>
 <summary><strong>domains [5/5] - Done</strong></summary>

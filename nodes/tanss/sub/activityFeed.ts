@@ -81,6 +81,12 @@ export const activityFeedOperations: INodeProperties[] = [
 				action: 'Get the number of unseen events',
 			},
 			{
+				name: 'Get Rule Assignments',
+				value: 'getRuleAssignments',
+				description: 'Gets TANSS event rule assignments by link type',
+				action: 'Get rule assignments',
+			},
+			{
 				name: 'List User Items',
 				value: 'listUserItems',
 				description: 'Gets a list of activity feed items for the current user',
@@ -192,6 +198,20 @@ export const activityFeedFields: INodeProperties[] = [
 			},
 		],
 	},
+	{
+		displayName: 'Link Type',
+		name: 'linkType',
+		type: 'options' as const,
+		options: activityFeedLinkTypes,
+		default: '',
+		description: 'Link type to fetch event-rule assignments for',
+		displayOptions: {
+			show: {
+				resource: ['activityFeed'],
+				operation: ['getRuleAssignments'],
+			},
+		},
+	},
 ];
 
 function assignIfPresent(body: IDataObject, key: string, value: unknown) {
@@ -280,6 +300,12 @@ export async function handleActivityFeed(this: IExecuteFunctions, i: number) {
 		case 'markAllAsSeen': {
 			requestOptions.method = 'POST';
 			requestOptions.url = `${baseURL}/backend/api/v1/tanssEvents/mark/all/seen`;
+			break;
+		}
+		case 'getRuleAssignments': {
+			requestOptions.method = 'GET';
+			const linkType = this.getNodeParameter('linkType', i) as string;
+			requestOptions.url = `${baseURL}/backend/api/v1/tanssEvents/rules/${linkType}/assignments`;
 			break;
 		}
 		default:
