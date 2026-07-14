@@ -127,7 +127,16 @@ export const checklistsFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['checklists'],
-				operation: ['assignChecklist', 'removeChecklist', 'getChecklistProcess', 'copyChecklist', 'createNewVersion', 'deleteChecklist', 'getChecklist', 'updateChecklist'],
+				operation: [
+					'assignChecklist',
+					'removeChecklist',
+					'getChecklistProcess',
+					'copyChecklist',
+					'createNewVersion',
+					'deleteChecklist',
+					'getChecklist',
+					'updateChecklist',
+				],
 			},
 		},
 		default: 0,
@@ -146,8 +155,20 @@ export const checklistsFields: INodeProperties[] = [
 		},
 		default: {},
 		options: [
-			{ displayName: 'Company ID', name: 'companyId', type: 'number' as const, default: 0, description: 'Optional company ID to filter the checklists' },
-			{ displayName: 'Department ID', name: 'departmentId', type: 'number' as const, default: 0, description: 'Optional department ID to filter the checklists' },
+			{
+				displayName: 'Company ID',
+				name: 'companyId',
+				type: 'number' as const,
+				default: 0,
+				description: 'Optional company ID to filter the checklists',
+			},
+			{
+				displayName: 'Department ID',
+				name: 'departmentId',
+				type: 'number' as const,
+				default: 0,
+				description: 'Optional department ID to filter the checklists',
+			},
 		],
 	},
 	{
@@ -197,12 +218,42 @@ export const checklistsFields: INodeProperties[] = [
 		},
 		default: {},
 		options: [
-			{ displayName: 'Checklist ID', name: 'checklistId', type: 'number' as const, default: 0, description: 'Identifier of the checklist the action belongs to' },
-			{ displayName: 'Checklist Main ID', name: 'checklistMainId', type: 'number' as const, default: 0, description: 'Identifier of the top-level checklist' },
-			{ displayName: 'Checklist Item ID', name: 'checklistItemId', type: 'number' as const, default: 0, description: 'Identifier of the checklist item the action refers to' },
-			{ displayName: 'Value', name: 'value', type: 'number' as const, default: 0, description: 'Recorded value for the action; a positive value marks the item as checked' },
+			{
+				displayName: 'Checklist ID',
+				name: 'checklistId',
+				type: 'number' as const,
+				default: 0,
+				description: 'Identifier of the checklist the action belongs to',
+			},
+			{
+				displayName: 'Checklist Main ID',
+				name: 'checklistMainId',
+				type: 'number' as const,
+				default: 0,
+				description: 'Identifier of the top-level checklist',
+			},
+			{
+				displayName: 'Checklist Item ID',
+				name: 'checklistItemId',
+				type: 'number' as const,
+				default: 0,
+				description: 'Identifier of the checklist item the action refers to',
+			},
+			{
+				displayName: 'Value',
+				name: 'value',
+				type: 'number' as const,
+				default: 0,
+				description: 'Recorded value for the action; a positive value marks the item as checked',
+			},
 			{ displayName: 'Date', name: 'date', type: 'number' as const, default: 0, description: 'Timestamp when the action was performed' },
-			{ displayName: 'User ID', name: 'userId', type: 'number' as const, default: 0, description: 'Identifier of the employee who performed the action' },
+			{
+				displayName: 'User ID',
+				name: 'userId',
+				type: 'number' as const,
+				default: 0,
+				description: 'Identifier of the employee who performed the action',
+			},
 			{ displayName: 'Support ID', name: 'supportId', type: 'number' as const, default: 0, description: 'Identifier of the related support ticket' },
 			{ displayName: 'Hidden', name: 'hidden', type: 'boolean' as const, default: false, description: 'Whether the action is hidden' },
 		],
@@ -235,7 +286,13 @@ export const checklistsFields: INodeProperties[] = [
 					{ name: 'Adhoc', value: 'ADHOC' },
 				],
 			},
-			{ displayName: 'Creator ID', name: 'creatorId', type: 'number' as const, default: 0, description: 'Identifier of the employee who created the checklist' },
+			{
+				displayName: 'Creator ID',
+				name: 'creatorId',
+				type: 'number' as const,
+				default: 0,
+				description: 'Identifier of the employee who created the checklist',
+			},
 			{ displayName: 'Active', name: 'active', type: 'boolean' as const, default: true, description: 'Whether the checklist is currently active' },
 			{
 				displayName: 'Position',
@@ -248,7 +305,13 @@ export const checklistsFields: INodeProperties[] = [
 					{ name: 'Top', value: 'TOP' },
 				],
 			},
-			{ displayName: 'Completed', name: 'completed', type: 'boolean' as const, default: false, description: 'Whether the checklist has been completed' },
+			{
+				displayName: 'Completed',
+				name: 'completed',
+				type: 'boolean' as const,
+				default: false,
+				description: 'Whether the checklist has been completed',
+			},
 		],
 	},
 ];
@@ -327,7 +390,8 @@ export async function handleChecklists(this: IExecuteFunctions, i: number) {
 		}
 		case 'updateChecklistAction': {
 			const updateChecklistActionFields = this.getNodeParameter('updateChecklistActionFields', i, {}) as Record<string, unknown>;
-			if (Object.keys(updateChecklistActionFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for updating the checklist action.');
+			if (Object.keys(updateChecklistActionFields).length === 0)
+				throw new NodeOperationError(this.getNode(), 'No fields provided for updating the checklist action.');
 			url = `${credentials.baseURL}/backend/api/v1/checklists/action`;
 			requestOptions.method = 'PUT';
 			requestOptions.body = updateChecklistActionFields;
@@ -361,7 +425,8 @@ export async function handleChecklists(this: IExecuteFunctions, i: number) {
 		case 'updateChecklist': {
 			const checklistId = this.getNodeParameter('checklistId', i, 0) as number;
 			const updateChecklistFields = this.getNodeParameter('updateChecklistFields', i, {}) as Record<string, unknown>;
-			if (Object.keys(updateChecklistFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for updating the checklist.');
+			if (Object.keys(updateChecklistFields).length === 0)
+				throw new NodeOperationError(this.getNode(), 'No fields provided for updating the checklist.');
 			url = `${credentials.baseURL}/backend/api/v1/checklists/${checklistId}`;
 			requestOptions.method = 'PUT';
 			requestOptions.body = updateChecklistFields;
