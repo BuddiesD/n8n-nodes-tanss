@@ -75,5 +75,3 @@ export async function handleAvailability(this: IExecuteFunctions, i: number) {
 		throw new NodeApiError(this.getNode(), err as JsonObject);
 	}
 }
-
-
