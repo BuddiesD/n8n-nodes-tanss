@@ -134,8 +134,16 @@ Tested with TANSS API. Version: 10.15.0
 
 ## To-Do / Progress
 
-**Status / Progress**  
-Progress: **175 / 273 (1 not in API Docs)** (64%)
+**Status / Progress**
+
+| Metric | Value |
+| :--- | :--- |
+| **Implemented** | **175** |
+| **Total API Endpoints** | **276** |
+| Not in API Docs | 1 |
+| Ignored `[Not gonna happen]` | 10 |
+| **Completion** | **64%** |
+
 
 <details>
 <summary><strong>Complete overview</strong></summary>
@@ -216,11 +224,30 @@ Progress: **175 / 273 (1 not in API Docs)** (64%)
   - [x] [POST] Creates a call notification
 </details>
 <details>
-<summary><strong>calls (user context) [3/3] - Done</strong></summary>
+<summary><strong>calls (user context) [3/23] - ToDo</strong></summary>
 
   - [x] [PUT] Get a list of phone calls
   - [x] [GET] Get phone call by id
   - [x] [POST] identifies a phone call
+  - [x] [GET] Get starface config - [Not gonna happen]
+  - [x] [POST] Update starface config - [Not gonna happen]
+  - [x] [DEL] Delete starface config - [Not gonna happen]
+  - [x] [GET] Subscribe to starface call events - [Not gonna happen]
+  - [x] [DEL] Unsubscribe from starface call events - [Not gonna happen]
+  - [x] [GET] Resubscribe all employees to starface events - [Not gonna happen]
+  - [x] [POST] Incoming call webhook (starface) - [Not gonna happen]
+  - [x] [POST] Create call notification - [Not gonna happen]
+  - [x] [POST] Close call notification - [Not gonna happen]
+  - [x] [POST] Pop up action - [Not gonna happen]
+  - [ ] [GET] Get all telephone systems
+  - [ ] [POST] Create telephone system
+  - [ ] [GET] Get telephone system by id
+  - [ ] [PUT] Update telephone system
+  - [ ] [DEL] Delete telephone system
+  - [ ] [POST] Check telephone system connection
+  - [ ] [GET] Get call-import polling intervals
+  - [ ] [PUT] Update call-import polling intervals
+  - [ ] [GET] Restart call-import thread
 </details>
 <details>
 <summary><strong>remote supports [11/11] - Done</strong></summary>
