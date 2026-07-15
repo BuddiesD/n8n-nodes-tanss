@@ -138,10 +138,10 @@ Tested with TANSS API. Version: 10.15.0
 
 | Metric | Value |
 | :--- | :--- |
-| **Implemented** | **185** |
-| **Total API Endpoints** | **286** |
+| **Implemented** | **191** |
+| **Total API Endpoints** | **292** |
 | Not in API Docs | 1 |
-| Ignored `[Not gonna happen]` | 20 |
+| Ignored `[Not gonna happen]` | 25 |
 | **Completion** | **64%** |
 
 
@@ -342,9 +342,20 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [POST] creates an employee
 </details>
 <details>
-<summary><strong>mails [1/1] - Done</strong></summary>
+<summary><strong>mails [7/7] - Done</strong></summary>
 
   - [x] [POST] Test email smtp settings
+  - [x] [PUT] Get mail list
+  - [x] [GET] Get pending retries
+  - [x] [GET] Retry sending mail
+  - [x] [DEL] Delete retry mail
+  - [x] [GET] Get mail
+  - [x] [DEL] Delete mail
+  - [ ] [GET] Identify mail `[Not gonna happen]`
+  - [ ] [POST] Send mail `[Not gonna happen]`
+  - [ ] [POST] Upload attachments `[Not gonna happen]`
+  - [ ] [PUT] Assign to ticket `[Not gonna happen]`
+  - [ ] [GET] Mail reply `[Not gonna happen]`
 </details>
 <details>
 <summary><strong>tags [0/10] - ToDo</strong></summary>
