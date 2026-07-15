@@ -16,10 +16,22 @@ export const companyOperations: INodeProperties[] = [
 				action: 'Create a company',
 			},
 			{
+				name: 'Get Company',
+				value: 'getCompany',
+				description: 'Gets a company by ID',
+				action: 'Get a company',
+			},
+			{
 				name: 'Get Company Employees',
 				value: 'getCompanyEmployees',
 				description: 'Gets all employees of a company',
 				action: 'Get all employees of a company',
+			},
+			{
+				name: 'Update Company',
+				value: 'updateCompany',
+				description: 'Updates an existing company',
+				action: 'Update a company',
 			},
 		],
 		default: 'createCompany',
@@ -62,7 +74,7 @@ export const companyFields: INodeProperties[] = [
 		required: true,
 		default: 0,
 		description: 'ID of the company',
-		displayOptions: { show: { resource: ['company'], operation: ['getCompanyEmployees'] } },
+		displayOptions: { show: { resource: ['company'], operation: ['getCompanyEmployees', 'getCompany', 'updateCompany'] } },
 	},
 	{
 		displayName: 'Company Fields',
@@ -71,6 +83,65 @@ export const companyFields: INodeProperties[] = [
 		placeholder: 'Add Field',
 		default: {},
 		displayOptions: { show: { resource: ['company'], operation: ['createCompany'] } },
+		options: [
+			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
+			{ displayName: 'Display ID', name: 'displayId', type: 'number' as const, default: 0 },
+			{ displayName: 'Name', name: 'name', type: 'string' as const, default: '' },
+			{ displayName: 'Matchcode', name: 'matchcode', type: 'string' as const, default: '' },
+			{ displayName: 'Street', name: 'street', type: 'string' as const, default: '' },
+			{ displayName: 'Postcode', name: 'postcode', type: 'string' as const, default: '' },
+			{ displayName: 'City', name: 'city', type: 'string' as const, default: '' },
+			{ displayName: 'Country', name: 'country', type: 'string' as const, default: '' },
+			{ displayName: 'Note', name: 'note', type: 'string' as const, default: '' },
+			{ displayName: 'Headquarter ID', name: 'headquarterId', type: 'number' as const, default: 0 },
+			{ displayName: 'Email', name: 'email', type: 'string' as const, default: '' },
+			{ displayName: 'Website', name: 'website', type: 'string' as const, default: '' },
+			{ displayName: 'Support Info', name: 'supportInfo', type: 'string' as const, default: '' },
+			{ displayName: 'Lockout', name: 'lockout', type: 'boolean' as const, default: false },
+			{ displayName: 'Lockout Reason', name: 'lockoutReason', type: 'string' as const, default: '' },
+			{ displayName: 'Inactive', name: 'inactive', type: 'boolean' as const, default: false },
+			{ displayName: 'Telephone', name: 'telephone', type: 'string' as const, default: '' },
+			{ displayName: 'Telefax', name: 'telefax', type: 'string' as const, default: '' },
+			{ displayName: 'Personal Customer', name: 'personalCustomer', type: 'boolean' as const, default: false },
+			{
+				displayName: 'Types',
+				name: 'types',
+				type: 'fixedCollection' as const,
+				typeOptions: { multipleValues: true },
+				placeholder: 'Add Type',
+				default: {},
+				options: [
+					{
+						displayName: 'Type',
+						name: 'type',
+						values: [
+							{ displayName: 'Category ID', name: 'categoryId', type: 'number' as const, default: 0 },
+							{ displayName: 'Category Name', name: 'categoryName', type: 'string' as const, default: '' },
+							{ displayName: 'Hidden', name: 'hidden', type: 'boolean' as const, default: false },
+							{ displayName: 'Icon', name: 'icon', type: 'string' as const, default: '' },
+							{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
+							{ displayName: 'Name', name: 'name', type: 'string' as const, default: '' },
+						],
+					},
+				],
+			},
+			{
+				displayName: 'Personal Customer Employee',
+				name: 'personalCustomerEmployee',
+				type: 'collection' as const,
+				placeholder: 'Add Field',
+				default: {},
+				options: personalCustomerEmployeeFields,
+			},
+		],
+	},
+	{
+		displayName: 'Update Company Fields',
+		name: 'updateCompanyFields',
+		type: 'collection' as const,
+		placeholder: 'Add Field',
+		default: {},
+		displayOptions: { show: { resource: ['company'], operation: ['updateCompany'] } },
 		options: [
 			{ displayName: 'ID', name: 'id', type: 'number' as const, default: 0 },
 			{ displayName: 'Display ID', name: 'displayId', type: 'number' as const, default: 0 },
@@ -143,6 +214,86 @@ function assignBoolean(body: IDataObject, key: string, value: unknown) {
 	}
 }
 
+function buildCompanyBody(fields: IDataObject): IDataObject {
+	const body: IDataObject = {};
+
+	assignNumber(body, 'id', fields.id);
+	assignNumber(body, 'displayId', fields.displayId);
+	assignString(body, 'name', fields.name);
+	assignString(body, 'matchcode', fields.matchcode);
+	assignString(body, 'street', fields.street);
+	assignString(body, 'postcode', fields.postcode);
+	assignString(body, 'city', fields.city);
+	assignString(body, 'country', fields.country);
+	assignString(body, 'note', fields.note);
+	assignNumber(body, 'headquarterId', fields.headquarterId);
+	assignString(body, 'email', fields.email);
+	assignString(body, 'website', fields.website);
+	assignString(body, 'supportInfo', fields.supportInfo);
+	assignBoolean(body, 'lockout', fields.lockout);
+	assignString(body, 'lockoutReason', fields.lockoutReason);
+	assignBoolean(body, 'inactive', fields.inactive);
+	assignString(body, 'telephone', fields.telephone);
+	assignString(body, 'telefax', fields.telefax);
+	assignBoolean(body, 'personalCustomer', fields.personalCustomer);
+
+	if (fields.types) {
+		const typesRaw = fields.types as IDataObject;
+		const typeItems = (typesRaw.type as IDataObject[]) || [];
+		const types = typeItems.map((entry) => {
+			const typePayload: IDataObject = {};
+			assignNumber(typePayload, 'id', entry.id);
+			assignString(typePayload, 'name', entry.name);
+			assignNumber(typePayload, 'categoryId', entry.categoryId);
+			assignString(typePayload, 'categoryName', entry.categoryName);
+			assignString(typePayload, 'icon', entry.icon);
+			assignBoolean(typePayload, 'hidden', entry.hidden);
+			return typePayload;
+		});
+
+		if (types.length > 0) {
+			body.types = types;
+		}
+	}
+
+	if (fields.personalCustomerEmployee && typeof fields.personalCustomerEmployee === 'object') {
+		const employeeRaw = fields.personalCustomerEmployee as IDataObject;
+		const employee: IDataObject = {};
+
+		assignNumber(employee, 'id', employeeRaw.id);
+		assignString(employee, 'name', employeeRaw.name);
+		assignString(employee, 'firstName', employeeRaw.firstName);
+		assignString(employee, 'lastName', employeeRaw.lastName);
+		assignNumber(employee, 'salutationId', employeeRaw.salutationId);
+		assignNumber(employee, 'departmentId', employeeRaw.departmentId);
+		assignString(employee, 'room', employeeRaw.room);
+		assignString(employee, 'telephoneNumber', employeeRaw.telephoneNumber);
+		assignString(employee, 'emailAddress', employeeRaw.emailAddress);
+		assignNumber(employee, 'carId', employeeRaw.carId);
+		assignString(employee, 'mobilePhone', employeeRaw.mobilePhone);
+		assignString(employee, 'initials', employeeRaw.initials);
+		assignNumber(employee, 'workingHourModelId', employeeRaw.workingHourModelId);
+		assignNumber(employee, 'accountingTypeId', employeeRaw.accountingTypeId);
+		assignString(employee, 'privatePhoneNumber', employeeRaw.privatePhoneNumber);
+		assignBoolean(employee, 'active', employeeRaw.active);
+		assignString(employee, 'erpNumber', employeeRaw.erpNumber);
+		assignString(employee, 'personalFaxNumber', employeeRaw.personalFaxNumber);
+		assignString(employee, 'role', employeeRaw.role);
+		assignNumber(employee, 'titleId', employeeRaw.titleId);
+		assignString(employee, 'language', employeeRaw.language);
+		assignString(employee, 'telephoneNumberTwo', employeeRaw.telephoneNumberTwo);
+		assignString(employee, 'mobileNumberTwo', employeeRaw.mobileNumberTwo);
+		assignBoolean(employee, 'restrictedUserLicense', employeeRaw.restrictedUserLicense);
+		assignString(employee, 'birthday', employeeRaw.birthday);
+
+		if (Object.keys(employee).length > 0) {
+			body.personalCustomerEmployee = employee;
+		}
+	}
+
+	return body;
+}
+
 export async function handleCompany(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const baseURL = await getTanssBaseUrl.call(this, i);
@@ -163,81 +314,7 @@ export async function handleCompany(this: IExecuteFunctions, i: number) {
 	switch (operation) {
 		case 'createCompany': {
 			const fields = this.getNodeParameter('companyFields', i, {}) as IDataObject;
-			const body: IDataObject = {};
-
-			assignNumber(body, 'id', fields.id);
-			assignNumber(body, 'displayId', fields.displayId);
-			assignString(body, 'name', fields.name);
-			assignString(body, 'matchcode', fields.matchcode);
-			assignString(body, 'street', fields.street);
-			assignString(body, 'postcode', fields.postcode);
-			assignString(body, 'city', fields.city);
-			assignString(body, 'country', fields.country);
-			assignString(body, 'note', fields.note);
-			assignNumber(body, 'headquarterId', fields.headquarterId);
-			assignString(body, 'email', fields.email);
-			assignString(body, 'website', fields.website);
-			assignString(body, 'supportInfo', fields.supportInfo);
-			assignBoolean(body, 'lockout', fields.lockout);
-			assignString(body, 'lockoutReason', fields.lockoutReason);
-			assignBoolean(body, 'inactive', fields.inactive);
-			assignString(body, 'telephone', fields.telephone);
-			assignString(body, 'telefax', fields.telefax);
-			assignBoolean(body, 'personalCustomer', fields.personalCustomer);
-
-			if (fields.types) {
-				const typesRaw = fields.types as IDataObject;
-				const typeItems = (typesRaw.type as IDataObject[]) || [];
-				const types = typeItems.map((entry) => {
-					const typePayload: IDataObject = {};
-					assignNumber(typePayload, 'id', entry.id);
-					assignString(typePayload, 'name', entry.name);
-					assignNumber(typePayload, 'categoryId', entry.categoryId);
-					assignString(typePayload, 'categoryName', entry.categoryName);
-					assignString(typePayload, 'icon', entry.icon);
-					assignBoolean(typePayload, 'hidden', entry.hidden);
-					return typePayload;
-				});
-
-				if (types.length > 0) {
-					body.types = types;
-				}
-			}
-
-			if (fields.personalCustomerEmployee && typeof fields.personalCustomerEmployee === 'object') {
-				const employeeRaw = fields.personalCustomerEmployee as IDataObject;
-				const employee: IDataObject = {};
-
-				assignNumber(employee, 'id', employeeRaw.id);
-				assignString(employee, 'name', employeeRaw.name);
-				assignString(employee, 'firstName', employeeRaw.firstName);
-				assignString(employee, 'lastName', employeeRaw.lastName);
-				assignNumber(employee, 'salutationId', employeeRaw.salutationId);
-				assignNumber(employee, 'departmentId', employeeRaw.departmentId);
-				assignString(employee, 'room', employeeRaw.room);
-				assignString(employee, 'telephoneNumber', employeeRaw.telephoneNumber);
-				assignString(employee, 'emailAddress', employeeRaw.emailAddress);
-				assignNumber(employee, 'carId', employeeRaw.carId);
-				assignString(employee, 'mobilePhone', employeeRaw.mobilePhone);
-				assignString(employee, 'initials', employeeRaw.initials);
-				assignNumber(employee, 'workingHourModelId', employeeRaw.workingHourModelId);
-				assignNumber(employee, 'accountingTypeId', employeeRaw.accountingTypeId);
-				assignString(employee, 'privatePhoneNumber', employeeRaw.privatePhoneNumber);
-				assignBoolean(employee, 'active', employeeRaw.active);
-				assignString(employee, 'erpNumber', employeeRaw.erpNumber);
-				assignString(employee, 'personalFaxNumber', employeeRaw.personalFaxNumber);
-				assignString(employee, 'role', employeeRaw.role);
-				assignNumber(employee, 'titleId', employeeRaw.titleId);
-				assignString(employee, 'language', employeeRaw.language);
-				assignString(employee, 'telephoneNumberTwo', employeeRaw.telephoneNumberTwo);
-				assignString(employee, 'mobileNumberTwo', employeeRaw.mobileNumberTwo);
-				assignBoolean(employee, 'restrictedUserLicense', employeeRaw.restrictedUserLicense);
-				assignString(employee, 'birthday', employeeRaw.birthday);
-
-				if (Object.keys(employee).length > 0) {
-					body.personalCustomerEmployee = employee;
-				}
-			}
+			const body = buildCompanyBody(fields);
 
 			if (Object.keys(body).length === 0) {
 				throw new NodeOperationError(this.getNode(), 'No fields provided for company creation.');
@@ -250,6 +327,18 @@ export async function handleCompany(this: IExecuteFunctions, i: number) {
 			break;
 		}
 
+		case 'getCompany': {
+			const companyId = Number(this.getNodeParameter('companyId', i, 0)) || 0;
+			if (companyId <= 0) {
+				throw new NodeOperationError(this.getNode(), 'A valid company ID must be provided.');
+			}
+
+			requestOptions.method = 'GET';
+			requestOptions.url = `${baseURL}/backend/api/v1/companies/${companyId}`;
+			delete requestOptions.headers['Content-Type'];
+			break;
+		}
+
 		case 'getCompanyEmployees': {
 			const companyId = Number(this.getNodeParameter('companyId', i, 0)) || 0;
 			if (companyId <= 0) {
@@ -259,6 +348,26 @@ export async function handleCompany(this: IExecuteFunctions, i: number) {
 			requestOptions.method = 'GET';
 			requestOptions.url = `${baseURL}/backend/api/v1/companies/${companyId}/employees`;
 			delete requestOptions.headers['Content-Type'];
+			break;
+		}
+
+		case 'updateCompany': {
+			const companyId = Number(this.getNodeParameter('companyId', i, 0)) || 0;
+			if (companyId <= 0) {
+				throw new NodeOperationError(this.getNode(), 'A valid company ID must be provided.');
+			}
+
+			const fields = this.getNodeParameter('updateCompanyFields', i, {}) as IDataObject;
+			const body = buildCompanyBody(fields);
+
+			if (Object.keys(body).length === 0) {
+				throw new NodeOperationError(this.getNode(), 'No fields provided for company update.');
+			}
+
+			requestOptions.method = 'PUT';
+			requestOptions.url = `${baseURL}/backend/api/v1/companies/${companyId}`;
+			requestOptions.headers['Content-Type'] = 'application/json';
+			requestOptions.body = body;
 			break;
 		}
 

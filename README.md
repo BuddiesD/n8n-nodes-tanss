@@ -138,10 +138,10 @@ Tested with TANSS API. Version: 10.15.0
 
 | Metric | Value |
 | :--- | :--- |
-| **Implemented** | **182** |
-| **Total API Endpoints** | **283** |
+| **Implemented** | **184** |
+| **Total API Endpoints** | **285** |
 | Not in API Docs | 1 |
-| Ignored `[Not gonna happen]` | 11 |
+| Ignored `[Not gonna happen]` | 20 |
 | **Completion** | **64%** |
 
 
@@ -229,16 +229,16 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [PUT] Get a list of phone calls
   - [x] [GET] Get phone call by id
   - [x] [POST] identifies a phone call
-  - [x] [GET] Get starface config - [Not gonna happen]
-  - [x] [POST] Update starface config - [Not gonna happen]
-  - [x] [DEL] Delete starface config - [Not gonna happen]
-  - [x] [GET] Subscribe to starface call events - [Not gonna happen]
-  - [x] [DEL] Unsubscribe from starface call events - [Not gonna happen]
-  - [x] [GET] Resubscribe all employees to starface events - [Not gonna happen]
-  - [x] [POST] Incoming call webhook (starface) - [Not gonna happen]
-  - [x] [POST] Create call notification - [Not gonna happen]
-  - [x] [POST] Close call notification - [Not gonna happen]
-  - [x] [POST] Pop up action - [Not gonna happen]
+  - [x] [GET] Get starface config - `[Not gonna happen]`
+  - [x] [POST] Update starface config - `[Not gonna happen]`
+  - [x] [DEL] Delete starface config - `[Not gonna happen]`
+  - [x] [GET] Subscribe to starface call events - `[Not gonna happen]`
+  - [x] [DEL] Unsubscribe from starface call events - `[Not gonna happen]`
+  - [x] [GET] Resubscribe all employees to starface events - `[Not gonna happen]`
+  - [x] [POST] Incoming call webhook (starface) - `[Not gonna happen]`
+  - [x] [POST] Create call notification - `[Not gonna happen]`
+  - [x] [POST] Close call notification - `[Not gonna happen]`
+  - [x] [POST] Pop up action - `[Not gonna happen]`
   - [ ] [GET] Get all telephone systems
   - [ ] [POST] Create telephone system
   - [ ] [GET] Get telephone system by id
@@ -389,7 +389,7 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [DEL] Delete checklist
   - [x] [GET] Get checklist
   - [x] [PUT] Update checklist
-  - [x] [POST] Convert to adhoc - [Not gonna happen]
+  - [x] [POST] Convert to adhoc - `[Not gonna happen]`
 </details>
 <details>
 <summary><strong>supports [0/5] - ToDo</strong></summary>
@@ -467,10 +467,21 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [DEL] Deletes an ip address
 </details>
 <details>
-<summary><strong>company [2/2] - Done</strong></summary>
+<summary><strong>company [4/13] - Done</strong></summary>
 
   - [x] [POST] Creates a new company
+  - [x] [GET] Gets a company by ID
   - [x] [GET] Gets all employees of a company
+  - [x] [PUT] Updates an existing company
+  - [ ] [GET] Gets company departments `[Not gonna happen]`
+  - [ ] [GET] Gets company flag icons `[Not gonna happen]`
+  - [ ] [GET] Gets company meta properties `[Not gonna happen]`
+  - [ ] [GET] Gets bookable support overview for company `[Not gonna happen]`
+  - [ ] [GET] Gets important company infos `[Not gonna happen]`
+  - [ ] [PUT] Updates important company infos `[Not gonna happen]`
+  - [ ] [DEL] Deletes important company info `[Not gonna happen]`
+  - [ ] [GET] Gets voucher `[Not gonna happen]`
+  - [ ] [PUT] Resets voucher export state `[Not gonna happen]`
 </details>
 <details>
 <summary><strong>company category [10/10] - Done</strong></summary>
