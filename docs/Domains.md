@@ -104,3 +104,13 @@ Retrieve all domains associated with a specific company.
 **Parameters:**
 
 - **Company ID** (required)
+
+## DNS Lookup
+
+**API Endpoint:** PUT /api/v1/domains/nslookup
+
+Performs a DNS lookup for a hostname or IP address and returns the resource records (A, AAAA, MX, NS, TXT) as a formatted text block.
+
+**Parameters:**
+
+- **Host** (required) — Hostname or IP address to resolve

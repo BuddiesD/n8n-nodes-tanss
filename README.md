@@ -138,8 +138,8 @@ Tested with TANSS API. Version: 10.15.0
 
 | Metric | Value |
 | :--- | :--- |
-| **Implemented** | **184** |
-| **Total API Endpoints** | **285** |
+| **Implemented** | **185** |
+| **Total API Endpoints** | **286** |
 | Not in API Docs | 1 |
 | Ignored `[Not gonna happen]` | 20 |
 | **Completion** | **64%** |
@@ -602,13 +602,14 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [GET] Get TANSS event rule assignments by link type
 </details>
 <details>
-<summary><strong>domains [5/5] - Done</strong></summary>
+<summary><strong>domains [6/6] - Done</strong></summary>
 
   - [x] [POST] Creates a domain -- This option is experiencing a error right now, Waiting for Support
   - [x] [GET] Gets a single domain
   - [x] [PUT] Updates a domain
   - [x] [DEL] Deletes a domain
   - [x] [GET] List of domains of a company
+  - [x] [PUT] DNS lookup for a hostname or IP
 </details>
 <details>
 <summary><strong>software licenses [10/10] - Done</strong></summary>

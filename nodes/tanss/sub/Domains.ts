@@ -43,6 +43,12 @@ export const domainOperations: INodeProperties[] = [
 				description: 'Lists domains for a company',
 				action: 'Lists domains of a company',
 			},
+			{
+				name: 'DNS Lookup',
+				value: 'dnsLookup',
+				description: 'Performs a DNS lookup for a hostname or IP',
+				action: 'Performs a DNS lookup',
+			},
 		],
 		default: 'createDomain',
 	},
@@ -139,6 +145,20 @@ export const domainFields: INodeProperties[] = [
 		default: '',
 		description: 'ID of the company',
 	},
+	{
+		displayName: 'Host',
+		name: 'host',
+		type: 'string' as const,
+		displayOptions: {
+			show: {
+				resource: ['domain'],
+				operation: ['dnsLookup'],
+			},
+		},
+		required: true,
+		default: '',
+		description: 'Hostname or IP address to resolve',
+	},
 ];
 
 export async function handleDomains(this: IExecuteFunctions, i: number) {
@@ -204,6 +224,14 @@ export async function handleDomains(this: IExecuteFunctions, i: number) {
 			if (Number.isNaN(companyId) || companyId <= 0) throw new NodeOperationError(this.getNode(), 'A valid companyId must be provided.');
 			url = `${baseURL}/backend/api/v1/domains/company/${companyId}`;
 			requestOptions.method = 'GET';
+			break;
+		}
+		case 'dnsLookup': {
+			const host = this.getNodeParameter('host', i, '') as string;
+			if (!host || host.trim() === '') throw new NodeOperationError(this.getNode(), 'A valid host must be provided.');
+			url = `${baseURL}/backend/api/v1/domains/nslookup`;
+			requestOptions.method = 'PUT';
+			requestOptions.body = { host: host.trim() };
 			break;
 		}
 		default:
