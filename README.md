@@ -492,7 +492,7 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [PUT] updates a category
   - [x] [DEL] Deletes a company category
   - [x] [GET] list of company types
-  - [x] [POST] Creates a new company type -- This option is experiencing a error right now. A fix will be included in the next Tanss update.
+  - [x] [POST] Creates a new company type
   - [x] [GET] gets a company type
   - [x] [PUT] updates a company type
   - [x] [DEL] Deletes a company type
