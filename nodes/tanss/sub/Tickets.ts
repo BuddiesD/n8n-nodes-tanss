@@ -26,10 +26,22 @@ export const ticketOperations: INodeProperties[] = [
 				action: 'Creates a new ticket',
 			},
 			{
+				name: 'Delete Comment',
+				value: 'deleteComment',
+				description: 'Deletes a comment from a ticket',
+				action: 'Deletes a comment from a ticket',
+			},
+			{
 				name: 'Delete Ticket',
 				value: 'deleteTicket',
 				description: 'Deletes a ticket',
 				action: 'Deletes a ticket',
+			},
+			{
+				name: 'Get Absent Technician Tickets',
+				value: 'getAbsentTechnicianTickets',
+				description: 'Get tickets assigned to absent technicians',
+				action: 'Get absent technician tickets',
 			},
 			{
 				name: 'Get Ticket by ID',
@@ -55,6 +67,12 @@ export const ticketOperations: INodeProperties[] = [
 				description: 'Updates a ticket with the provided details',
 				action: 'Updates a ticket with the provided details',
 			},
+			{
+				name: 'Update Comment',
+				value: 'updateComment',
+				description: 'Updates a comment on a ticket',
+				action: 'Updates a comment on a ticket',
+			},
 		],
 		default: 'getTicketById',
 	},
@@ -69,7 +87,7 @@ export const ticketFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['ticket'],
-				operation: ['getTicketById', 'createComment', 'getTicketHistory', 'updateTicket', 'deleteTicket', 'mergeTickets'],
+				operation: ['getTicketById', 'createComment', 'getTicketHistory', 'updateTicket', 'deleteTicket', 'mergeTickets', 'deleteComment', 'updateComment'],
 			},
 		},
 		default: 0,
@@ -126,6 +144,62 @@ export const ticketFields: INodeProperties[] = [
 		},
 		default: false,
 		description: 'Whether the comment is internal or public',
+	},
+	{
+		displayName: 'Comment ID',
+		name: 'commentId',
+		type: 'number' as const,
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['ticket'],
+				operation: ['deleteComment', 'updateComment'],
+			},
+		},
+		default: 0,
+		description: 'ID of the comment',
+	},
+	{
+		displayName: 'Update Comment Fields',
+		name: 'updateCommentFields',
+		type: 'collection' as const,
+		placeholder: 'Add Field',
+		displayOptions: {
+			show: {
+				resource: ['ticket'],
+				operation: ['updateComment'],
+			},
+		},
+		default: {},
+		options: [
+			{
+				displayName: 'Content',
+				name: 'content',
+				type: 'string' as const,
+				default: '',
+				description: 'Updated content of the comment',
+			},
+			{
+				displayName: 'Internal',
+				name: 'internal',
+				type: 'boolean' as const,
+				default: false,
+				description: 'Whether the comment is internal or public',
+			},
+		],
+	},
+	{
+		displayName: 'Pinned',
+		name: 'pinned',
+		type: 'boolean' as const,
+		displayOptions: {
+			show: {
+				resource: ['ticket'],
+				operation: ['updateComment'],
+			},
+		},
+		default: false,
+		description: 'When true, pin the comment to the ticket; when false, unpin it',
 	},
 	{
 		displayName: 'Update Fields',
@@ -489,10 +563,11 @@ export async function handleTicket(this: IExecuteFunctions, i: number) {
 	let url = '';
 	const requestOptions: {
 		method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-		headers: { 'Content-Type': string };
+		headers: Record<string, string>;
 		json: boolean;
-		body?: Record<string, unknown>;
 		url: string;
+		body?: Record<string, unknown>;
+		returnFullResponse?: boolean;
 	} = {
 		method: 'GET',
 		headers: { 'Content-Type': 'application/json' },
@@ -547,18 +622,44 @@ export async function handleTicket(this: IExecuteFunctions, i: number) {
 			requestOptions.method = 'PUT';
 			break;
 		}
+		case 'getAbsentTechnicianTickets': {
+			url = `${credentials.baseURL}/backend/api/v1/tickets/absentTechnicians`;
+			break;
+		}
+		case 'deleteComment': {
+			if (!ticketId) throw new NodeOperationError(this.getNode(), 'Ticket ID is required.');
+			const commentId = this.getNodeParameter('commentId', i, 0) as number;
+			if (!commentId) throw new NodeOperationError(this.getNode(), 'Comment ID is required.');
+			url = `${credentials.baseURL}/backend/api/v1/tickets/${ticketId}/comments/${commentId}`;
+			requestOptions.method = 'DELETE';
+			break;
+		}
+		case 'updateComment': {
+			if (!ticketId) throw new NodeOperationError(this.getNode(), 'Ticket ID is required.');
+			const commentId = this.getNodeParameter('commentId', i, 0) as number;
+			if (!commentId) throw new NodeOperationError(this.getNode(), 'Comment ID is required.');
+			const updateCommentFields = this.getNodeParameter('updateCommentFields', i, {}) as Record<string, unknown>;
+			const pinned = this.getNodeParameter('pinned', i, false) as boolean;
+			url = `${credentials.baseURL}/backend/api/v1/tickets/${ticketId}/comments/${commentId}`;
+			requestOptions.method = 'PUT';
+			url += `?pinned=${pinned}`;
+			requestOptions.body = updateCommentFields;
+			break;
+		}
 		default:
 			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized.`);
 	}
 
 	requestOptions.url = url;
 
+	const isDeleteOperation = requestOptions.method === 'DELETE';
+
 	try {
-		if (operation === 'deleteTicket') {
+		if (isDeleteOperation) {
+			delete requestOptions.headers['Content-Type'];
 			const fullResponse = (await tanssHttpRequest.call(this, i, {
-				...(requestOptions as unknown as Record<string, unknown>),
-				simple: false,
-				resolveWithFullResponse: true,
+				...requestOptions,
+				returnFullResponse: true,
 			} as unknown as import('n8n-workflow').IHttpRequestOptions)) as unknown as {
 				statusCode?: number;
 				body?: unknown;
@@ -566,7 +667,8 @@ export async function handleTicket(this: IExecuteFunctions, i: number) {
 
 			const statusCode = fullResponse?.statusCode ?? 0;
 			if (statusCode === 204) {
-				return { success: true, statusCode, message: 'Ticket deleted successfully.' };
+				const successMessage = operation === 'deleteTicket' ? 'Ticket deleted successfully.' : 'Comment deleted successfully.';
+				return { success: true, statusCode, message: successMessage };
 			}
 
 			const tanssBody = (fullResponse?.body ?? null) as { error?: { localizedText?: string; text?: string; type?: string } } | null;
@@ -583,7 +685,7 @@ export async function handleTicket(this: IExecuteFunctions, i: number) {
 		const responseData = await tanssHttpRequest.call(this, i, requestOptions as unknown as import('n8n-workflow').IHttpRequestOptions);
 		return responseData;
 	} catch (error: unknown) {
-		if (operation === 'deleteTicket') {
+		if (isDeleteOperation) {
 			const anyErr = error as {
 				statusCode?: number;
 				response?: { status?: number; statusCode?: number; body?: unknown; data?: unknown };

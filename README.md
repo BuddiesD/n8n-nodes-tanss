@@ -138,9 +138,8 @@ Tested with TANSS API. Version: 10.15.0
 
 | Metric | Value |
 | :--- | :--- |
-| **Implemented** | **205** |
-| **Total API Endpoints** | **306** |
-| Not in API Docs | 1 |
+| **Implemented** | **208** |
+| **Total API Endpoints** | **309** |
 | Ignored `[Not gonna happen]` | 25 |
 | **Completion** | **64%** |
 
@@ -150,15 +149,50 @@ Tested with TANSS API. Version: 10.15.0
 
 <br>
 <details>
-<summary><strong>tickets [6/6] - Done</strong></summary>
+<summary><strong>tickets [10/41] - Done</strong></summary>
 
-  - [x] [POST] Creates a ticket in the database
+  - [x] [POST] Create a ticket
   - [x] [GET] Gets a ticket by id
-  - [x] [DEL] Deletes a ticket by id
   - [x] [PUT] Updates a ticket
-  - [x] [GET] Gets a ticket history
+  - [x] [DEL] Deletes a ticket by id
   - [x] [POST] Creates a comment
-  - [x] [PUT] Merge two Tickets (not in API Docs)
+  - [x] [PUT] Merge
+  - [x] [DEL] Delete comment
+  - [x] [GET] Get absent technician tickets
+  - [x] [PUT] Update comment
+  - [x] [GET] Gets a ticket history
+  - [ ] [GET] Get workflow content - `[Not gonna happen]`
+  - [ ] [POST] Submit workflow content - `[Not gonna happen]`
+  - [ ] [GET] Get workflow pdf - `[Not gonna happen]`
+  - [ ] [POST] Create mass ticket from project - `[Not gonna happen]`
+  - [ ] [GET] Get assignment flags - `[Not gonna happen]`
+  - [ ] [GET] Get assignments for company - `[Not gonna happen]`
+  - [ ] [GET] Get open tickets from company merge - `[Not gonna happen]`
+  - [ ] [GET] Get open tickets from company - `[Not gonna happen]`
+  - [ ] [GET] Get department order - `[Not gonna happen]`
+  - [ ] [GET] Get ticket flags - `[Not gonna happen]`
+  - [ ] [GET] Get ticket last entry - `[Not gonna happen]`
+  - [ ] [GET] Get ticket list properties - `[Not gonna happen]`
+  - [ ] [GET] Get local admin tickets - `[Not gonna happen]`
+  - [ ] [GET] Get ticket pinned by ticket id - `[Not gonna happen]`
+  - [ ] [POST] Create ticket pinned - `[Not gonna happen]`
+  - [ ] [PUT] Update ticket pinned - `[Not gonna happen]`
+  - [ ] [DEL] Delete ticket pinned - `[Not gonna happen]`
+  - [ ] [GET] Get preferred technicians - `[Not gonna happen]`
+  - [ ] [GET] Get unwanted technicians - `[Not gonna happen]`
+  - [ ] [GET] Get ticket contract infos - `[Not gonna happen]`
+  - [ ] [PUT] Toggle favorite - `[Not gonna happen]`
+  - [ ] [POST] Send pdf report via mail - `[Not gonna happen]`
+  - [ ] [DEL] Delete ticket pinned by type and link id - `[Not gonna happen]`
+  - [ ] [GET] Get mail attachments for ticket - `[Not gonna happen]`
+  - [ ] [POST] Send mail - `[Not gonna happen]`
+  - [ ] [GET] Get mail for ticket - `[Not gonna happen]`
+  - [ ] [GET] Get mail attachment - `[Not gonna happen]`
+  - [ ] [GET] Get ticket detail pdf - `[Not gonna happen]`
+  - [ ] [GET] Get ticket properties - `[Not gonna happen]`
+  - [ ] [GET] Get changed ticket properties - `[Not gonna happen]`
+  - [ ] [POST] Request new service cap - `[Not gonna happen]`
+  - [ ] [GET] Get statistics - `[Not gonna happen]`
 </details>
 <details>
 <summary><strong>ticket lists [9/9] - Done</strong></summary>

@@ -58,6 +58,17 @@ Create a new ticket in the database.
 - **Title**
 - **Type ID**
 
+## Delete Comment
+
+**API Endpoint:** DELETE /api/v1/tickets/{ticketId}/comments/{commentId}
+
+Delete a comment from a specific ticket.
+
+**Parameters:**
+
+- **Ticket ID** (required)
+- **Comment ID** (required)
+
 ## Delete Ticket
 
 **API Endpoint:** DELETE /api/v1/tickets/{ticketId}
@@ -68,6 +79,12 @@ Delete a ticket.
 
 - **Ticket ID** (required)
 - **Target Ticket ID**
+
+## Get Absent Technician Tickets
+
+**API Endpoint:** GET /api/v1/tickets/absentTechnicians
+
+Get tickets for absent technicians.
 
 ## Get Ticket by ID
 
@@ -128,3 +145,56 @@ Update an existing ticket.
 - **Status ID**
 - **Title**
 - **Type ID**
+
+## Update Comment
+
+**API Endpoint:** PUT /api/v1/tickets/{ticketId}/comments/{commentId}
+
+Update an existing comment on a ticket.
+
+**Parameters:**
+
+- **Ticket ID** (required)
+- **Comment ID** (required)
+- **Content**
+- **Internal**
+- **Pinned** (optional, query parameter)
+
+---
+
+## Not Implemented
+
+The following API endpoints exist but are not implemented in this node:
+
+- Get workflow content
+- Submit workflow content
+- Get workflow pdf
+- Create mass ticket from project
+- Get assignment flags
+- Get assignments for company
+- Get open tickets from company merge
+- Get open tickets from company
+- Get department order
+- Get ticket flags
+- Get ticket last entry
+- Get ticket list properties
+- Get local admin tickets
+- Get ticket pinned by ticket id
+- Create ticket pinned
+- Update ticket pinned
+- Delete ticket pinned
+- Get preferred technicians
+- Get unwanted technicians
+- Get ticket contract infos
+- Toggle favorite
+- Send pdf report via mail
+- Delete ticket pinned by type and link id
+- Get mail attachments for ticket
+- Send mail
+- Get mail for ticket
+- Get mail attachment
+- Get ticket detail pdf
+- Get ticket properties
+- Get changed ticket properties
+- Request new service cap
+- Get statistics
