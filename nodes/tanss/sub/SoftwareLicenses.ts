@@ -238,7 +238,13 @@ export const softwareLicensesFields: INodeProperties[] = [
 		displayOptions: { show: { resource: ['softwareLicenses'], operation: ['copySoftwareLicense'] } },
 		options: [
 			{ displayName: 'Count', name: 'count', type: 'number' as const, default: 1, description: 'Number of license copies to create' },
-			{ displayName: 'Serial Numbers (JSON Array)', name: 'serialNumbers', type: 'json' as const, default: '[]', description: 'List of serial numbers as JSON array' },
+			{
+				displayName: 'Serial Numbers (JSON Array)',
+				name: 'serialNumbers',
+				type: 'json' as const,
+				default: '[]',
+				description: 'List of serial numbers as JSON array',
+			},
 		],
 	},
 	{

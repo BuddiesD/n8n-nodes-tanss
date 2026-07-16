@@ -82,5 +82,3 @@ Removes a mail. If `ticketId` is given, the mail is only detached from that tick
 
 - **Mail ID** (required)
 - **Ticket ID** — Optional, detaches from this ticket instead of deleting
-
-

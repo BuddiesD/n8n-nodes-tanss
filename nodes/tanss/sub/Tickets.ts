@@ -87,7 +87,16 @@ export const ticketFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['ticket'],
-				operation: ['getTicketById', 'createComment', 'getTicketHistory', 'updateTicket', 'deleteTicket', 'mergeTickets', 'deleteComment', 'updateComment'],
+				operation: [
+					'getTicketById',
+					'createComment',
+					'getTicketHistory',
+					'updateTicket',
+					'deleteTicket',
+					'mergeTickets',
+					'deleteComment',
+					'updateComment',
+				],
 			},
 		},
 		default: 0,

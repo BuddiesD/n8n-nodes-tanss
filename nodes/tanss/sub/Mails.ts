@@ -262,7 +262,6 @@ export async function handleMails(this: IExecuteFunctions, i: number) {
 			break;
 		}
 
-		
 		case 'getMail': {
 			const mailId = Number(this.getNodeParameter('mailId', i, 0)) || 0;
 			if (!mailId) throw new NodeOperationError(this.getNode(), 'Mail ID is required.');
@@ -286,8 +285,6 @@ export async function handleMails(this: IExecuteFunctions, i: number) {
 			break;
 		}
 
-		
-		
 		default:
 			throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not recognized.`);
 	}

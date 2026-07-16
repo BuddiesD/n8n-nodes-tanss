@@ -212,7 +212,7 @@ export class Tanss implements INodeType {
 				else if (resource === 'search') responseData = await handleSearch.call(this, i);
 				else if (resource === 'services') responseData = await handleServices.call(this, i);
 				else if (resource === 'softwareLicenses') responseData = await handleSoftwareLicenses.call(this, i);
-			else if (resource === 'projects') responseData = await handleProjects.call(this, i);
+				else if (resource === 'projects') responseData = await handleProjects.call(this, i);
 				else if (resource === 'calls') responseData = await handleCalls.call(this, i);
 				else if (resource === 'callsuser') responseData = await handleCallsUser.call(this, i);
 				else if (resource === 'employees') responseData = await handleEmployees.call(this, i);
