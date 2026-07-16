@@ -149,6 +149,42 @@ export const softwareLicensesOperations: INodeProperties[] = [
 				description: 'Deletes a software license type',
 				action: 'Delete a software license type',
 			},
+			{
+				name: 'Get Expiring Licenses',
+				value: 'getExpiringLicenses',
+				description: 'Lists licenses whose expirationDate falls inside the upcoming reminder window',
+				action: 'Get expiring licenses',
+			},
+			{
+				name: 'Get Software License Assignments',
+				value: 'getSoftwareLicenseAssignments',
+				description: 'Returns every device/employee/installation that consumes a seat of this license',
+				action: 'Get software license assignments',
+			},
+			{
+				name: 'Get Software License Contracts',
+				value: 'getSoftwareLicenseContracts',
+				description: 'Returns the customer contracts this software license is referenced from',
+				action: 'Get software license contracts',
+			},
+			{
+				name: 'Copy Software License',
+				value: 'copySoftwareLicense',
+				description: 'Duplicates an existing software license',
+				action: 'Copy software license',
+			},
+			{
+				name: 'Get Software License Properties',
+				value: 'getSoftwareLicenseProperties',
+				description: 'Returns the customer-defined extra fields for this license',
+				action: 'Get software license properties',
+			},
+			{
+				name: 'Get Software License Types Treeview',
+				value: 'getSoftwareLicenseTypesTreeview',
+				description: 'Returns software-license types nested as a parent/child tree',
+				action: 'Get software license types treeview',
+			},
 		],
 		default: 'getSoftwareLicenses',
 	},
@@ -165,9 +201,45 @@ export const softwareLicensesFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['softwareLicenses'],
-				operation: ['getSoftwareLicenseById', 'updateSoftwareLicense', 'deleteSoftwareLicense'],
+				operation: [
+					'getSoftwareLicenseById',
+					'updateSoftwareLicense',
+					'deleteSoftwareLicense',
+					'getSoftwareLicenseAssignments',
+					'getSoftwareLicenseContracts',
+					'copySoftwareLicense',
+					'getSoftwareLicenseProperties',
+				],
 			},
 		},
+	},
+	{
+		displayName: 'Company ID',
+		name: 'expireCompanyId',
+		type: 'number' as const,
+		default: 0,
+		description: 'Restrict expiring licenses to a single company; omit to span all accessible companies',
+		displayOptions: { show: { resource: ['softwareLicenses'], operation: ['getExpiringLicenses'] } },
+	},
+	{
+		displayName: 'Tree View',
+		name: 'treeView',
+		type: 'boolean' as const,
+		default: false,
+		description: 'Return types nested as a parent/child tree (true) or as a flat list (false)',
+		displayOptions: { show: { resource: ['softwareLicenses'], operation: ['getSoftwareLicenseTypesTreeview'] } },
+	},
+	{
+		displayName: 'Copy Options',
+		name: 'copyOptions',
+		type: 'collection' as const,
+		placeholder: 'Add Option',
+		default: {},
+		displayOptions: { show: { resource: ['softwareLicenses'], operation: ['copySoftwareLicense'] } },
+		options: [
+			{ displayName: 'Count', name: 'count', type: 'number' as const, default: 1, description: 'Number of license copies to create' },
+			{ displayName: 'Serial Numbers (JSON Array)', name: 'serialNumbers', type: 'json' as const, default: '[]', description: 'List of serial numbers as JSON array' },
+		],
 	},
 	{
 		displayName: 'Software License Type ID',
@@ -371,7 +443,7 @@ export async function handleSoftwareLicenses(this: IExecuteFunctions, i: number)
 	let url = '';
 	const requestOptions: {
 		method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-		headers: { 'Content-Type': string };
+		headers: Record<string, string>;
 		json: boolean;
 		body?: Record<string, unknown>;
 		url: string;
@@ -394,10 +466,12 @@ export async function handleSoftwareLicenses(this: IExecuteFunctions, i: number)
 		case 'createSoftwareLicense': {
 			const createFields = this.getNodeParameter('createSoftwareLicenseFields', i, {}) as SoftwareLicenseFieldInput;
 			if (Object.keys(createFields).length === 0) throw new NodeOperationError(this.getNode(), 'No fields provided for creating software license.');
+			const createBody = normalizeSoftwareLicenseBody(createFields);
+			if (createBody.active === undefined) createBody.active = true;
 			url = `${credentials.baseURL}/backend/api/v1/softwarelicenses`;
 			requestOptions.method = 'POST';
-			requestOptions.body = normalizeSoftwareLicenseBody(createFields);
-			break;
+			requestOptions.body = createBody;
+			break; // Missing `remark` and `inventoryNumber` fields currently cause a RUNTIME_EXCEPTION
 		}
 		case 'getSoftwareLicenseById': {
 			if (!softwareLicenseId) throw new NodeOperationError(this.getNode(), 'softwareLicenseId is required for get.');
@@ -454,6 +528,64 @@ export async function handleSoftwareLicenses(this: IExecuteFunctions, i: number)
 			if (!softwareLicenseTypeId) throw new NodeOperationError(this.getNode(), 'softwareLicenseTypeId is required for delete.');
 			url = `${credentials.baseURL}/backend/api/v1/softwarelicenses/types/${softwareLicenseTypeId}`;
 			requestOptions.method = 'DELETE';
+			break;
+		}
+		case 'getExpiringLicenses': {
+			const expireCompanyId = Number(this.getNodeParameter('expireCompanyId', i, 0)) || 0;
+			let expireUrl = `${credentials.baseURL}/backend/api/v1/softwarelicenses/expire`;
+			if (expireCompanyId > 0) expireUrl += `?companyId=${expireCompanyId}`;
+			url = expireUrl;
+			requestOptions.method = 'GET';
+			delete requestOptions.headers['Content-Type'];
+			break;
+		}
+		case 'getSoftwareLicenseAssignments': {
+			if (!softwareLicenseId) throw new NodeOperationError(this.getNode(), 'softwareLicenseId is required for assignments.');
+			url = `${credentials.baseURL}/backend/api/v1/softwarelicenses/${softwareLicenseId}/assignments`;
+			requestOptions.method = 'GET';
+			delete requestOptions.headers['Content-Type'];
+			break;
+		}
+		case 'getSoftwareLicenseContracts': {
+			if (!softwareLicenseId) throw new NodeOperationError(this.getNode(), 'softwareLicenseId is required for contracts.');
+			url = `${credentials.baseURL}/backend/api/v1/softwarelicenses/${softwareLicenseId}/contracts`;
+			requestOptions.method = 'GET';
+			delete requestOptions.headers['Content-Type'];
+			break;
+		}
+		case 'copySoftwareLicense': {
+			if (!softwareLicenseId) throw new NodeOperationError(this.getNode(), 'softwareLicenseId is required for copy.');
+			const copyOpts = this.getNodeParameter('copyOptions', i, {}) as Record<string, unknown>;
+			const copyBody: Record<string, unknown> = {};
+			if (copyOpts.count !== undefined) copyBody.count = Number(copyOpts.count) || 1;
+			if (copyOpts.serialNumbers && String(copyOpts.serialNumbers).trim() !== '') {
+				try {
+					const parsed = JSON.parse(String(copyOpts.serialNumbers));
+					if (Array.isArray(parsed)) copyBody.serialNumbers = parsed;
+				} catch {
+					// ignore invalid JSON
+				}
+			}
+			url = `${credentials.baseURL}/backend/api/v1/softwarelicenses/${softwareLicenseId}/copy`;
+			requestOptions.method = 'POST';
+			requestOptions.headers['Content-Type'] = 'application/json';
+			requestOptions.body = copyBody;
+			break;
+		}
+		case 'getSoftwareLicenseProperties': {
+			if (!softwareLicenseId) throw new NodeOperationError(this.getNode(), 'softwareLicenseId is required for properties.');
+			url = `${credentials.baseURL}/backend/api/v1/softwarelicenses/${softwareLicenseId}/properties`;
+			requestOptions.method = 'GET';
+			delete requestOptions.headers['Content-Type'];
+			break;
+		}
+		case 'getSoftwareLicenseTypesTreeview': {
+			const treeView = this.getNodeParameter('treeView', i, false) as boolean;
+			let treeUrl = `${credentials.baseURL}/backend/api/v1/softwarelicenses/types/treeview`;
+			if (treeView) treeUrl += '?treeView=true';
+			url = treeUrl;
+			requestOptions.method = 'GET';
+			delete requestOptions.headers['Content-Type'];
 			break;
 		}
 		default:

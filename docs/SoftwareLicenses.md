@@ -159,3 +159,72 @@ Delete a software license type.
 **Parameters:**
 
 - **Software License Type ID** (required)
+
+## Get Expiring Licenses
+
+**API Endpoint:** GET /api/v1/softwarelicenses/expire
+
+Lists licenses whose expirationDate falls inside the upcoming reminder window.
+
+**Parameters:**
+
+- **Company ID** — Restrict to a single company; omit to span all accessible companies
+
+## Get Software License Assignments
+
+**API Endpoint:** GET /api/v1/softwarelicenses/{id}/assignments
+
+Returns every device/employee/installation that consumes a seat of this license.
+
+**Parameters:**
+
+- **Software License ID** (required)
+
+## Get Software License Contracts
+
+**API Endpoint:** GET /api/v1/softwarelicenses/{id}/contracts
+
+Returns the customer contracts this software license is referenced from.
+
+**Parameters:**
+
+- **Software License ID** (required)
+
+## Copy Software License
+
+**API Endpoint:** POST /api/v1/softwarelicenses/{id}/copy
+
+Duplicates an existing software license.
+
+**Parameters:**
+
+- **Software License ID** (required)
+- **Count** — Number of copies to create
+- **Serial Numbers (JSON Array)** — List of serial numbers
+
+## Get Software License Properties
+
+**API Endpoint:** GET /api/v1/softwarelicenses/{id}/properties
+
+Returns the customer-defined extra fields for this license.
+
+**Parameters:**
+
+- **Software License ID** (required)
+
+## Get Software License Types Treeview
+
+**API Endpoint:** GET /api/v1/softwarelicenses/types/treeview
+
+Returns software-license types nested as a parent/child tree.
+
+**Parameters:**
+
+- **Tree View** — Return nested tree (true) or flat list (false)
+
+---
+
+## Not Implemented (UI-only / Binary endpoints)
+
+- **Get Software License PDF** — GET `/api/v1/softwarelicenses/{id}/pdf` — Returns binary PDF, not usable in n8n workflow
+- **Get Software Licenses List PDF** — PUT `/api/v1/softwarelicenses/pdf` — Returns binary PDF, not usable in n8n workflow

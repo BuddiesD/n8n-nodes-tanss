@@ -138,8 +138,8 @@ Tested with TANSS API. Version: 10.15.0
 
 | Metric | Value |
 | :--- | :--- |
-| **Implemented** | **191** |
-| **Total API Endpoints** | **292** |
+| **Implemented** | **197** |
+| **Total API Endpoints** | **298** |
 | Not in API Docs | 1 |
 | Ignored `[Not gonna happen]` | 25 |
 | **Completion** | **64%** |
@@ -356,11 +356,11 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [DEL] Delete retry mail
   - [x] [GET] Get mail
   - [x] [DEL] Delete mail
-  - [ ] [GET] Identify mail `[Not gonna happen]`
-  - [ ] [POST] Send mail `[Not gonna happen]`
-  - [ ] [POST] Upload attachments `[Not gonna happen]`
-  - [ ] [PUT] Assign to ticket `[Not gonna happen]`
-  - [ ] [GET] Mail reply `[Not gonna happen]`
+  - [ ] [GET] Identify mail - `[Not gonna happen]`
+  - [ ] [POST] Send mail - `[Not gonna happen]`
+  - [ ] [POST] Upload attachments - `[Not gonna happen]`
+  - [ ] [PUT] Assign to ticket - `[Not gonna happen]`
+  - [ ] [GET] Mail reply - `[Not gonna happen]`
 </details>
 <details>
 <summary><strong>tags [0/10] - ToDo</strong></summary>
@@ -386,9 +386,16 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [POST] Change callback state
 </details>
 <details>
-<summary><strong>search [1/1] - Done</strong></summary>
+<summary><strong>search [1/8] Done</strong></summary>
 
   - [x] [PUT] global search
+  - [ ] [GET] Find devices - `[Not gonna happen]`
+  - [ ] [GET] Find employees - `[Not gonna happen]`
+  - [ ] [GET] Find knowledge-base entries - `[Not gonna happen]`
+  - [ ] [GET] Find mail accounts - `[Not gonna happen]`
+  - [ ] [GET] Find supports - `[Not gonna happen]`
+  - [ ] [GET] Find tickets - `[Not gonna happen]`
+  - [ ] [GET] Get tmp file upload by id - `[Not gonna happen]`
 </details>
 <details>
 <summary><strong>checklists [13/13] - Done</strong></summary>
@@ -489,15 +496,15 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [GET] Gets a company by ID
   - [x] [GET] Gets all employees of a company
   - [x] [PUT] Updates an existing company
-  - [ ] [GET] Gets company departments `[Not gonna happen]`
-  - [ ] [GET] Gets company flag icons `[Not gonna happen]`
-  - [ ] [GET] Gets company meta properties `[Not gonna happen]`
-  - [ ] [GET] Gets bookable support overview for company `[Not gonna happen]`
-  - [ ] [GET] Gets important company infos `[Not gonna happen]`
-  - [ ] [PUT] Updates important company infos `[Not gonna happen]`
-  - [ ] [DEL] Deletes important company info `[Not gonna happen]`
-  - [ ] [GET] Gets voucher `[Not gonna happen]`
-  - [ ] [PUT] Resets voucher export state `[Not gonna happen]`
+  - [ ] [GET] Gets company departments - `[Not gonna happen]`
+  - [ ] [GET] Gets company flag icons - `[Not gonna happen]`
+  - [ ] [GET] Gets company meta properties - `[Not gonna happen]`
+  - [ ] [GET] Gets bookable support overview for company - `[Not gonna happen]`
+  - [ ] [GET] Gets important company infos - `[Not gonna happen]`
+  - [ ] [PUT] Updates important company infos - `[Not gonna happen]`
+  - [ ] [DEL] Deletes important company info - `[Not gonna happen]`
+  - [ ] [GET] Gets voucher - `[Not gonna happen]`
+  - [ ] [PUT] Resets voucher export state - `[Not gonna happen]`
 </details>
 <details>
 <summary><strong>company category [10/10] - Done</strong></summary>
@@ -628,18 +635,26 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [PUT] DNS lookup for a hostname or IP
 </details>
 <details>
-<summary><strong>software licenses [10/10] - Done</strong></summary>
+<summary><strong>software licenses [16/18] - Done</strong></summary>
 
   - [x] [PUT] Get a list of software licenses
-  - [x] [POST] Creates a software license
+  - [x] [POST] Creates a software license - Missing `remark` and `inventoryNumber` fields currently cause a RUNTIME_EXCEPTION
   - [x] [GET] Gets a single software license by id
   - [x] [PUT] Updates a software license
   - [x] [DEL] Deletes a software license
+  - [x] [GET] Get expiring licenses
+  - [x] [GET] Get software license assignments
+  - [x] [GET] Get software license contracts
+  - [x] [POST] Copy software license
+  - [x] [GET] Get software license properties
   - [x] [GET] Gets all software license types
   - [x] [POST] Creates a new software license type
   - [x] [GET] Gets a single software license type
   - [x] [PUT] Updates a software license type
   - [x] [DEL] Deletes a software license type
+  - [x] [GET] Get software license types treeview
+  - [ ] [GET] Render a single software license as PDF  - `[Not gonna happen]`
+  - [ ] [PUT] Render the filtered software-license list as PDF  - `[Not gonna happen]`
 </details>
 
 </details>
