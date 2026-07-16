@@ -14,12 +14,6 @@ export const ticketListOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get All Project Tickets',
-				value: 'getProjectTickets',
-				description: 'Get a list of all projects',
-				action: 'Get a list of all projects',
-			},
-			{
 				name: 'Get Company Tickets',
 				value: 'getCompanyTickets',
 				description: 'Get tickets for a specific company',
@@ -237,9 +231,6 @@ export async function handleTicketList(this: IExecuteFunctions, i: number) {
 		}
 		case 'getNotIdentifiedTickets':
 			url = `${credentials.baseURL}/backend/api/v1/tickets/notIdentified`;
-			break;
-		case 'getProjectTickets':
-			url = `${credentials.baseURL}/backend/api/v1/tickets/projects`;
 			break;
 		case 'getTechnicianTickets':
 			url = `${credentials.baseURL}/backend/api/v1/tickets/technician`;
