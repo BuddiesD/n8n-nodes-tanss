@@ -139,8 +139,8 @@ Tested with TANSS API. Version: 10.15.0
 | Metric | Value |
 | :--- | :--- |
 | **Implemented** | **208** |
-| **Total API Endpoints** | **309** |
-| Ignored `[Not gonna happen]` | 25 |
+| **Total API Endpoints** | **310** |
+| Ignored `[Not gonna happen]` | 26 |
 | **Completion** | **64%** |
 
 
@@ -245,7 +245,7 @@ Tested with TANSS API. Version: 10.15.0
   - [ ] [POST] Upload ticket image - `[Not gonna happen]`
 </details>
 <details>
-<summary><strong>timestamp [15/15] - Done</strong></summary>
+<summary><strong>timestamp [15/24] - Done</strong></summary>
 
   - [x] [GET] gets a list of timestamps from a given period
   - [x] [POST] writes a timestamp into the database
@@ -262,6 +262,15 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [POST] creates a pause config
   - [x] [PUT] updates a pause config
   - [x] [DEL] deletes a pause config
+  - [ ] [POST] Create timestamp (user context) - `[Not gonna happen]`
+  - [ ] [GET] List open change requests - `[Not gonna happen]`
+  - [ ] [DEL] Delete change requests - `[Not gonna happen]`
+  - [ ] [GET] List employees visible for timestamp statistics - `[Not gonna happen]`
+  - [ ] [GET] List initial balances of all employees - `[Not gonna happen]`
+  - [ ] [POST] Create manual booking - `[Not gonna happen]`
+  - [ ] [PUT] List manual bookings - `[Not gonna happen]`
+  - [ ] [DEL] Delete manual booking - `[Not gonna happen]`
+  - [ ] [GET] Export timestamp statistics as CSV - `[Not gonna happen]`
 </details>
 <details>
 <summary><strong>calls [9/9] - Done</strong></summary>

@@ -134,3 +134,19 @@ Delete a pause configuration.
 **Parameters:**
 
 - **Pause Config ID** (required)
+
+---
+
+## Not Implemented
+
+The following API endpoints exist but are not implemented in this node:
+
+- Create timestamp (user context) (POST /api/timestamps/v1) — uses TimestampToken auth, records a punch for the calling employee
+- List open change requests (GET /api/v1/timestamps/changeRequests)
+- Delete change requests (DELETE /api/v1/timestamps/changeRequests/{employeeId}/{dayTimestamp})
+- List employees visible for timestamp statistics (GET /api/v1/timestamps/employees)
+- List initial balances of all employees (GET /api/v1/timestamps/initialBalances)
+- Create manual booking (POST /api/v1/timestamps/manualBooking)
+- List manual bookings (PUT /api/v1/timestamps/manualBooking)
+- Delete manual booking (DELETE /api/v1/timestamps/manualBooking/{id})
+- Export timestamp statistics as CSV (GET /api/v1/timestamps/statistics/export)
