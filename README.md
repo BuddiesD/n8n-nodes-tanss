@@ -232,12 +232,17 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [POST] upload a document/image
 </details>
 <details>
-<summary><strong>ticket states [4/4] - Done</strong></summary>
+<summary><strong>ticket states [4/9] - Done</strong></summary>
 
   - [x] [GET] Gets a list of all ticket states
   - [x] [POST] Creates a ticket state
   - [x] [PUT] Updates a ticket state
   - [x] [DEL] Deletes a ticket state
+  - [ ] [GET] Get attention items - `[Not gonna happen]`
+  - [ ] [POST] Upload attention item - `[Not gonna happen]`
+  - [ ] [DEL] Delete ticket image - `[Not gonna happen]`
+  - [ ] [GET] Get ticket images - `[Not gonna happen]`
+  - [ ] [POST] Upload ticket image - `[Not gonna happen]`
 </details>
 <details>
 <summary><strong>timestamp [15/15] - Done</strong></summary>

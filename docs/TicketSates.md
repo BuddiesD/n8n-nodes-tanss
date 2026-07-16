@@ -38,3 +38,15 @@ Delete a ticket state.
 **Parameters:**
 
 - **Ticket State ID** (required)
+
+---
+
+## Not Implemented
+
+The following API endpoints exist but are not implemented in this node:
+
+- Get attention items
+- Upload attention item
+- Delete ticket image
+- Get ticket images
+- Upload ticket image
