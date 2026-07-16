@@ -250,7 +250,7 @@ Tested with TANSS API. Version: 10.15.0
   - [ ] [GET] Restart call-import thread
 </details>
 <details>
-<summary><strong>remote supports [11/11] - Done</strong></summary>
+<summary><strong>remote supports [11/16] - Done</strong></summary>
 
   - [x] [POST] Creates/imports a remote support into the database
   - [x] [PUT] Get list of remote supports
@@ -263,6 +263,11 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [GET] Gets all technician assignments
   - [x] [POST] Creates a technician assignment
   - [x] [DEL] Delets a technician assignment
+  - [ ] [PUT] List remote-support sessions (TANSS internal) - `[Not gonna happen]`
+  - [ ] [PUT] Update remote-support provider configuration - `[Not gonna happen]`
+  - [ ] [PUT] Validate remote-support provider configuration - `[Not gonna happen]`
+  - [ ] [GET] Get remote-support provider configuration - `[Not gonna happen]`
+  - [ ] [PUT] Trigger remote-support import - `[Not gonna happen]`
 </details>
 <details>
 <summary><strong>monitoring [0/7] - ToDo</strong></summary>
