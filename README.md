@@ -138,8 +138,8 @@ Tested with TANSS API. Version: 10.15.0
 
 | Metric | Value |
 | :--- | :--- |
-| **Implemented** | **197** |
-| **Total API Endpoints** | **298** |
+| **Implemented** | **205** |
+| **Total API Endpoints** | **306** |
 | Not in API Docs | 1 |
 | Ignored `[Not gonna happen]` | 25 |
 | **Completion** | **64%** |
@@ -161,7 +161,7 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [PUT] Merge two Tickets (not in API Docs)
 </details>
 <details>
-<summary><strong>ticket lists [10/10] - Done</strong></summary>
+<summary><strong>ticket lists [9/9] - Done</strong></summary>
 
   - [x] [GET] gets a list of own tickets (assigned to currently logged in employee)
   - [x] [GET] gets a list of general tickets (assigned to no employee)
@@ -169,10 +169,24 @@ Tested with TANSS API. Version: 10.15.0
   - [x] [GET] gets a list of tickets of all technicians
   - [x] [GET] gets a list of repair tickets
   - [x] [GET] gets a list of not identified tickets
-  - [x] [GET] gets a list of all projects
   - [x] [GET] gets a list of all tickets which are assigned to local ticket admins
   - [x] [GET] gets a list of all ticket which a technician has a role in
   - [x] [PUT] Get a (custom) ticket list
+</details>
+<details>
+<summary><strong>projects [9/11] - Done</strong></summary>
+
+  - [x] [GET] Get a list of all projects
+  - [x] [GET] Get project status
+  - [ ] [GET] Get phases from project - `[Not gonna happen]`
+  - [ ] [GET] Get new phase start date - `[Not gonna happen]`
+  - [x] [GET] Get project sub-tickets
+  - [x] [POST] Create a project phase
+  - [x] [PUT] Update a project phase
+  - [x] [DEL] Delete a project phase
+  - [x] [GET] Get company tickets for project
+  - [x] [GET] Get projects for ticket
+  - [x] [PUT] Assign ticket to project
 </details>
 <details>
 <summary><strong>ticket content [5/5] - Done</strong></summary>
