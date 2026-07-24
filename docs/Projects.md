@@ -108,3 +108,10 @@ Assigns the ticket to a project (and optionally a specific phase), or detaches i
   - **Phase ID** — ID of the project phase to assign the ticket to
 
 ---
+
+## Not Implemented
+
+The following API endpoints exist but are not implemented in this node:
+
+- Get new phase start date (GET /api/v1/projects/phases/newPhaseStartDate)
+- Get phases from project (GET /api/v1/projects/{projectId}/phases)
