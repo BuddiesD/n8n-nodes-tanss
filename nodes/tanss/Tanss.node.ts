@@ -6,7 +6,7 @@ import { handleIps, ipsOperations, ipsFields } from './sub/ips';
 import { handleChecklists, checklistsOperations, checklistsFields } from './sub/Checklists';
 import { handleTicketList, ticketListOperations, ticketListFields } from './sub/TicketLists';
 import { handleTicketContent, ticketContentOperations, ticketContentFields } from './sub/TicketContent';
-import { handleTicketStates, ticketStatesOperations, ticketStatesFields } from './sub/TicketSates';
+import { handleTicketStates, ticketStatesOperations, ticketStatesFields } from './sub/TicketStates';
 import { handleTimestamps, timestampOperations, timestampFields } from './sub/timestamp';
 import { handleAvailability, availabilityOperations, availabilityFields } from './sub/Availability';
 import { handleEmployees, employeesOperations, employeesFields } from './sub/Employees';
