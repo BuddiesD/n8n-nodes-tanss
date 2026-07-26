@@ -320,8 +320,6 @@ export async function handleChecklists(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 
-
-
 	let url = '';
 	const requestOptions: {
 		method: 'GET' | 'POST' | 'PUT' | 'DELETE';
