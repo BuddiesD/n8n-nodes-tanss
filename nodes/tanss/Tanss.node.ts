@@ -34,7 +34,10 @@ export class Tanss implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'TANSS',
 		name: 'tanss',
-		icon: 'file:../../icons/tanss.svg',
+		icon: {
+			light: 'file:../../icons/tanss.svg',
+			dark: 'file:../../icons/tanss.dark.svg',
+		},
 		group: ['transform'],
 		version: 1,
 		description: 'Interact with the TANSS API',
