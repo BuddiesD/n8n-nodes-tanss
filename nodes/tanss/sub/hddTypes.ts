@@ -89,7 +89,6 @@ export async function handleHddTypes(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	const hddTypesBasePath = isGeneratedTokenMode.call(this, i) ? '/backend/api/deviceManagement/v1/hddTypes' : '/backend/api/v1/hddTypes';
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const hddTypeId = this.getNodeParameter('hddTypeId', i, 0) as number;
 
 	let url = '';

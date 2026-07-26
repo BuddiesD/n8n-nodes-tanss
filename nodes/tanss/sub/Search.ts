@@ -115,9 +115,7 @@ export const searchFields: INodeProperties[] = [
 
 export async function handleSearch(this: IExecuteFunctions, i: number) {
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const base = credentials.baseURL as string;
-	if (!base) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');
 
 	const filterJson = this.getNodeParameter('filterJson', i, '') as string;
 
@@ -126,7 +124,7 @@ export async function handleSearch(this: IExecuteFunctions, i: number) {
 	if (filterJson && filterJson.trim() !== '') {
 		try {
 			const parsed = JSON.parse(filterJson);
-			if (typeof parsed !== 'object' || parsed === null) throw new Error('filterJson must be a JSON object.');
+			if (typeof parsed !== 'object' || parsed === null) throw new NodeOperationError(this.getNode(), 'filterJson must be a JSON object.');
 			body = parsed as IDataObject;
 		} catch (err) {
 			throw new NodeApiError(this.getNode(), err as JsonObject);

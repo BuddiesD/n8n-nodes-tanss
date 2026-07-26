@@ -106,7 +106,6 @@ export const servicesFields: INodeProperties[] = [
 export async function handleServices(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 
 	const servicesBasePath = isGeneratedTokenMode.call(this, i) ? '/backend/api/deviceManagement/v1/services' : '/backend/api/v1/services';
 	const serviceId = this.getNodeParameter('serviceId', i, 0) as number;

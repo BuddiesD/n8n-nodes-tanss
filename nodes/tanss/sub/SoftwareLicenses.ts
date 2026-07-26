@@ -442,7 +442,6 @@ function normalizeSoftwareLicenseTypeBody(fields: SoftwareLicenseTypeFieldInput)
 export async function handleSoftwareLicenses(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const softwareLicenseId = this.getNodeParameter('softwareLicenseId', i, 0) as number;
 	const softwareLicenseTypeId = this.getNodeParameter('softwareLicenseTypeId', i, 0) as number;
 

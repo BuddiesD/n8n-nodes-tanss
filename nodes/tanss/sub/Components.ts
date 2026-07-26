@@ -183,7 +183,6 @@ export async function handleComponents(this: IExecuteFunctions, i: number) {
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	const componentsBasePath = isGeneratedTokenMode.call(this, i) ? '/backend/api/deviceManagement/v1/components' : '/backend/api/v1/components';
 
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const componentId = this.getNodeParameter('componentId', i, 0) as number;
 
 	let url = '';

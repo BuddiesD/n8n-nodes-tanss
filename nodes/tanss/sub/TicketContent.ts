@@ -126,11 +126,8 @@ export async function handleTicketContent(this: IExecuteFunctions, i: number) {
 	}
 
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const ticketId = this.getNodeParameter('ticketId', i, 0) as number;
-	const typedCredentials = credentials as { baseURL?: string };
-	const baseURL = typedCredentials.baseURL;
-	if (!baseURL) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');
+	const baseURL = credentials.baseURL;
 	if (!ticketId || ticketId <= 0) throw new NodeOperationError(this.getNode(), 'Valid Ticket ID is required.');
 
 	let url = '';

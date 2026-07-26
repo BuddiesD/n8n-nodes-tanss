@@ -89,8 +89,6 @@ export async function handleIps(this: IExecuteFunctions, i: number) {
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	const ipsBasePath = isGeneratedTokenMode.call(this, i) ? '/backend/api/deviceManagement/v1/ips' : '/backend/api/v1/ips';
 
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-
 	let url = '';
 	const requestOptions: {
 		method: 'GET' | 'POST' | 'PUT' | 'DELETE';

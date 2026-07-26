@@ -763,10 +763,7 @@ export async function handleCalls(this: IExecuteFunctions, i: number) {
 	}
 
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-	const typedCredentials = credentials as { baseURL?: string };
-	const baseURL = typedCredentials.baseURL;
-	if (!baseURL) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');
+	const baseURL = credentials.baseURL;
 
 	if (operation === 'createCall') {
 		const body = buildCallBodyFromInput.call(this, i);

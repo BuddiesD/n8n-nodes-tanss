@@ -86,7 +86,6 @@ export async function handleCpu(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	const cpusBasePath = isGeneratedTokenMode.call(this, i) ? '/backend/api/deviceManagement/v1/cpus' : '/backend/api/v1/cpus';
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const cpuId = this.getNodeParameter('cpuId', i, 0) as number;
 
 	let url = '';

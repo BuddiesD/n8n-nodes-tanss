@@ -280,7 +280,6 @@ export const projectFields: INodeProperties[] = [
 export async function handleProjects(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 
 	const projectId = this.getNodeParameter('projectId', i, 0) as number;
 	const phaseId = this.getNodeParameter('phaseId', i, 0) as number;

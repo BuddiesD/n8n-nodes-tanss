@@ -376,7 +376,6 @@ export async function handlePeriphery(this: IExecuteFunctions, i: number) {
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	const peripheryBasePath = isGeneratedTokenMode.call(this, i) ? '/backend/api/deviceManagement/v1/peripheries' : '/backend/api/v1/peripheries';
 
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const peripheryId = this.getNodeParameter('peripheryId', i, 0) as number;
 
 	let url = '';

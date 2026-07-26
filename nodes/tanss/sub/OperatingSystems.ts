@@ -112,7 +112,6 @@ export async function handleOperatingSystems(this: IExecuteFunctions, i: number)
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 	const osBasePath = isGeneratedTokenMode.call(this, i) ? '/backend/api/deviceManagement/v1/os' : '/backend/api/v1/os';
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const osId = this.getNodeParameter('osId', i, 0) as number;
 
 	let url = '';

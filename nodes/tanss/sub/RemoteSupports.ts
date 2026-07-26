@@ -278,9 +278,6 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 	}
 
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
-	const base = credentials.baseURL as string;
-	if (!base) throw new NodeOperationError(this.getNode(), 'No baseURL in credentials');
 
 	let url = '';
 	const requestOptions: {
@@ -379,19 +376,20 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 			requestOptions.body = body;
 
 			try {
-				const fullResponse = await tanssHttpRequest.call(this, i, {
-					...(requestOptions as unknown as IDataObject),
-					simple: false,
-					resolveWithFullResponse: true,
-				} as unknown as import('n8n-workflow').IHttpRequestOptions);
-				if (fullResponse && fullResponse.statusCode === 204) {
-					return {
-						success: true,
-						statusCode: 204,
-						message: 'Device assignment deleted',
-					} as unknown as IDataObject;
+				type FullResponse = { statusCode: number; body?: unknown };
+				const fullResponse = (await tanssHttpRequest.call(this, i, {
+					...requestOptions,
+					returnFullResponse: true,
+				} as unknown as import('n8n-workflow').IHttpRequestOptions)) as unknown as FullResponse;
+				if (fullResponse.statusCode === 204) {
+					return { success: true, statusCode: 204, message: 'Device assignment deleted' };
 				}
-				return fullResponse && fullResponse.body ? fullResponse.body : fullResponse;
+				return {
+					success: false,
+					statusCode: fullResponse.statusCode,
+					message: `Delete request failed (status ${fullResponse.statusCode})`,
+					error: fullResponse.body ?? null,
+				};
 			} catch (err: unknown) {
 				return buildRemoteSupportDeleteErrorResponse(err);
 			}
@@ -432,19 +430,20 @@ export async function handleRemoteSupports(this: IExecuteFunctions, i: number) {
 			requestOptions.url = url;
 
 			try {
-				const fullResponse = await tanssHttpRequest.call(this, i, {
-					...(requestOptions as unknown as IDataObject),
-					simple: false,
-					resolveWithFullResponse: true,
-				} as unknown as import('n8n-workflow').IHttpRequestOptions);
-				if (fullResponse && fullResponse.statusCode === 204) {
-					return {
-						success: true,
-						statusCode: 204,
-						message: 'Remote support deleted',
-					} as unknown as IDataObject;
+				type FullResponse = { statusCode: number; body?: unknown };
+				const fullResponse = (await tanssHttpRequest.call(this, i, {
+					...requestOptions,
+					returnFullResponse: true,
+				} as unknown as import('n8n-workflow').IHttpRequestOptions)) as unknown as FullResponse;
+				if (fullResponse.statusCode === 204) {
+					return { success: true, statusCode: 204, message: 'Remote support deleted' };
 				}
-				return fullResponse && fullResponse.body ? fullResponse.body : fullResponse;
+				return {
+					success: false,
+					statusCode: fullResponse.statusCode,
+					message: `Delete request failed (status ${fullResponse.statusCode})`,
+					error: fullResponse.body ?? null,
+				};
 			} catch (err: unknown) {
 				return buildRemoteSupportDeleteErrorResponse(err);
 			}

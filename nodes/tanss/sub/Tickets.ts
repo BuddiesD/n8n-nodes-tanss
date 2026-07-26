@@ -346,7 +346,6 @@ export const ticketFields: INodeProperties[] = [
 				type: 'number' as const,
 				default: 0,
 			},
-			{ displayName: 'Remitter ID', name: 'remitterId', type: 'number' as const, default: 0 },
 			{
 				displayName: 'Resubmission Date',
 				name: 'resubmissionDate',
@@ -566,7 +565,6 @@ export async function handleTicket(this: IExecuteFunctions, i: number) {
 	const operation = this.getNodeParameter('operation', i) as string;
 	const credentials = { baseURL: await getTanssBaseUrl.call(this, i) };
 
-	if (!credentials) throw new NodeOperationError(this.getNode(), 'No credentials returned!');
 	const ticketId = this.getNodeParameter('ticketId', i, 0) as number;
 
 	let url = '';
