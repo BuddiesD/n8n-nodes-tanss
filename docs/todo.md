@@ -1030,7 +1030,7 @@
 <details>
 <summary><strong>domains [6/6] - Done</strong></summary>
 
-- [x] [POST] Creates a domain -- This option is experiencing a error right now, Waiting for Support
+- [x] [POST] Creates a domain -- This option is experiencing a error right now (fixed in 10.16)
 - [x] [GET] Gets a single domain
 - [x] [PUT] Updates a domain
 - [x] [DEL] Deletes a domain
@@ -1361,7 +1361,7 @@
 <summary><strong>software licenses [10/12] - Done</strong></summary>
 
 - [x] [PUT] Get a list of software licenses
-- [x] [POST] Creates a software license - Missing `remark` and `inventoryNumber` fields currently cause a RUNTIME_EXCEPTION
+- [x] [POST] Creates a software license -- Missing `remark` and `inventoryNumber` fields currently cause a RUNTIME_EXCEPTION (fixed in 10.16)
 - [x] [GET] Gets a single software license by id
 - [x] [PUT] Updates a software license
 - [x] [DEL] Deletes a software license
