@@ -1,33 +1,7 @@
-# Important for the old Tanss Node Users
-
-<details>
-<summary>Show migration details</summary>
-
-A new **TANSS Node** was released on **October 27, 2025** [here](https://github.com/BuddiesD/n8n-nodes-tanss).  
-Please note that **existing credentials are not compatible** due to the introduction of **2FA (Two-Factor Authentication)**.
-
-You can install both versions, but **2FA functionality will only be visible after uninstalling** the old package.
-
-Old: [n8n-nodes-tanss-api](https://www.npmjs.com/package/n8n-nodes-tanss-api)<br>
-New: [n8n-nodes-tanss](https://www.npmjs.com/package/n8n-nodes-tanss)
-
-### Breaking Changes (Credentials & Auth)
-
-**Important:** Updating from older versions to versions **greater than 1.1.0** can break existing workflows until credentials and auth setup are migrated.
-
-- The legacy credential `TanssApi` is removed.
-- Authentication is now handled via `Auth Mode` and two credential types:
-  - `TANSS User API` (username/password, optional 2FA, auto refresh)
-  - `TANSS Generated Token API` (static generated token)
-- Existing workflows using old credentials must be reconfigured with one of the new credential types.
-- The old dedicated Authentication resource/node operations were removed.
-- If your workflow previously used Authentication operations to obtain tokens manually, switch to normal resource operations with the configured credentials.
-- TANSS credentials are now also usable in the normal n8n `HTTP Request` node.
-
-</details>
-
-
 # n8n-nodes-tanss
+
+> [!WARNING]
+> **Before upgrading, check [BREAKING_CHANGES.md](BREAKING_CHANGES.md) for migration details.**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![CodeFactor](https://www.codefactor.io/repository/github/buddiesd/n8n-nodes-tanss/badge)](https://www.codefactor.io/repository/github/buddiesd/n8n-nodes-tanss)
@@ -50,6 +24,8 @@ TANSS is a professional ticket and service management system for handling suppor
 - [Resources](#resources)
 - [ToDo list](docs/todo.md)
 - [Changelog](CHANGELOG.md)
+- [Breaking Changes](BREAKING_CHANGES.md)
+- [Disclaimer](#disclaimer)
 - [Contributing](#contributing)
 
 ## Installation
@@ -147,6 +123,17 @@ A detailed breakdown of all implemented and pending API endpoints is available i
 | **Completion** | **36%** |
 | **Total API Endpoints** | **857** | 
 
+
+## Disclaimer
+
+**This is an unofficial, community-maintained project** it is **not** affiliated with, endorsed by, or sponsored by TANSS or its parent company.
+
+- **Trademarks:** "TANSS" and all related names, logos, and product identifiers are trademarks of their respective owners. Their use here is purely descriptive and does not imply any official relationship.
+- **Access requirement:** Using this node requires a valid TANSS installation with appropriate API permissions. The authors are not responsible for providing or facilitating access to any TANSS system.
+- **No warranty:** This software is provided **as-is**, without any express or implied warranties. The authors make no guarantees regarding:
+  - Correctness or completeness of the API integration
+  - Compatibility with specific TANSS versions
+- **Liability:** In no event shall the authors be held liable for any damages arising from the use of this software, including but not limited to data loss, service interruptions, or business disruptions.
 
 ## Contributing
 
