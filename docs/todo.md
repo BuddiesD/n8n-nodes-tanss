@@ -1,5 +1,4 @@
-<details>
-<summary><strong>Complete overview</strong></summary>
+## Complete overview
 
 <br>
 <details>

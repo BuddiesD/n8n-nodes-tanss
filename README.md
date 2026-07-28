@@ -74,13 +74,42 @@ Note: The first startup may time out because n8n is being downloaded and set up.
 
 ## Operations
 
-The following operations are supported by this node and are documented in the **[ToDo list](docs/todo.md)** and the **TANSS API documentation**.
+**208 operations** across 30 resources. Each resource's operations and their parameters are documented in the [`docs/`](docs/) directory.
 
-**Operations currently implemented** in the node are marked as **Done** or **Testing** in the [ToDo list](docs/todo.md).
-A complete overview of all available operations can be found in the TANSS API documentation.
+| Resource | Operations | Docs |
+| :--- | :--- | :--- |
+| Activity Feed | 4 | [`docs/activityFeed.md`](docs/activityFeed.md) |
+| Availability | 2 | [`docs/Availability.md`](docs/Availability.md) |
+| Call | 9 | [`docs/calls.md`](docs/calls.md) |
+| Call User | 3 | [`docs/callsuser.md`](docs/callsuser.md) |
+| Callback | 5 | [`docs/Callback.md`](docs/Callback.md) |
+| Chat | 10 | [`docs/chats.md`](docs/chats.md) |
+| Checklist | 12 | [`docs/Checklists.md`](docs/Checklists.md) |
+| Company | 4 | [`docs/Company.md`](docs/Company.md) |
+| Company Category | 10 | [`docs/CompanyCategories.md`](docs/CompanyCategories.md) |
+| Component | 9 | [`docs/Components.md`](docs/Components.md) |
+| CPU | 5 | [`docs/CPUs.md`](docs/CPUs.md) |
+| Domain | 6 | [`docs/Domains.md`](docs/Domains.md) |
+| Employee | 2 | [`docs/Employees.md`](docs/Employees.md) |
+| HDD Type | 5 | [`docs/hddTypes.md`](docs/hddTypes.md) |
+| IP | 4 | [`docs/ips.md`](docs/ips.md) |
+| Mail | 7 | [`docs/Mails.md`](docs/Mails.md) |
+| Manufacturer | 5 | [`docs/manufacturers.md`](docs/manufacturers.md) |
+| Operating System | 5 | [`docs/OperatingSystems.md`](docs/OperatingSystems.md) |
+| PC | 5 | [`docs/PCs.md`](docs/PCs.md) |
+| Periphery | 11 | [`docs/Periphery.md`](docs/Periphery.md) |
+| Project | 9 | [`docs/Projects.md`](docs/Projects.md) |
+| Remote Support | 11 | [`docs/RemoteSupports.md`](docs/RemoteSupports.md) |
+| Search | 1 | [`docs/Search.md`](docs/Search.md) |
+| Service | 5 | [`docs/services.md`](docs/services.md) |
+| Software License | 16 | [`docs/SoftwareLicenses.md`](docs/SoftwareLicenses.md) |
+| Ticket | 10 | [`docs/Tickets.md`](docs/Tickets.md) |
+| Ticket Content | 5 | [`docs/TicketContent.md`](docs/TicketContent.md) |
+| Ticket List | 9 | [`docs/TicketLists.md`](docs/TicketLists.md) |
+| Ticket State | 4 | [`docs/TicketStates.md`](docs/TicketStates.md) |
+| Timestamp | 3 | [`docs/timestamp.md`](docs/timestamp.md) |
 
-- [ToDo list](docs/todo.md)
-- [Tanss API documentation](https://api-doc.tanss.de/)
+For implementation status (done / testing / planned), see the [ToDo list](docs/todo.md). For the full TANSS API reference, visit [api-doc.tanss.de](https://api-doc.tanss.de/).
 
 ## Credentials
 
