@@ -43,7 +43,7 @@
         ]
     },
     "devDependencies": {
-        "@n8n/node-cli": "^0.46.1",
+        "@n8n/node-cli": "^0.47.1",
         "@types/node": "^26.0.1",
         "eslint": "9.39.5",
         "ignore": "^7.0.5",
